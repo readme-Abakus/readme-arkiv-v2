@@ -1,0 +1,14 @@
+.searchTable {
+  text-align: left;
+  width: 80vw;
+  margin: auto;
+  margin-bottom: 60px;
+}
+
+.showMore {
+  margin-top: 5px;
+  width: 200px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
