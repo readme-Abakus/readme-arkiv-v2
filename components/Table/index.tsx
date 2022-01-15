@@ -6,7 +6,7 @@ import {
   InfiniteHitsProvided,
   StateResultsProvided,
 } from "react-instantsearch-core";
-import useDarkMode from "use-dark-mode";
+import { useTheme } from "next-themes";
 
 import styles from "./Table.module.css";
 
@@ -24,7 +24,7 @@ const SearchTable: FC<InfiniteHitsProvided & StateResultsProvided> = ({
   hasMore,
   searchState,
 }) => {
-  const darkMode = useDarkMode();
+  const { theme } = useTheme();
   return (
     <>
       {searchState && searchState.query ? (
@@ -33,7 +33,7 @@ const SearchTable: FC<InfiniteHitsProvided & StateResultsProvided> = ({
             striped
             bordered
             hover
-            variant={darkMode.value ? "dark" : undefined}
+            variant={theme}
             responsive="lg"
             className={styles.searchTable}
           >

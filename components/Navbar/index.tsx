@@ -1,7 +1,7 @@
-import { FC } from "react";
-import useDarkMode from "use-dark-mode";
+import { FC, useEffect, useState } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import Link from "next/link";
+import { useTheme } from "next-themes";
 
 import { LightSwitch } from "../LightSwitch";
 import * as ROUTES from "../../utils/routes";
@@ -9,13 +9,22 @@ import * as ROUTES from "../../utils/routes";
 import styles from "./Navbar.module.css";
 
 export const AppNavbar: FC = () => {
-  const isDark = useDarkMode();
+  const [mounted, setMounted] = useState(false);
+  const { theme } = useTheme();
+
+  // When mounted on client, now we can show the UI
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) {
+    return null;
+  }
+
   return (
     <Navbar
       className={styles.navbar}
       collapseOnSelect
       expand="sm"
-      variant={isDark.value ? "dark" : "light"}
+      variant={theme as "dark" | "light"}
     >
       <Link href={ROUTES.HOME} passHref>
         <Navbar.Brand>Arkiv</Navbar.Brand>

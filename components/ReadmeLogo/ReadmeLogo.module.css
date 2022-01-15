@@ -17,3 +17,11 @@
   grid-column: 1;
   grid-row: 1;
 }
+
+[data-theme="dark"] .logoHvit {
+  opacity: 1;
+}
+
+[data-theme="dark"] .logoSort {
+  opacity: 0;
+}

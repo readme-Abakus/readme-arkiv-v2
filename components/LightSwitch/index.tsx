@@ -1,26 +1,16 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import Switch from "react-switch";
-import useDarkMode from "use-dark-mode";
+import { useTheme } from "next-themes";
 
 import styles from "./LightSwitch.module.css";
 
 export const LightSwitch: FC = () => {
-  const darkmode = useDarkMode();
-  const [state, setState] = useState(!darkmode.value);
-
-  function handleChange(checked: boolean) {
-    setState(checked);
-    if (checked) {
-      darkmode.disable();
-    } else {
-      darkmode.enable();
-    }
-  }
+  const { theme, setTheme } = useTheme();
 
   return (
     <Switch
-      onChange={(checked) => handleChange(checked)}
-      checked={state}
+      onChange={(checked) => setTheme(checked ? "light" : "dark")}
+      checked={theme === "light"}
       checkedIcon={
         <i className={`material-icons md-24 ${styles.sun}`}> wb_sunny</i>
       }

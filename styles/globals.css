@@ -5,41 +5,30 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
 
-body.light-mode {
   background-color: #fff;
   color: #333;
   transition: all 0.3s ease;
 }
-body.dark-mode {
+
+[data-theme="dark"] body {
   background-color: #1a1919;
   color: #999;
   transition: all 0.3s ease;
 }
 
-body.dark-mode * input {
+[data-theme="dark"] input {
   background-color: #282d33;
   color: #ffffff;
 }
 
-body.dark-mode * textarea {
+[data-theme="dark"] textarea {
   background-color: #282d33;
   color: #ffffff;
 }
 
-body.dark-mode * input::placeholder {
+[data-theme="dark"] input::placeholder {
   color: #ffffff5e;
-}
-
-body.dark-mode * .RowImage {
-  box-shadow: unset;
-}
-
-body.dark-mode * .ais-PoweredBy-link {
-  background-color: white;
-  border-radius: 15px;
-  padding: 2.5px 10px;
 }
 
 code {

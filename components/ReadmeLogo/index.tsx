@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { FC } from "react";
-import useDarkMode from "use-dark-mode";
 
 import styles from "./ReadmeLogo.module.css";
 import logoSrc from "../../public/images/readme_hvit.png";
@@ -13,13 +12,11 @@ export const ReadmeLogo: FC<{
   maxHeight?: string;
   small?: boolean;
 }> = ({ maxWidth, maxHeight, small }) => {
-  const darkmode = useDarkMode();
   return (
     <div className={styles.readmeLogo}>
       <div
-        className={styles.logoHvit}
+        className={styles.logoHvit + " logoHvit"}
         style={{
-          opacity: darkmode.value ? 1 : 0,
           maxHeight,
           maxWidth,
         }}
@@ -31,9 +28,8 @@ export const ReadmeLogo: FC<{
         />
       </div>
       <div
-        className={styles.logoSort}
+        className={styles.logoSort + " logoSort"}
         style={{
-          opacity: darkmode.value ? 0 : 1,
           maxHeight,
           maxWidth,
         }}
