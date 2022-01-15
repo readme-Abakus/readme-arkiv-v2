@@ -7,7 +7,8 @@ import algoliasearch from "algoliasearch/lite";
 
 import "instantsearch.css/themes/reset.css";
 
-import styles from "./Search.module.css";
+import styles from "../styles/Search.module.css";
+import Head from "next/head";
 
 const searchClient = algoliasearch(
   "K9OSMLFRD3",
@@ -17,6 +18,9 @@ const searchClient = algoliasearch(
 const Search: FC = () => {
   return (
     <>
+      <Head>
+        <title>readme - søk</title>
+      </Head>
       <h1>Artikkelsøk</h1>
       <InstantSearch searchClient={searchClient} indexName="Articles">
         <SearchBox />
