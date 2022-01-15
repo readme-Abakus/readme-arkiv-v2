@@ -1,0 +1,17 @@
+.app {
+  position: relative;
+  min-height: 95vh;
+  text-align: center;
+  font-family: helvetica neue, Arial, Helvetica, Geneva, sans-serif;
+}
+
+.content {
+  padding-bottom: 2.5rem;
+}
+
+.header {
+  position: relative;
+  padding: 0px 10px;
+  max-width: 700px;
+  margin: 30px auto;
+}

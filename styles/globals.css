@@ -28,21 +28,18 @@ body.dark-mode * textarea {
   color: #ffffff;
 }
 
-body.dark-mode * table {
-  background-color: #282d33;
-  color: #999;
-}
-
 body.dark-mode * input::placeholder {
   color: #ffffff5e;
 }
 
-body.dark-mode * tr:hover {
-  color: #ddd;
-}
-
 body.dark-mode * .RowImage {
   box-shadow: unset;
+}
+
+body.dark-mode * .ais-PoweredBy-link {
+  background-color: white;
+  border-radius: 15px;
+  padding: 2.5px 10px;
 }
 
 code {

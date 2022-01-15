@@ -23,7 +23,7 @@ const Search: FC = () => {
         <AppTable />
         <PoweredBy
           translations={{
-            searchBy: "Søk levert av",
+            searchBy: "Søk levert av ",
           }}
           className={styles.poweredBy}
         />

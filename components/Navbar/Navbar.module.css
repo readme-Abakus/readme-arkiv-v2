@@ -1,0 +1,18 @@
+@media only screen and (max-width: 575px) {
+  .lightSwitch {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.lightSwitch {
+  margin-left: auto;
+}
+
+.navbar * a {
+  transition: color 0.3s ease;
+}
+
+.navbar {
+  margin: 0 15px;
+}
