@@ -1,7 +1,18 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { getEditions } from "../lib/Firebase/firebaseAPIs";
+import { IEditionData } from "../lib/types";
 
-const Home: NextPage = () => {
+export async function getStaticProps() {
+  return {
+    props: {
+      editionData: await getEditions(),
+    },
+  };
+}
+
+const Home: NextPage<{ editionData: IEditionData[] }> = ({ editionData }) => {
+  console.log(editionData);
   return (
     <Head>
       <title>readme - arkiv</title>
