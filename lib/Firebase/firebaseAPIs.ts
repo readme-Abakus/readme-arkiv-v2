@@ -21,7 +21,7 @@ export async function getEditions(): Promise<IEditionData[]> {
   pdfRefs.forEach(async (pdfRef) => {
     const [year, edition] = pdfRef.name.replace(".pdf", "").split("-");
     const imagePath = pdfRef.fullPath
-      .replace(".pdf", ".png")
+      .replace(".pdf", ".jpg")
       .replace("pdf/", "images/");
 
     yearEditionMap.set(year, [
@@ -37,7 +37,7 @@ export async function getEditions(): Promise<IEditionData[]> {
   const finalData: IEditionData[] = Array.from(yearEditionMap.entries()).map(
     ([year, editions]) => ({
       year: parseInt(year),
-      editions: editions.sort((a, b) => a.edition.localeCompare(b.edition)),
+      editions: editions.sort((a, b) => b.edition.localeCompare(a.edition)),
     })
   );
 

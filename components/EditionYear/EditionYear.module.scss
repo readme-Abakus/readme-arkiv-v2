@@ -1,0 +1,30 @@
+.container {
+  margin-bottom: 50px;
+
+  > hr {
+    height: 5px;
+    border-radius: 5px;
+  }
+}
+
+.imagesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20px;
+  width: calc(3 * 220px);
+  > a {
+    transition: all 0.2s ease-in-out;
+    box-shadow: 5px 5px 12px #888;
+
+    &:hover {
+      transform: scale(1.15);
+      z-index: 10;
+      box-shadow: 8px 8px 15px #888;
+    }
+  }
+}
+
+[data-theme="dark"] .imagesContainer a {
+  box-shadow: unset;
+}
