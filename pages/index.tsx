@@ -13,7 +13,6 @@ export async function getStaticProps() {
 }
 
 const Home: NextPage<{ editionData: IEditionData[] }> = ({ editionData }) => {
-  console.log(editionData);
   return (
     <>
       <Head>
