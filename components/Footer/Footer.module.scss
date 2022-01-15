@@ -4,4 +4,8 @@
   left: 50%;
   transform: translateX(-50%);
   height: 2.5rem;
+
+  > p {
+    margin-bottom: 5px;
+  }
 }
