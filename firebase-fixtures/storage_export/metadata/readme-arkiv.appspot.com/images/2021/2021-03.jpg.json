@@ -1,0 +1,19 @@
+{
+  "name": "images/2021/2021-03.jpg",
+  "bucket": "readme-arkiv.appspot.com",
+  "contentType": "image/jpeg",
+  "metageneration": 1,
+  "generation": 1629323262364,
+  "storageClass": "STANDARD",
+  "etag": "someETag",
+  "contentDisposition": "inline",
+  "contentEncoding": "identity",
+  "downloadTokens": [
+    "5017cd73-985e-41a6-8a7d-d552e8feaf57"
+  ],
+  "timeCreated": "2021-08-18T21:47:42.363Z",
+  "updated": "2021-08-18T21:47:42.363Z",
+  "size": 56671,
+  "md5Hash": "fMOc2X2hLcrmgTrmvf76fA==",
+  "crc32c": "747833411"
+}

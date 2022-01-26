@@ -1,0 +1,22 @@
+{
+  "name": "pdf/2021/2021-02.pdf",
+  "bucket": "readme-arkiv.appspot.com",
+  "contentType": "application/pdf",
+  "metageneration": 1,
+  "generation": 1629325794932,
+  "storageClass": "STANDARD",
+  "etag": "someETag",
+  "contentDisposition": "inline",
+  "contentEncoding": "identity",
+  "customMetadata": {
+    "listinglop": "false"
+  },
+  "downloadTokens": [
+    "7cdf88ac-05b3-464d-ba32-95a36e98164b"
+  ],
+  "timeCreated": "2021-08-18T22:29:54.931Z",
+  "updated": "2021-08-18T22:29:54.953Z",
+  "size": 4528985,
+  "md5Hash": "PPsAjEmssk+iOZQlsrSkLw==",
+  "crc32c": "1628136776"
+}

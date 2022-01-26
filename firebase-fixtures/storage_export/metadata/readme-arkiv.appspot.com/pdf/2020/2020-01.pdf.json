@@ -1,0 +1,22 @@
+{
+  "name": "pdf/2020/2020-01.pdf",
+  "bucket": "readme-arkiv.appspot.com",
+  "contentType": "application/pdf",
+  "metageneration": 1,
+  "generation": 1629323306074,
+  "storageClass": "STANDARD",
+  "etag": "someETag",
+  "contentDisposition": "inline",
+  "contentEncoding": "identity",
+  "customMetadata": {
+    "listinglop": "false"
+  },
+  "downloadTokens": [
+    "a9b53b5b-64b1-4615-bce5-0b862fbc5fc9"
+  ],
+  "timeCreated": "2021-08-18T21:48:26.073Z",
+  "updated": "2021-08-18T21:48:26.102Z",
+  "size": 6175326,
+  "md5Hash": "d3Ldy/t/ihe7h4Q1HZTZwA==",
+  "crc32c": "2846136495"
+}
