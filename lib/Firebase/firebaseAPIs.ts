@@ -1,4 +1,4 @@
-import { ref, listAll, list } from "firebase/storage";
+import { ref, listAll } from "firebase/storage";
 
 import { IEdition, IEditionData } from "../types";
 import { storage } from "./firebase";
