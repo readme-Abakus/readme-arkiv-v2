@@ -1,6 +1,7 @@
 .searchTable {
   text-align: left;
   width: 80vw;
+  max-width: 1500px;
   margin: auto;
   margin-bottom: 10px;
 }
