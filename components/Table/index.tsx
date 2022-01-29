@@ -29,46 +29,52 @@ const SearchTable: FC<InfiniteHitsProvided & StateResultsProvided> = ({
     <>
       {searchState && searchState.query ? (
         <Fade in appear>
-          <Table
-            striped
-            bordered
-            hover
-            variant={theme}
-            responsive="lg"
-            className={styles.searchTable}
-          >
-            <thead>
-              <tr>
-                <th>Utgave</th>
-                <th>Tittel</th>
-                <th>Forfatter</th>
-                <th>Layout</th>
-                <th>Spalte</th>
-                <th>Stikkord</th>
-              </tr>
-            </thead>
-            <tbody>
-              {hits.map((hit) => (
-                <tr key={hit._id}>
-                  <td>
-                    <a href={hit.url} target="_blank" rel="noopener noreferrer">
-                      {hit.edition}
-                    </a>
-                  </td>
-                  <td>{hit.title}</td>
-                  <td>{hit.author}</td>
-                  <td>{hit.layout}</td>
-                  <td>{hit.type}</td>
-                  <td>{parseTags(hit.tags)}</td>
+          <>
+            <Table
+              striped
+              bordered
+              hover
+              variant={theme}
+              responsive="lg"
+              className={styles.searchTable}
+            >
+              <thead>
+                <tr>
+                  <th>Utgave</th>
+                  <th>Tittel</th>
+                  <th>Forfatter</th>
+                  <th>Layout</th>
+                  <th>Spalte</th>
+                  <th>Stikkord</th>
                 </tr>
-              ))}
-            </tbody>
+              </thead>
+              <tbody>
+                {hits.map((hit) => (
+                  <tr key={hit._id}>
+                    <td>
+                      <a
+                        href={hit.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {hit.edition}
+                      </a>
+                    </td>
+                    <td>{hit.title}</td>
+                    <td>{hit.author}</td>
+                    <td>{hit.layout}</td>
+                    <td>{hit.type}</td>
+                    <td>{parseTags(hit.tags)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
             {hasMore && (
               <Button className={styles.showMore} onClick={refineNext}>
                 Vis mer
               </Button>
             )}
-          </Table>
+          </>
         </Fade>
       ) : null}
     </>

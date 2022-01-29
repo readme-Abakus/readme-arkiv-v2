@@ -2,13 +2,11 @@
   text-align: left;
   width: 80vw;
   margin: auto;
-  margin-bottom: 60px;
+  margin-bottom: 10px;
 }
 
 .showMore {
-  margin-top: 5px;
+  margin: 0 auto;
+  margin-bottom: 20px;
   width: 200px;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
 }
