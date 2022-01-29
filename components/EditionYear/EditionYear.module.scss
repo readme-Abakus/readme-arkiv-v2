@@ -13,7 +13,7 @@
   justify-content: space-around;
   flex-grow: 0;
   gap: 20px;
-  width: calc(3 * 220px);
+  max-width: calc(3 * 220px);
   > a > span {
     transition: all 0.2s ease-in-out;
     box-shadow: 5px 5px 12px #888;
