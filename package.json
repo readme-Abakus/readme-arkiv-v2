@@ -5,7 +5,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "start:emulators": "firebase emulators:start --import=./firebase-fixtures",
+    "emulators": "firebase emulators:start --import=./firebase-fixtures",
     "lint": "next lint"
   },
   "dependencies": {
