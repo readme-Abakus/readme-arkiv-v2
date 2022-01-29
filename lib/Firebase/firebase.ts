@@ -28,8 +28,7 @@ const functions = getFunctions(app);
 
 const db = getFirestore(app);
 
-// FIXME: Emulators are broken
-if (false) {
+if (process.env.NODE_ENV !== "production") {
   connectStorageEmulator(storage, "localhost", 9199);
   connectAuthEmulator(auth, "http://localhost:9099");
   connectFirestoreEmulator(db, "localhost", 8080);

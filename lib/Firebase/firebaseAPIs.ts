@@ -1,4 +1,4 @@
-import { ref, listAll } from "firebase/storage";
+import { ref, listAll, list } from "firebase/storage";
 
 import { IEdition, IEditionData } from "../types";
 import { storage } from "./firebase";
@@ -6,19 +6,22 @@ import { storage } from "./firebase";
 export async function getEditions(): Promise<IEditionData[]> {
   const listRef = ref(storage, "pdf");
 
-  const folderRefs = await listAll(listRef);
-
-  const pdfRefs = (
-    await Promise.all(
-      folderRefs.prefixes.map(
-        async (folderRef) => (await listAll(folderRef)).items
-      )
-    )
-  ).flat();
+  const yearRefs = (await listAll(listRef)).prefixes;
 
   const yearEditionMap = new Map<string, IEdition[]>();
 
-  pdfRefs.forEach(async (pdfRef) => {
+  const pdfRefs = await Promise.all(
+    yearRefs.map(
+      async (folderRef) =>
+        // We recreate the ref here since there is a bug in the emulator that
+        // crashes it if we use folderRef directly
+        (
+          await listAll(ref(storage, folderRef.fullPath))
+        ).items
+    )
+  );
+
+  pdfRefs.flat().forEach((pdfRef) => {
     const [year, edition] = pdfRef.name.replace(".pdf", "").split("-");
     const imagePath = pdfRef.fullPath
       .replace(".pdf", ".jpg")
@@ -46,5 +49,7 @@ export async function getEditions(): Promise<IEditionData[]> {
 
 const getDownloadURL = (bucketName: string, fullPath: string) =>
   `${
-    true ? "https://storage.googleapis.com" : "http://localhost:9199"
+    process.env.NODE_ENV === "production"
+      ? "https://storage.googleapis.com"
+      : "http://localhost:9199"
   }/${bucketName}/${fullPath}`;
