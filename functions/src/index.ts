@@ -1,11 +1,11 @@
-import admin = require("firebase-admin");
-import functions = require("firebase-functions");
+import * as admin from "firebase-admin";
+import * as functions from "firebase-functions";
 
-import path = require("path");
-import sharp = require("sharp");
-import os = require("os");
-import fs = require("fs-extra");
-import pdf2jpg = require("pdf2jpg");
+import * as path from "path";
+import sharp from "sharp";
+import * as os from "os";
+import * as fs from "fs-extra";
+import pdf2jpg from "pdf2jpg";
 import { RuntimeOptions } from "firebase-functions";
 
 admin.initializeApp();
