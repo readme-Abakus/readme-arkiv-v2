@@ -5,6 +5,7 @@ import Layout from "../components/Layout";
 import { ThemeProvider } from "next-themes";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Favicon } from "../components/Favicon";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -14,6 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet"
         />
+        <Favicon />
       </Head>
       <ThemeProvider>
         <Layout>
