@@ -1,6 +1,5 @@
 import { DocumentReference, deleteDoc } from "firebase/firestore";
 import { StorageReference, deleteObject } from "firebase/storage";
-import { isArray } from "lodash";
 import { FC, useState } from "react";
 import { Spinner } from "react-bootstrap";
 
@@ -23,7 +22,7 @@ export const DeleteButton: FC<DeleteButtonProps> = ({
     setIsDeleting(true);
 
     if (docRef !== undefined) {
-      if (isArray(docRef)) {
+      if (Array.isArray(docRef)) {
         for (let ref of docRef) {
           await deleteDoc(ref);
         }
@@ -33,7 +32,7 @@ export const DeleteButton: FC<DeleteButtonProps> = ({
     }
 
     if (storageRef !== undefined) {
-      if (isArray(storageRef)) {
+      if (Array.isArray(storageRef)) {
         for (let ref of storageRef) {
           await deleteObject(ref);
         }
