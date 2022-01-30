@@ -7,10 +7,14 @@ import { LightSwitch } from "../LightSwitch";
 
 import styles from "./Navbar.module.css";
 import { ROUTES } from "../../utils/routes";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../lib/Firebase/firebase";
+import { signOut } from "firebase/auth";
 
 export const AppNavbar: FC = () => {
   const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
+  const [user, loading] = useAuthState(auth);
 
   // When mounted on client, now we can show the UI
   useEffect(() => setMounted(true), []);
@@ -40,6 +44,16 @@ export const AppNavbar: FC = () => {
         <Nav className={styles.lightSwitch}>
           <LightSwitch />
         </Nav>
+        {!loading && user && (
+          <Nav>
+            <Link href={ROUTES.ADMIN} passHref>
+              <Nav.Link>Admin</Nav.Link>
+            </Link>
+            <Nav.Link type="button" onClick={() => signOut(auth)}>
+              Logg ut
+            </Nav.Link>
+          </Nav>
+        )}
       </Navbar.Collapse>
     </Navbar>
   );
