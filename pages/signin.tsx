@@ -1,0 +1,16 @@
+import Link from "next/link";
+
+import { SignInForm } from "../components/Admin/SignInForm";
+
+import styles from "../styles/SignIn.module.css";
+import { ROUTES } from "../utils/routes";
+
+const SignInPage = () => (
+  <div className={styles.signIn}>
+    <h1>Logg inn</h1>
+    <SignInForm />
+    <Link href={ROUTES.PASSWORD_FORGET}>Glemt passord?</Link>
+  </div>
+);
+
+export default SignInPage;

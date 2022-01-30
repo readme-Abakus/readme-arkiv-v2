@@ -4,9 +4,9 @@ import Link from "next/link";
 import { useTheme } from "next-themes";
 
 import { LightSwitch } from "../LightSwitch";
-import * as ROUTES from "../../utils/routes";
 
 import styles from "./Navbar.module.css";
+import { ROUTES } from "../../utils/routes";
 
 export const AppNavbar: FC = () => {
   const [mounted, setMounted] = useState(false);

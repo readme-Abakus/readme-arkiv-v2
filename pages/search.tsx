@@ -1,4 +1,5 @@
-import { FC } from "react";
+import { NextPage } from "next";
+import Head from "next/head";
 import { AppTable } from "../components/Table";
 import { SearchBox } from "../components/SearchBox";
 import { InstantSearch, PoweredBy } from "react-instantsearch-dom";
@@ -8,14 +9,13 @@ import algoliasearch from "algoliasearch/lite";
 import "instantsearch.css/themes/reset.css";
 
 import styles from "../styles/Search.module.css";
-import Head from "next/head";
 
 const searchClient = algoliasearch(
   "K9OSMLFRD3",
   "e9162c9f16b6ca303aa413e062713697"
 );
 
-const Search: FC = () => {
+const Search: NextPage = () => {
   return (
     <>
       <Head>

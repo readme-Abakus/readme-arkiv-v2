@@ -1,10 +1,23 @@
-export const HOME = "/";
-export const SIGN_IN = "/signin";
-export const SEARCH = "/search";
-export const ADMIN = "/admin";
-export const PASSWORD_FORGET = "/pw-forget";
-export const NEW_EDITION = "/new_edition";
-export const NEW_ARTICLE = "/new_article";
-export const EDIT_ARTICLE = "/edit_article/:id";
-export const EDITION_LIST = "/editions";
-export const ARTICLE_LIST = "/articles";
+const HOME = "/";
+const SEARCH = "/search";
+const ADMIN = "/admin";
+const SIGN_IN = "/signin";
+const PASSWORD_FORGET = "/pw-forget";
+const NEW_EDITION = ADMIN + "/new_edition";
+const NEW_ARTICLE = ADMIN + "/new_article";
+const EDIT_ARTICLE = ADMIN + "/edit_article/:id";
+const EDITION_LIST = ADMIN + "/editions";
+const ARTICLE_LIST = ADMIN + "/articles";
+
+export const ROUTES = {
+  HOME,
+  SEARCH,
+  ADMIN,
+  SIGN_IN,
+  PASSWORD_FORGET,
+  NEW_EDITION,
+  NEW_ARTICLE,
+  EDIT_ARTICLE,
+  EDITION_LIST,
+  ARTICLE_LIST,
+};
