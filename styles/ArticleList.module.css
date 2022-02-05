@@ -48,22 +48,22 @@
 
 .open {
   cursor: pointer;
-  color: var(--primary);
+  color: var(--bs-blue);
   transition: 0.5s;
 }
 
 .open:hover {
   transition: 0.5s;
-  filter: drop-shadow(0 0 0.1rem var(--primary));
+  filter: drop-shadow(0 0 0.1rem var(--bs-blue));
 }
 
 .edit {
   cursor: pointer;
-  color: var(--secondary);
+  color: var(--bs-grey);
   transition: 0.5s;
 }
 
 .edit:hover {
   transition: 0.5s;
-  filter: drop-shadow(0 0 0.1rem var(--secondary));
+  filter: drop-shadow(0 0 0.1rem var(--bs-grey));
 }

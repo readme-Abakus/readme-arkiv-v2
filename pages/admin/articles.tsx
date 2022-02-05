@@ -11,7 +11,6 @@ import { ROUTES } from "../../utils/routes";
 import styles from "../../styles/ArticleList.module.css";
 
 interface ListElementProps {
-  key: number;
   obj: IArticleListData;
 }
 
