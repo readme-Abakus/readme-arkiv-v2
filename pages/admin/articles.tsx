@@ -15,11 +15,11 @@ interface ListElementProps {
   obj: IArticleListData;
 }
 
-const ListElement: FC<ListElementProps> = ({ obj, key }) => {
+const ListElement: FC<ListElementProps> = ({ obj }) => {
   const { data, ref, id } = obj;
   const { edition, title, url } = data;
   return (
-    <div key={key} className={styles.elementStyle}>
+    <div className={styles.elementStyle}>
       <p>
         {edition} | {title}
       </p>
