@@ -1,7 +1,7 @@
-import { sendPasswordResetEmail } from "firebase/auth";
 import Head from "next/head";
 import { FormEventHandler, useState } from "react";
 import { Form, Alert } from "react-bootstrap";
+import { useSendPasswordResetEmail } from "react-firebase-hooks/auth";
 
 import { SubmitButton } from "../components/Admin/Common/SubmitButton";
 import { auth } from "../lib/Firebase/firebase";
@@ -19,23 +19,16 @@ export default PasswordForgetPage;
 
 const PasswordForgetForm = () => {
   const [email, setEmail] = useState("");
-  const [sending, setSending] = useState(false);
+  const [sendPasswordResetEmail, sending, error] =
+    useSendPasswordResetEmail(auth);
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState<any>(null);
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
     setSuccess(false);
-    setSending(true);
-    sendPasswordResetEmail(auth, email)
-      .then(() => {
-        setSending(false);
-        setSuccess(true);
-      })
-      .catch((error) => {
-        setSending(false);
-        setError(error);
-      });
+    sendPasswordResetEmail(email).then(() => {
+      setSuccess(true);
+    });
   };
 
   const isValid = email !== "";
