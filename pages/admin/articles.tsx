@@ -1,41 +1,10 @@
 import { NextPage } from "next";
-import Link from "next/link";
-import { FC } from "react";
 import { Button } from "react-bootstrap";
-import { DeleteButton } from "../../components/Admin/Common/DeleteButton";
 import { WithAuthentication } from "../../components/WithAuthentication";
 import { useArticleList } from "../../lib/Firebase/hooks";
-import { IArticleListData } from "../../lib/types";
-import { ROUTES } from "../../utils/routes";
 
 import styles from "../../styles/ArticleList.module.css";
-
-interface ListElementProps {
-  obj: IArticleListData;
-}
-
-const ListElement: FC<ListElementProps> = ({ obj }) => {
-  const { data, ref, id } = obj;
-  const { edition, title, url } = data;
-  return (
-    <div className={styles.elementStyle}>
-      <p>
-        {edition} | {title}
-      </p>
-      <div className={styles.end}>
-        <a href={url} target="_blank" rel="noopener noreferrer">
-          <i className={`material-icons md-36 ${styles.open}`}>
-            remove_red_eye
-          </i>
-        </a>
-        <Link href={ROUTES.EDIT_ARTICLE.replace(":id", id)} passHref>
-          <i className={`material-icons md-36 ${styles.edit}`}>edit</i>
-        </Link>
-        <DeleteButton docRef={ref} />
-      </div>
-    </div>
-  );
-};
+import { ListElement } from "../../components/Admin/Articles/ListElement";
 
 const ArticleList: NextPage = () => {
   const [data, loading, error, pageNum, nextPage, prevPage] = useArticleList();
