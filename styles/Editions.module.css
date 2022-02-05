@@ -1,0 +1,21 @@
+.list {
+  width: 40vw;
+  max-width: 1000px;
+  margin: auto;
+  margin-bottom: 40px;
+}
+
+.elementStyle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid lightgray;
+  border-radius: 5px;
+  margin: 2px;
+  height: 50px;
+}
+
+.elementStyle > p {
+  margin-bottom: 0;
+  margin-left: 5px;
+}
