@@ -1,0 +1,69 @@
+.articleList {
+  width: 60vw;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.pagination {
+  margin: auto;
+  padding: 10px 0;
+  width: 60vw;
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+}
+
+.pagination > button {
+  width: 20vw;
+  height: 45px;
+  font-size: 1.25em;
+}
+
+.elementStyle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid lightgray;
+  border-radius: 5px;
+  margin: 2px;
+  text-align: left;
+}
+
+.elementStyle > p {
+  margin: 5px;
+}
+
+.end {
+  user-select: none;
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+}
+
+@media only screen and (max-width: 410px) {
+  .end {
+    flex-direction: column;
+  }
+}
+
+.open {
+  cursor: pointer;
+  color: var(--primary);
+  transition: 0.5s;
+}
+
+.open:hover {
+  transition: 0.5s;
+  filter: drop-shadow(0 0 0.1rem var(--primary));
+}
+
+.edit {
+  cursor: pointer;
+  color: var(--secondary);
+  transition: 0.5s;
+}
+
+.edit:hover {
+  transition: 0.5s;
+  filter: drop-shadow(0 0 0.1rem var(--secondary));
+}

@@ -8,7 +8,7 @@ import styles from "./DeleteButton.module.css";
 interface DeleteButtonProps {
   docRef?: DocumentReference[] | DocumentReference;
   storageRef?: StorageReference[] | StorageReference;
-  removeSelf: () => void;
+  removeSelf?: () => void;
 }
 
 export const DeleteButton: FC<DeleteButtonProps> = ({
@@ -41,7 +41,9 @@ export const DeleteButton: FC<DeleteButtonProps> = ({
       }
     }
     setIsDeleting(false);
-    removeSelf();
+    if (removeSelf !== undefined) {
+      removeSelf();
+    }
   }
 
   return (
