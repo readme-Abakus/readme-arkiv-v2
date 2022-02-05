@@ -12,23 +12,20 @@ import {
   WithFieldValue,
 } from "firebase/firestore";
 import { useState } from "react";
-import {
-  useCollection,
-  useCollectionData,
-} from "react-firebase-hooks/firestore";
-import { IArticleListData, IArticle } from "../types";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+import { IArticle } from "../types";
 import { db } from "./firebase";
 
 const articleConverter = {
-  toFirestore(post: WithFieldValue<IArticleListData>): DocumentData {
-    return post.data;
+  toFirestore(post: WithFieldValue<IArticle>): DocumentData {
+    return post;
   },
   fromFirestore(
     snapshot: QueryDocumentSnapshot,
     options: SnapshotOptions
-  ): IArticleListData {
+  ): IArticle {
     const data = snapshot.data(options)!;
-    return { id: snapshot.id, data: data as IArticle, ref: snapshot.ref };
+    return { ...data, id: snapshot.id } as IArticle;
   },
 };
 
@@ -40,8 +37,8 @@ const baseQuery = [orderBy(firstField, "desc"), orderBy(secondField, "desc")];
 export const useArticleList = () => {
   const [dynamicQuery, setQuery] = useState([...baseQuery, limit(pageSize)]);
 
-  const [data, loading, error] = useCollectionData<IArticleListData>(
-    query<IArticleListData>(
+  const [data, loading, error] = useCollectionData<IArticle>(
+    query<IArticle>(
       collection(db, "articles").withConverter(articleConverter),
       ...dynamicQuery
     )
@@ -52,7 +49,7 @@ export const useArticleList = () => {
   const prevPage = () => {
     if (pageNum - 1 < 0 || !data) return;
 
-    const first = data[0].data;
+    const first = data[0];
     setPageNum(pageNum - 1);
     setQuery([
       ...baseQuery,
@@ -64,7 +61,7 @@ export const useArticleList = () => {
   const nextPage = () => {
     if (!data) return;
 
-    const last = data[data.length - 1].data;
+    const last = data[data.length - 1];
     setPageNum(pageNum + 1);
     setQuery([
       ...baseQuery,

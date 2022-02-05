@@ -1,7 +1,8 @@
 import { ref, listAll } from "firebase/storage";
+import { doc, deleteDoc } from "firebase/firestore";
 
 import { IEdition, IEditionData } from "../types";
-import { storage } from "./firebase";
+import { db, storage } from "./firebase";
 
 export async function getEditions(): Promise<IEditionData[]> {
   const listRef = ref(storage, "pdf");
@@ -46,6 +47,10 @@ export async function getEditions(): Promise<IEditionData[]> {
 
   return finalData.sort((a, b) => b.year - a.year);
 }
+
+export const deleteArticle = async (id: string) => {
+  await deleteDoc(doc(db, `articles/${id}`));
+};
 
 const getDownloadURL = (bucketName: string, fullPath: string) =>
   `${

@@ -1,17 +1,17 @@
 import Link from "next/link";
 import { FC } from "react";
 import { DeleteButton } from "../../Common/DeleteButton";
-import { IArticleListData } from "../../../../lib/types";
 import { ROUTES } from "../../../../utils/routes";
 
 import styles from "./ListElement.module.css";
+import { deleteArticle } from "../../../../lib/Firebase/firebaseAPIs";
+import { IArticle } from "../../../../lib/types";
 
 interface ListElementProps {
-  obj: IArticleListData;
+  article: IArticle;
 }
-export const ListElement: FC<ListElementProps> = ({ obj }) => {
-  const { data, ref, id } = obj;
-  const { edition, title, url } = data;
+export const ListElement: FC<ListElementProps> = ({ article }) => {
+  const { edition, title, url, id } = article;
   return (
     <div className={styles.elementStyle}>
       <p>
@@ -26,7 +26,7 @@ export const ListElement: FC<ListElementProps> = ({ obj }) => {
         <Link href={ROUTES.EDIT_ARTICLE.replace(":id", id)} passHref>
           <i className={`material-icons md-36 ${styles.edit}`}>edit</i>
         </Link>
-        <DeleteButton docRef={ref} />
+        <DeleteButton onClick={() => deleteArticle(id)} />
       </div>
     </div>
   );

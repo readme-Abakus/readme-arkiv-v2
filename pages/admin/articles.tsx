@@ -17,7 +17,7 @@ const ArticleList: NextPage = () => {
         ) : (
           <>
             {data?.map((article, i) => (
-              <ListElement key={i} obj={article} />
+              <ListElement key={i} article={article} />
             ))}
 
             <div className={styles.pagination}>

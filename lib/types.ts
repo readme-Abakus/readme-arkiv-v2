@@ -1,5 +1,3 @@
-import { DocumentReference } from "firebase/firestore";
-
 export interface IEdition {
   pdfUrl: string;
   imageUrl: string;
@@ -22,10 +20,5 @@ export interface IArticle {
   tags: string[];
   type: string;
   url: string;
-  _id?: string;
-}
-export interface IArticleListData {
   id: string;
-  data: IArticle;
-  ref: DocumentReference;
 }

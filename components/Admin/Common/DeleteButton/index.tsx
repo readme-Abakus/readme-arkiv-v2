@@ -1,49 +1,22 @@
-import { DocumentReference, deleteDoc } from "firebase/firestore";
-import { StorageReference, deleteObject } from "firebase/storage";
 import { FC, useState } from "react";
 import { Spinner } from "react-bootstrap";
 
 import styles from "./DeleteButton.module.css";
 
 interface DeleteButtonProps {
-  docRef?: DocumentReference[] | DocumentReference;
-  storageRef?: StorageReference[] | StorageReference;
-  removeSelf?: () => void;
+  onClick: () => Promise<void> | (() => void);
 }
 
-export const DeleteButton: FC<DeleteButtonProps> = ({
-  docRef,
-  storageRef,
-  removeSelf,
-}) => {
+export const DeleteButton: FC<DeleteButtonProps> = ({ onClick }) => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   async function deleteItem() {
     setIsDeleting(true);
-
-    if (docRef !== undefined) {
-      if (Array.isArray(docRef)) {
-        for (let ref of docRef) {
-          await deleteDoc(ref);
-        }
-      } else {
-        await deleteDoc(docRef);
-      }
+    if (onClick !== undefined) {
+      await onClick();
     }
 
-    if (storageRef !== undefined) {
-      if (Array.isArray(storageRef)) {
-        for (let ref of storageRef) {
-          await deleteObject(ref);
-        }
-      } else {
-        await deleteObject(storageRef);
-      }
-    }
     setIsDeleting(false);
-    if (removeSelf !== undefined) {
-      removeSelf();
-    }
   }
 
   return (
