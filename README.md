@@ -25,6 +25,8 @@ Så må du installere firebase-tools:
 npm install -g firebase-tools
 ```
 
+NB! For å kjøre firebase-emulatorer trenger du også java installert.
+
 Åpne to terminaler. I den ene starter du Firebase-emulatorene ved å skrive:
 ```bash
 yarn emulators
@@ -70,18 +72,18 @@ Her har vi fire forskjellige biter:
 
 **Firestore:** Dette er hvor artiklene i hver utgave lagres. Hver rad i samlingen `articles` har oppsett som under. Merk at feltene kan være tomme, avhengig av typen artikkel.
 
-|Feltnavn|Datatype|Betydning|Eksempel
-|---|---|---|---|
-|author|tekst|Hvem som har skrevet artikkelen| "Tobias Skjelvik"|
-|content|tekst|Det faktiske teksten i artikkelen| "readme er et veldig kult magasin..."|
-|edition|tekst|Utgavenummer, på formen `{utgaveår}-0{utgavenummer}`| "2023-01"|
-|layout|tekst|Hvem som har hatt layout på artikkelen| "Øyvind Monsen"|
-|pages|liste med tall| hvilke sider artikkelen er på iht. utgaveplanen| [8, 9]|
-|photo| tekst| Hvem som har tatt bilder til artikkelen | "Simen Holmestad"|
-|tags| liste med tekst| Stikkord som beksriver innholdet i artikkelen. Brukes til søk. |["kake", "korona", "fest"]|
-|title| tekst| Artikkeloverskriften | "Arrkoms korona-party: Hva er greia?"|
-|type| tekst | Hvilken spalte artikkelen utkom i| "Gløsløken"|
-|url| tekst/lenke| Lenke til pdf-en som artikkelen er i, med "page hash"| https://storage.googleapis.com/readme-arkiv.appspot.com/pdf/2021/2021-03.pdf#page=5|
+| Feltnavn | Datatype        | Betydning                                                      | Eksempel                                                                            |
+| -------- | --------------- | -------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| author   | tekst           | Hvem som har skrevet artikkelen                                | "Tobias Skjelvik"                                                                   |
+| content  | tekst           | Det faktiske teksten i artikkelen                              | "readme er et veldig kult magasin..."                                               |
+| edition  | tekst           | Utgavenummer, på formen `{utgaveår}-0{utgavenummer}`           | "2023-01"                                                                           |
+| layout   | tekst           | Hvem som har hatt layout på artikkelen                         | "Øyvind Monsen"                                                                     |
+| pages    | liste med tall  | hvilke sider artikkelen er på iht. utgaveplanen                | [8, 9]                                                                              |
+| photo    | tekst           | Hvem som har tatt bilder til artikkelen                        | "Simen Holmestad"                                                                   |
+| tags     | liste med tekst | Stikkord som beksriver innholdet i artikkelen. Brukes til søk. | ["kake", "korona", "fest"]                                                          |
+| title    | tekst           | Artikkeloverskriften                                           | "Arrkoms korona-party: Hva er greia?"                                               |
+| type     | tekst           | Hvilken spalte artikkelen utkom i                              | "Gløsløken"                                                                         |
+| url      | tekst/lenke     | Lenke til pdf-en som artikkelen er i, med "page hash"          | https://storage.googleapis.com/readme-arkiv.appspot.com/pdf/2021/2021-03.pdf#page=5 |
 
 Det finnes også en samling som heter `settings`. Denne har ett dokument som styrer litt hemmelig funksjonalitet i admin-siden.
 
