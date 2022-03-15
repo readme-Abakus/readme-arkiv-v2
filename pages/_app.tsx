@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
         <Favicon />
       </Head>
-      <ThemeProvider>
+      <ThemeProvider defaultTheme="system">
         <SSRProvider>
           <Layout>
             <Component {...pageProps} />
