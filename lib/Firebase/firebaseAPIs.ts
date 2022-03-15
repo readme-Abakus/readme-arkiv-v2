@@ -4,7 +4,9 @@ import { doc, deleteDoc, getDocs, collection } from "firebase/firestore";
 import { IEdition, IEditionData } from "../types";
 import { db, storage } from "./firebase";
 
-export async function getEditions(): Promise<IEditionData[]> {
+export async function getEditions(
+  editionList: boolean = false
+): Promise<IEditionData[]> {
   const settings = await getDocs(collection(db, "settings"));
 
   const showListing: boolean = settings.docs[0].data().showListing;
@@ -31,7 +33,7 @@ export async function getEditions(): Promise<IEditionData[]> {
     const isListing =
       metaData.customMetadata?.listinglop?.toLowerCase() == "true";
 
-    if (isListing && !showListing) {
+    if (!editionList && isListing && !showListing) {
       continue;
     }
 
