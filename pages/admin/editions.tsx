@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import Head from "next/head";
 import { DeleteButton } from "../../components/Admin/Common/DeleteButton";
 import { WithAuthentication } from "../../components/WithAuthentication";
 import { getEditions } from "../../lib/Firebase/firebaseServersideAPIs";
@@ -20,6 +21,9 @@ const Editions: NextPage<{ editionData: IEditionData[] }> = ({
 }) => {
   return (
     <WithAuthentication>
+      <Head>
+        <title>readme - utgaver</title>
+      </Head>
       <div className={styles.list}>
         <h1>Utgaver</h1>
         {editionData.map((year) => (
