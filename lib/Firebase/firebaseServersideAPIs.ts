@@ -1,7 +1,9 @@
 import { IEdition, IEditionData } from "../types";
 import { db, storage } from "./firebaseAdmin";
 
-export async function getEditions(): Promise<IEditionData[]> {
+export async function getEditions(
+  editionList: boolean = false
+): Promise<IEditionData[]> {
   const pdfRefs = await storage.bucket().getFiles({ prefix: "pdf/" });
   const showListing = await (
     await db.collection("settings").get()
@@ -19,7 +21,7 @@ export async function getEditions(): Promise<IEditionData[]> {
       [year, edition] = matches[0].split("-");
     }
 
-    if (isListing && !showListing) {
+    if (!editionList && isListing && !showListing) {
       return;
     }
 
