@@ -1,6 +1,7 @@
 import { IEdition, IEditionData } from "../types";
 import { db, storage } from "./firebaseAdmin";
 
+// Edition list param allows us to opt out of filtering by listing
 export async function getEditions(
   editionList: boolean = false
 ): Promise<IEditionData[]> {
