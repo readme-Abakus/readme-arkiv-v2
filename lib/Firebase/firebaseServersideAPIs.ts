@@ -1,17 +1,26 @@
 import { IEdition, IEditionData } from "../types";
-import { storage } from "./firebaseAdmin";
+import { db, storage } from "./firebaseAdmin";
 
 export async function getEditions(): Promise<IEditionData[]> {
   const pdfRefs = await storage.bucket().getFiles({ prefix: "pdf/" });
+  const showListing = await (
+    await db.collection("settings").get()
+  ).docs[0].get("showListing");
 
   const yearEditionMap = new Map<string, IEdition[]>();
 
   pdfRefs[0].forEach((pdfRef) => {
+    const isListing =
+      pdfRef.metadata.metadata.listinglop.toLowerCase() === "true";
     const matches = pdfRef.name.match(/[0-9]{4}-[0-9]{2}/g);
     let [year, edition] = ["0000", "00"];
 
     if (matches) {
       [year, edition] = matches[0].split("-");
+    }
+
+    if (isListing && !showListing) {
+      return;
     }
 
     const imagePath = pdfRef.name

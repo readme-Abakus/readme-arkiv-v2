@@ -1,0 +1,8 @@
+.toggleContainer {
+  margin: 10px;
+}
+
+.toggleContainer > p {
+  margin-right: 5px;
+  margin-bottom: 0;
+}
