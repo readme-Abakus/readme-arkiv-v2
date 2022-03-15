@@ -4,8 +4,10 @@ import Head from "next/head";
 import { Button } from "react-bootstrap";
 import { ROUTES } from "../../utils/routes";
 
-import styles from "../../styles/Admin.module.css";
+import { ShowListingToggle } from "../../components/Admin/ShowListingToggle";
 import { WithAuthentication } from "../../components/WithAuthentication";
+
+import styles from "../../styles/Admin.module.css";
 
 const Admin: NextPage = () => {
   return (
@@ -28,9 +30,7 @@ const Admin: NextPage = () => {
           <Button variant="primary">Vis artikkellisten</Button>
         </Link>
 
-        {
-          //<ShowListingToggle />
-        }
+        <ShowListingToggle />
       </div>
     </WithAuthentication>
   );

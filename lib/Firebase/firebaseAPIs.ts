@@ -1,10 +1,14 @@
-import { ref, listAll, deleteObject } from "firebase/storage";
-import { doc, deleteDoc } from "firebase/firestore";
+import { ref, listAll, deleteObject, getMetadata } from "firebase/storage";
+import { doc, deleteDoc, getDocs, collection } from "firebase/firestore";
 
 import { IEdition, IEditionData } from "../types";
 import { db, storage } from "./firebase";
 
 export async function getEditions(): Promise<IEditionData[]> {
+  const settings = await getDocs(collection(db, "settings"));
+
+  const showListing: boolean = settings.docs[0].data().showListing;
+
   const listRef = ref(storage, "pdf");
 
   const yearRefs = (await listAll(listRef)).prefixes;
@@ -22,7 +26,15 @@ export async function getEditions(): Promise<IEditionData[]> {
     )
   );
 
-  pdfRefs.flat().forEach((pdfRef) => {
+  for (const pdfRef of pdfRefs.flat()) {
+    const metaData = await getMetadata(pdfRef);
+    const isListing =
+      metaData.customMetadata?.listinglop?.toLowerCase() == "true";
+
+    if (isListing && !showListing) {
+      continue;
+    }
+
     const [year, edition] = pdfRef.name.replace(".pdf", "").split("-");
     const imagePath = pdfRef.fullPath
       .replace(".pdf", ".jpg")
@@ -36,7 +48,7 @@ export async function getEditions(): Promise<IEditionData[]> {
         imageUrl: getDownloadURL(pdfRef.bucket, imagePath),
       },
     ]);
-  });
+  }
 
   const finalData: IEditionData[] = Array.from(yearEditionMap.entries()).map(
     ([year, editions]) => ({

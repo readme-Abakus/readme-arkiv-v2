@@ -9,11 +9,12 @@ import {
   QueryDocumentSnapshot,
   SnapshotOptions,
   startAfter,
+  updateDoc,
   WithFieldValue,
 } from "firebase/firestore";
 import { useState } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import { IArticle } from "../types";
+import { IArticle, ISettings } from "../types";
 import { db } from "./firebase";
 
 const articleConverter = {
@@ -38,7 +39,7 @@ export const useArticleList = () => {
   const [dynamicQuery, setQuery] = useState([...baseQuery, limit(pageSize)]);
 
   const [data, loading, error] = useCollectionData<IArticle>(
-    query<IArticle>(
+    query(
       collection(db, "articles").withConverter(articleConverter),
       ...dynamicQuery
     )
@@ -71,4 +72,31 @@ export const useArticleList = () => {
   };
 
   return [data, loading, error, pageNum, nextPage, prevPage] as const;
+};
+
+const settingsConverter = {
+  toFirestore(post: WithFieldValue<ISettings>): DocumentData {
+    return post;
+  },
+  fromFirestore(
+    snapshot: QueryDocumentSnapshot,
+    options: SnapshotOptions
+  ): ISettings {
+    const data = snapshot.data(options)!;
+    return { ...data } as ISettings;
+  },
+};
+
+export const useSettings = () => {
+  const [data, loading, error, snapshot] = useCollectionData<ISettings>(
+    query(collection(db, "settings").withConverter(settingsConverter))
+  );
+
+  const updateSettings = (newSettings: ISettings) => {
+    if (snapshot) {
+      updateDoc(snapshot.docs[0].ref, { ...newSettings });
+    }
+  };
+
+  return [data?.at(0), loading, error, updateSettings] as const;
 };
