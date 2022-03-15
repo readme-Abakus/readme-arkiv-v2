@@ -4,6 +4,7 @@ import { doc, deleteDoc, getDocs, collection } from "firebase/firestore";
 import { IEdition, IEditionData } from "../types";
 import { db, storage } from "./firebase";
 
+// Edition list param allows us to opt out of filtering by listing
 export async function getEditions(
   editionList: boolean = false
 ): Promise<IEditionData[]> {
