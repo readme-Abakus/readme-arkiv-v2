@@ -6,11 +6,11 @@ export async function getEditions(): Promise<IEditionData[]> {
 
   const yearEditionMap = new Map<string, IEdition[]>();
 
-  pdfRefs[0]?.forEach((pdfRef) => {
-    const [year, edition] = pdfRef.name
-      .split("/")[2]
-      .replace(".pdf", "")
-      .split("-");
+  pdfRefs[0].forEach((pdfRef) => {
+    let [year, edition] = pdfRef.name.replace(".pdf", "").split("-");
+
+    year = year.split("/").at(-1) as string;
+
     const imagePath = pdfRef.name
       .replace(".pdf", ".jpg")
       .replace("pdf/", "images/");
