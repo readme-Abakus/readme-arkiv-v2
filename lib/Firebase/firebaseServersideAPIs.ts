@@ -7,9 +7,12 @@ export async function getEditions(): Promise<IEditionData[]> {
   const yearEditionMap = new Map<string, IEdition[]>();
 
   pdfRefs[0].forEach((pdfRef) => {
-    let [year, edition] = pdfRef.name.replace(".pdf", "").split("-");
+    const matches = pdfRef.name.match(/[0-9]{4}-[0-9]{2}/g);
+    let [year, edition] = ["0000", "00"];
 
-    year = year.split("/").at(-1) as string;
+    if (matches) {
+      [year, edition] = matches[0].split("-");
+    }
 
     const imagePath = pdfRef.name
       .replace(".pdf", ".jpg")
