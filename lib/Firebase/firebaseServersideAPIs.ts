@@ -48,27 +48,6 @@ export async function getEditions(): Promise<IEditionData[]> {
   return finalData.sort((a, b) => b.year - a.year);
 }
 
-export const deleteArticle = async (id: string) => {
-  await deleteDoc(doc(db, `articles/${id}`));
-};
-
-export const deleteEdition = async (editionString: string) => {
-  const [year, edition] = editionString.split("-");
-  const path = `${year}/${year}-${edition}`;
-  const pdfPath = `pdf/${path}.pdf`;
-  const thumbPath = `images/${path}.jpg`;
-
-  const pdfRef = ref(storage, pdfPath);
-  const thumbRef = ref(storage, thumbPath);
-
-  await deleteObject(thumbRef).catch((err) =>
-    console.log("could not delete thumb: ", err)
-  );
-  await deleteObject(pdfRef).catch((err) =>
-    console.log("could not delete pdf: ", err)
-  );
-};
-
 const getDownloadURL = (bucketName: string, fullPath: string) =>
   `${
     process.env.NODE_ENV === "production"
