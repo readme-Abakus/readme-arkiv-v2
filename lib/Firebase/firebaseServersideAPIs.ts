@@ -6,7 +6,7 @@ export async function getEditions(): Promise<IEditionData[]> {
 
   const yearEditionMap = new Map<string, IEdition[]>();
 
-  pdfRefs[0].forEach((pdfRef) => {
+  pdfRefs[0]?.forEach((pdfRef) => {
     const [year, edition] = pdfRef.name
       .split("/")[2]
       .replace(".pdf", "")
