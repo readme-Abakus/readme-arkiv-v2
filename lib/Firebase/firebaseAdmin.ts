@@ -1,19 +1,17 @@
 import admin from "firebase-admin";
 import { config } from "./config";
 
-try {
+if (!admin.apps.length) {
   admin.initializeApp({
-    credential: admin.credential.cert(config),
+    credential: admin.credential.cert({
+      projectId: config.projectId,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY,
+    }),
   });
-  console.log("Initialized.");
-} catch (error: any) {
-  /*
-   * We skip the "already exists" message which is
-   * not an actual error when we're hot-reloading.
-   */
-  if (!/already exists/u.test(error.message)) {
-    console.error("Firebase admin initialization error", error.stack);
-  }
 }
 
-export default admin;
+const db = admin.firestore();
+const storage = admin.storage();
+
+export { db, storage };
