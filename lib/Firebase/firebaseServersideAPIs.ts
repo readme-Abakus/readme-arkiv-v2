@@ -2,9 +2,7 @@ import { IEdition, IEditionData } from "../types";
 import { storage } from "./firebaseAdmin";
 
 export async function getEditions(): Promise<IEditionData[]> {
-  const pdfRefs = await storage
-    .bucket("readme-arkiv.appspot.com")
-    .getFiles({ prefix: "pdf/" });
+  const pdfRefs = await storage.bucket().getFiles({ prefix: "pdf/" });
 
   const yearEditionMap = new Map<string, IEdition[]>();
 

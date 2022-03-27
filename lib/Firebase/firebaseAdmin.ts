@@ -8,6 +8,9 @@ if (!admin.apps.length) {
       clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
       privateKey: process.env.FIREBASE_PRIVATE_KEY,
     }),
+    storageBucket: config.storageBucket,
+    databaseURL: config.databaseURL,
+    projectId: config.projectId,
   });
 }
 
