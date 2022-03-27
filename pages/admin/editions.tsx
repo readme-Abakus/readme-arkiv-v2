@@ -1,7 +1,10 @@
 import { NextPage } from "next";
 import { DeleteButton } from "../../components/Admin/Common/DeleteButton";
 import { WithAuthentication } from "../../components/WithAuthentication";
-import { deleteEdition, getEditions } from "../../lib/Firebase/firebaseAPIs";
+import {
+  deleteEdition,
+  getEditions,
+} from "../../lib/Firebase/firebaseServersideAPIs";
 import { IEditionData } from "../../lib/types";
 
 import styles from "../../styles/Editions.module.css";
