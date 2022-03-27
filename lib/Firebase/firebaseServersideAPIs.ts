@@ -1,30 +1,19 @@
-import { ref, listAll, deleteObject } from "firebase/storage";
-import { doc, deleteDoc } from "firebase/firestore";
-
 import { IEdition, IEditionData } from "../types";
-import { db, storage } from "./firebase";
+import { storage } from "./firebaseAdmin";
 
 export async function getEditions(): Promise<IEditionData[]> {
-  const listRef = ref(storage, "pdf");
-
-  const yearRefs = (await listAll(listRef)).prefixes;
+  const pdfRefs = await storage
+    .bucket("readme-arkiv.appspot.com")
+    .getFiles({ prefix: "pdf/" });
 
   const yearEditionMap = new Map<string, IEdition[]>();
 
-  const pdfRefs = await Promise.all(
-    yearRefs.map(
-      async (folderRef) =>
-        // We recreate the ref here since there is a bug in the emulator that
-        // crashes it if we use folderRef directly
-        (
-          await listAll(ref(storage, folderRef.fullPath))
-        ).items
-    )
-  );
-
-  pdfRefs.flat().forEach((pdfRef) => {
-    const [year, edition] = pdfRef.name.replace(".pdf", "").split("-");
-    const imagePath = pdfRef.fullPath
+  pdfRefs[0].forEach((pdfRef) => {
+    const [year, edition] = pdfRef.name
+      .split("/")[2]
+      .replace(".pdf", "")
+      .split("-");
+    const imagePath = pdfRef.name
       .replace(".pdf", ".jpg")
       .replace("pdf/", "images/");
 
@@ -32,8 +21,8 @@ export async function getEditions(): Promise<IEditionData[]> {
       ...(yearEditionMap.get(year) ?? []),
       {
         edition,
-        pdfUrl: getDownloadURL(pdfRef.bucket, pdfRef.fullPath),
-        imageUrl: getDownloadURL(pdfRef.bucket, imagePath),
+        pdfUrl: getDownloadURL(pdfRef.bucket.name, pdfRef.name),
+        imageUrl: getDownloadURL(pdfRef.bucket.name, imagePath),
       },
     ]);
   });
