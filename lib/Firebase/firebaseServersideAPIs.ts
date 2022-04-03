@@ -3,7 +3,7 @@ import { db, storage } from "./firebaseAdmin";
 
 // Edition list param allows us to opt out of filtering by listing
 export async function getEditions(
-  editionList: boolean = false
+  filterListingEditions: boolean = false
 ): Promise<IEditionData[]> {
   const pdfRefs = await storage.bucket().getFiles({ prefix: "pdf/" });
   const showListing = await (
@@ -22,7 +22,7 @@ export async function getEditions(
       [year, edition] = matches[0].split("-");
     }
 
-    if (!editionList && isListing && !showListing) {
+    if (filterListingEditions && isListing && !showListing) {
       return;
     }
 

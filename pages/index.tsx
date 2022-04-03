@@ -7,7 +7,7 @@ import { IEditionData } from "../lib/types";
 export async function getStaticProps() {
   return {
     props: {
-      editionData: await getEditions(),
+      editionData: await getEditions(true),
     },
   };
 }

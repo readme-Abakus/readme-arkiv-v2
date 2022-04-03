@@ -11,7 +11,7 @@ import styles from "../../styles/Editions.module.css";
 export async function getStaticProps() {
   return {
     props: {
-      editionData: await getEditions(true),
+      editionData: await getEditions(),
     },
   };
 }
