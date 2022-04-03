@@ -19,6 +19,7 @@ const runtimeOpts: RuntimeOptions = {
 const THUMB_MAX_WIDTH = 620;
 
 exports.handlePDFUpload = functions
+  .region("europe-west1")
   .runWith(runtimeOpts)
   .storage.object()
   .onFinalize(async (object) => {
