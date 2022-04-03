@@ -4,7 +4,7 @@ import { DeleteButton } from "../../Common/DeleteButton";
 import { ROUTES } from "../../../../utils/routes";
 
 import styles from "./ListElement.module.css";
-import { deleteArticle } from "../../../../lib/Firebase/firebaseAPIs";
+import { deleteArticle } from "../../../../lib/Firebase/firebaseClientAPIs";
 import { IArticle } from "../../../../lib/types";
 
 interface ListElementProps {

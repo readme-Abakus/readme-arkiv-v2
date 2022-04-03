@@ -3,16 +3,7 @@ import { connectAuthEmulator, getAuth } from "firebase/auth";
 import { connectStorageEmulator, getStorage } from "firebase/storage";
 import { connectFunctionsEmulator, getFunctions } from "firebase/functions";
 import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
-
-const config = {
-  apiKey: "AIzaSyCLhIKGOYZilQuXirB_W-1UmKNfQygETqw",
-  authDomain: "readme-arkiv.firebaseapp.com",
-  databaseURL: "https://readme-arkiv.firebaseio.com",
-  projectId: "readme-arkiv",
-  storageBucket: "readme-arkiv.appspot.com",
-  messagingSenderId: "884912593534",
-  appId: "1:884912593534:web:994587a01eb1bd1d85d62f",
-};
+import { config } from "./config";
 
 if (!getApps().length) {
   initializeApp(config);

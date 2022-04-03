@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { EditionYear } from "../components/EditionYear";
-import { getEditions } from "../lib/Firebase/firebaseAPIs";
+import { getEditions } from "../lib/Firebase/firebaseServersideAPIs";
 import { IEditionData } from "../lib/types";
 
 export async function getStaticProps() {
