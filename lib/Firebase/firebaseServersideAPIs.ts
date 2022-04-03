@@ -12,33 +12,35 @@ export async function getEditions(
 
   const yearEditionMap = new Map<string, IEdition[]>();
 
-  pdfRefs[0].forEach((pdfRef) => {
-    const isListing =
-      pdfRef.metadata.metadata.listinglop.toLowerCase() === "true";
-    const matches = pdfRef.name.match(/[0-9]{4}-[0-9]{2}/g);
-    let [year, edition] = ["0000", "00"];
+  await Promise.all(
+    pdfRefs[0].map(async (pdfRef) => {
+      const [metadata] = await pdfRef.getMetadata();
+      const isListing = metadata.metadata.listinglop.toLowerCase() === "true";
+      const matches = pdfRef.name.match(/[0-9]{4}-[0-9]{2}/g);
+      let [year, edition] = ["0000", "00"];
 
-    if (matches) {
-      [year, edition] = matches[0].split("-");
-    }
+      if (matches) {
+        [year, edition] = matches[0].split("-");
+      }
 
-    if (filterListingEditions && isListing && !showListing) {
-      return;
-    }
+      if (filterListingEditions && isListing && !showListing) {
+        return;
+      }
 
-    const imagePath = pdfRef.name
-      .replace(".pdf", ".jpg")
-      .replace("pdf/", "images/");
+      const imagePath = pdfRef.name
+        .replace(".pdf", ".jpg")
+        .replace("pdf/", "images/");
 
-    yearEditionMap.set(year, [
-      ...(yearEditionMap.get(year) ?? []),
-      {
-        edition,
-        pdfUrl: getDownloadURL(pdfRef.bucket.name, pdfRef.name),
-        imageUrl: getDownloadURL(pdfRef.bucket.name, imagePath),
-      },
-    ]);
-  });
+      yearEditionMap.set(year, [
+        ...(yearEditionMap.get(year) ?? []),
+        {
+          edition,
+          pdfUrl: getDownloadURL(pdfRef.bucket.name, pdfRef.name),
+          imageUrl: getDownloadURL(pdfRef.bucket.name, imagePath),
+        },
+      ]);
+    })
+  );
 
   const finalData: IEditionData[] = Array.from(yearEditionMap.entries()).map(
     ([year, editions]) => ({
