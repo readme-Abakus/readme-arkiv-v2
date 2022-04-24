@@ -18,6 +18,9 @@ const runtimeOpts: RuntimeOptions = {
 
 const THUMB_MAX_WIDTH = 620;
 
+const VERCEL_REBUILD_URL =
+  "https://api.vercel.com/v1/integrations/deploy/prj_EMutmNh2b9jV8LM7p843xbrKastq/YmXMYVqB6P";
+
 exports.handlePDFUpload = functions
   .region("europe-west1")
   .runWith(runtimeOpts)
@@ -78,10 +81,7 @@ exports.handlePDFUpload = functions
     );
 
     if (process.env.NODE_ENV === "production") {
-      await fetch(
-        "https://api.vercel.com/v1/integrations/deploy/prj_EMutmNh2b9jV8LM7p843xbrKastq/YmXMYVqB6P",
-        { method: "POST" }
-      );
+      await fetch(VERCEL_REBUILD_URL, { method: "POST" });
       console.log("Pinging Vercel for rebuild.");
     } else {
       console.log(
@@ -101,10 +101,7 @@ exports.handlePdfDelete = functions.storage
     }
 
     if (process.env.NODE_ENV === "production") {
-      await fetch(
-        "https://api.vercel.com/v1/integrations/deploy/prj_EMutmNh2b9jV8LM7p843xbrKastq/YmXMYVqB6P",
-        { method: "POST" }
-      );
+      await fetch(VERCEL_REBUILD_URL, { method: "POST" });
       console.log("Pinging Vercel for rebuild.");
     } else {
       console.log(
