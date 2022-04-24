@@ -42,7 +42,13 @@ export const AppNavbar: FC = () => {
               </LinkButton>
             </li>
             <li>
-              <a href="#" onClick={() => signOut(auth)}>
+              <a
+                href="#"
+                onClick={() => {
+                  setOpen(false);
+                  signOut(auth);
+                }}
+              >
                 Logg ut
               </a>
             </li>
