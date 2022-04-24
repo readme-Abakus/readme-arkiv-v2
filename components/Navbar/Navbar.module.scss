@@ -2,10 +2,11 @@
   margin-left: auto !important;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .navbar {
-  height: 80px;
+  height: 60px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -83,7 +84,7 @@
     position: absolute;
     text-align: center;
     width: 100%;
-    top: 80px;
+    top: 60px;
     left: 0;
     opacity: 0;
     background-color: #fff;
@@ -115,9 +116,5 @@
   .icon {
     display: block;
     cursor: pointer;
-  }
-
-  .lightSwitch {
-    margin-left: initial;
   }
 }
