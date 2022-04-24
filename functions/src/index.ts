@@ -82,6 +82,11 @@ exports.handlePDFUpload = functions
         "https://api.vercel.com/v1/integrations/deploy/prj_EMutmNh2b9jV8LM7p843xbrKastq/YmXMYVqB6P",
         { method: "POST" }
       );
+      console.log("Pinging Vercel for rebuild.");
+    } else {
+      console.log(
+        `In env ${process.env.NODE_ENV}, not pinging Vercel for rebuild.`
+      );
     }
 
     return fs.remove(workingDir);
@@ -100,6 +105,11 @@ exports.handlePdfDelete = functions.storage
         "https://api.vercel.com/v1/integrations/deploy/prj_EMutmNh2b9jV8LM7p843xbrKastq/YmXMYVqB6P",
         { method: "POST" }
       );
+      console.log("Pinging Vercel for rebuild.");
+    } else {
+      console.log(
+        `In env ${process.env.NODE_ENV}, not pinging Vercel for rebuild.`
+      );
     }
   });
 
@@ -110,6 +120,11 @@ exports.handleSettingsChange = functions.firestore
       await fetch(
         "https://api.vercel.com/v1/integrations/deploy/prj_EMutmNh2b9jV8LM7p843xbrKastq/YmXMYVqB6P",
         { method: "POST" }
+      );
+      console.log("Pinging Vercel for rebuild.");
+    } else {
+      console.log(
+        `In env ${process.env.NODE_ENV}, not pinging Vercel for rebuild.`
       );
     }
   });
