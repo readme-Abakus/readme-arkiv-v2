@@ -22,3 +22,7 @@ export interface IArticle {
   url: string;
   id: string;
 }
+
+export interface ISettings {
+  showListing: boolean;
+}
