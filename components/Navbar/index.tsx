@@ -17,12 +17,14 @@ export const AppNavbar: FC = () => {
 
   return (
     <nav className={styles.navbar}>
-      <LinkButton route={ROUTES.HOME} exactMatch>
+      <LinkButton route={ROUTES.HOME} exactMatch onClick={() => setOpen(false)}>
         Arkiv
       </LinkButton>
       <ul className={open ? `${styles.links} ${styles.active}` : styles.links}>
         <li>
-          <LinkButton route={ROUTES.SEARCH}>Søk</LinkButton>
+          <LinkButton route={ROUTES.SEARCH} onClick={() => setOpen(false)}>
+            Søk
+          </LinkButton>
         </li>
         <li>
           <a href="https://abakus.no/" onClick={() => setOpen(false)}>
@@ -77,7 +79,7 @@ const LinkButton = ({
   }
   return (
     <Link href={route} passHref>
-      <a className={className} {...onClick}>
+      <a className={className} onClick={onClick}>
         {children}
       </a>
     </Link>
