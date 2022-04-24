@@ -10,7 +10,5 @@
     "esModuleInterop": true
   },
   "compileOnSave": true,
-  "include": [
-    "src"
-, "pdf2jpg.d.ts"  ]
+  "include": ["src", "pdf2jpg.d.ts"]
 }

@@ -51,8 +51,9 @@ exports.handlePDFUpload = functions
 
     await fs.ensureFile(tempFilePath);
 
-    await pdf2jpg(tempFilePath, { page: 1 }).then((buffer: any) =>
-      fs.writeFileSync(tempPNGFilePath, buffer)
+    await pdf2jpg(tempFilePath, { page: 1 }).then(
+      (buffer: string | NodeJS.ArrayBufferView) =>
+        fs.writeFileSync(tempPNGFilePath, buffer)
     );
 
     const metadata = {
