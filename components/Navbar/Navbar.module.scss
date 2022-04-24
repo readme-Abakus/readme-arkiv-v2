@@ -1,0 +1,121 @@
+.lightSwitch {
+  margin-left: auto !important;
+}
+
+.navbar {
+  height: 80px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  li {
+    text-decoration: none;
+    text-align: center;
+  }
+  a {
+    transition: color 0.3s ease;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.5);
+    &:hover {
+      color: rgba(0, 0, 0, 0.7);
+    }
+    &.active {
+      color: rgba(0, 0, 0, 0.9);
+    }
+  }
+
+  & > a:first-child {
+    font-size: 1.25rem;
+    margin-right: 1rem;
+  }
+}
+
+[data-theme="dark"] {
+  .navbar {
+    a {
+      color: rgba(255, 255, 255, 0.55);
+      &:hover {
+        color: rgba(255, 255, 255, 0.75);
+      }
+      &.active {
+        color: white;
+      }
+    }
+  }
+  .icon {
+    color: rgba(255, 255, 255, 0.55);
+    border-color: rgba(255, 255, 255, 0.55);
+  }
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0;
+
+  li {
+    margin-left: 0.5rem;
+
+    &:not(:last-child) {
+      margin-right: 0.5rem;
+    }
+  }
+}
+
+.icon {
+  display: none;
+  color: rgba(0, 0, 0, 0.55);
+  padding: 0.25rem 0.75rem;
+  border: rgba(0, 0, 0, 0.55) solid 1px;
+  border-radius: 5px;
+}
+
+@media only screen and (max-width: 500px) {
+  .links {
+    z-index: 9;
+    flex-direction: column;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    top: 80px;
+    left: 0;
+    opacity: 0;
+    background-color: #fff;
+    visibility: hidden;
+    padding-bottom: 0.5rem;
+    border-bottom: rgb(153, 153, 153) solid 4px;
+
+    > * {
+      padding: 0.5rem 0;
+    }
+    li {
+      margin: 0rem;
+      &:not(:last-child) {
+        margin-right: 0rem;
+      }
+    }
+
+    &.active {
+      visibility: visible;
+      opacity: 1;
+      display: block;
+      transition: 0.3s all;
+    }
+  }
+  [data-theme="dark"] .links {
+    background-color: #1a1919;
+  }
+
+  .icon {
+    display: block;
+    cursor: pointer;
+  }
+
+  .lightSwitch {
+    margin-left: initial;
+  }
+}
