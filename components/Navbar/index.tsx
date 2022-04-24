@@ -73,7 +73,7 @@ const LinkButton = ({
   if (exactMatch) {
     className = router.pathname == route ? styles.active : "";
   } else {
-    className = router.pathname.endsWith(route) ? styles.active : "";
+    className = router.pathname.startsWith(route) ? styles.active : "";
   }
   return (
     <Link href={route} passHref>
