@@ -8,7 +8,7 @@ Dette er en videreutvikling av det [gamle arkivet](https://github.com/readme-ntn
 
 ## Kom igang
 
-Først, sørg for at du har [Node](https://nodejs.org) og [Yarn](https://yarnpkg.com) installert.
+Først, sørg for at du har [Java (JDK)](https://openjdk.java.net/install/), [Node](https://nodejs.org) og [Yarn](https://yarnpkg.com) installert.
 
 Klon deretter repoet og kjør følgende kommandoer
 
@@ -28,7 +28,7 @@ npm install -g firebase-tools
 Du trenger også en fil med lokale miljøvariabler, som lar deg kjøre prosjektet. Spør [Andreas Hammer Håversen](https://github.com/AndreasHaaversen), så sender han deg en fil.
 NB! Denne fila, som _må_ hete `.env.local`, _*må*_ holdes hemmelig, da den inneholder sensitiv info.
 
-NB! For å kjøre firebase-emulatorer trenger du også java installert.
+NB! For å kjøre firebase-emulatorer trenger du også Java installert.
 
 Åpne to terminaler. I den ene starter du Firebase-emulatorene ved å skrive:
 ```bash
@@ -42,7 +42,7 @@ yarn dev
 
 Du kan nå åpne nettsiden på [http://localhost:3000](http://localhost:3000).
 
-Det er satt opp Firebase-emulatorer for Functions, Firestore, Storage og Auth, og laste inn testdata i de tre siste.  Emulatorene kan styres/justeres/inspiseres fra localhost:4000. Auth-emulatoren lastes inn med en testbruker som har e-post andreas.h.haaversen@gmail.com og passord password. Bruk denne om du vil se admin-sidene (localhost:3000/admin).
+Det er satt opp Firebase-emulatorer for Functions, Firestore, Storage og Auth. Det er satt opp testdata til de tre siste. Emulatorene kan styres/justeres/inspiseres fra `localhost:4000`. Auth-emulatoren lastes inn med en testbruker som har e-post andreas.h.haaversen@gmail.com og passord `password`. Bruk denne om du vil se admin-sidene (`localhost:3000/admin`).
 
 ## Deploy
 Dette er ikke satt opp enda, info kommer!
@@ -58,12 +58,13 @@ Dette er ikke satt opp enda, info kommer!
 Vi tar de i tur og orden.
 
 ### Next.js frontend
-Denne er satt opp med mest mulig Static Site Generation (SSG). Dette betyr at HTML-en til nettsidene generes når vi bygger applikasjonen, isteden for hver gang nettsidene åpnes. Det vil si at innholdet de fleste sidene, viktigst av alt forsiden, kun oppdateres når vi ber Vercel om å bygge nettsiden på nytt. Dette gjør at nettsidene laster kjapt, siden de kan forhåndslagres i sin helhet i CDN-et. 
+Denne er satt opp med mest mulig Static Site Generation (SSG). Dette betyr at HTML-en til nettsidene generes når vi bygger applikasjonen, isteden for hver gang nettsidene åpnes. Det vil si at innholdet de fleste sidene, viktigst av alt forsiden, kun oppdateres når vi ber Vercel om å bygge nettsiden på nytt. Dette gjør at nettsidene laster kjapt, siden de kan forhåndslagres i sin helhet i CDN-et til Vercel. 
 
 #### Hendelser som utløser nytt bygg:
 * Opplasting av en ny utgave
 * Sletting av en utgave
 * Erstatting av en utgave (egentlig samme operasjon som opplasting)
+* Endring av innstillinger for visning av utgaver
 
 ### Firebase backend
 Her har vi fire forskjellige biter:
