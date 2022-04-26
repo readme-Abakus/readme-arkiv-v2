@@ -6,6 +6,7 @@ import sharp from "sharp";
 import * as os from "os";
 import * as fs from "fs-extra";
 import pdf2jpg from "pdf2jpg";
+import fetch from "node-fetch";
 import { RuntimeOptions } from "firebase-functions";
 
 admin.initializeApp();
@@ -17,7 +18,11 @@ const runtimeOpts: RuntimeOptions = {
 
 const THUMB_MAX_WIDTH = 620;
 
+const VERCEL_REBUILD_URL =
+  "https://api.vercel.com/v1/integrations/deploy/prj_EMutmNh2b9jV8LM7p843xbrKastq/YmXMYVqB6P";
+
 exports.handlePDFUpload = functions
+  .region("europe-west1")
   .runWith(runtimeOpts)
   .storage.object()
   .onFinalize(async (object) => {
@@ -46,8 +51,9 @@ exports.handlePDFUpload = functions
 
     await fs.ensureFile(tempFilePath);
 
-    await pdf2jpg(tempFilePath, { page: 1 }).then((buffer: any) =>
-      fs.writeFileSync(tempPNGFilePath, buffer)
+    await pdf2jpg(tempFilePath, { page: 1 }).then(
+      (buffer: string | NodeJS.ArrayBufferView) =>
+        fs.writeFileSync(tempPNGFilePath, buffer)
     );
 
     const metadata = {
@@ -75,5 +81,48 @@ exports.handlePDFUpload = functions
       thumbnailUploadStream.on("finish", resolve).on("error", reject)
     );
 
+    if (process.env.NODE_ENV === "production") {
+      await fetch(VERCEL_REBUILD_URL, { method: "POST" });
+      console.log("Pinging Vercel for rebuild.");
+    } else {
+      console.log(
+        `In env ${process.env.NODE_ENV}, not pinging Vercel for rebuild.`
+      );
+    }
+
     return fs.remove(workingDir);
+  });
+
+exports.handlePdfDelete = functions.storage
+  .object()
+  .onDelete(async (object) => {
+    const filePath = object.name as string;
+    if (!filePath.match(/pdf\/\d{4}\/.+\.pdf/g)) {
+      return console.log("Object is not a pdf.");
+    }
+
+    if (process.env.NODE_ENV === "production") {
+      await fetch(VERCEL_REBUILD_URL, { method: "POST" });
+      console.log("Pinging Vercel for rebuild.");
+    } else {
+      console.log(
+        `In env ${process.env.NODE_ENV}, not pinging Vercel for rebuild.`
+      );
+    }
+  });
+
+exports.handleSettingsChange = functions.firestore
+  .document("settings/{docID}")
+  .onWrite(async () => {
+    if (process.env.NODE_ENV === "production") {
+      await fetch(
+        "https://api.vercel.com/v1/integrations/deploy/prj_EMutmNh2b9jV8LM7p843xbrKastq/YmXMYVqB6P",
+        { method: "POST" }
+      );
+      console.log("Pinging Vercel for rebuild.");
+    } else {
+      console.log(
+        `In env ${process.env.NODE_ENV}, not pinging Vercel for rebuild.`
+      );
+    }
   });
