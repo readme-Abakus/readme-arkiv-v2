@@ -107,10 +107,10 @@
     top: 60px;
     left: 0;
     opacity: 0;
-    background-color: #fff;
+    background-color: $bg-color-light;
     visibility: hidden;
     padding-bottom: 0.5rem;
-    border-bottom: rgb(153, 153, 153) solid 4px;
+    border-bottom: grey solid 4px;
 
     > * {
       padding: 0.5rem 0;
@@ -130,7 +130,7 @@
     }
   }
   [data-theme="dark"] .links {
-    background-color: #1a1919;
+    background-color: $bg-color-dark;
   }
 
   .icon {
