@@ -56,7 +56,7 @@ export const AppNavbar: FC = () => {
         )}
       </ul>
       <span
-        className={`material-icons ${styles.icon}`}
+        className={`material-icons ${styles.icon} ${open ? styles.active : ""}`}
         onClick={() => setOpen(!open)}
       >
         menu
