@@ -20,9 +20,37 @@ export interface IArticle {
   tags: string[];
   type: string;
   url: string;
-  id: string;
+  id?: string;
 }
 
 export interface ISettings {
   showListing: boolean;
+}
+
+export type ISubmitArticleFunction = (
+  valuesToSubmit: IEditArticle,
+  statusFunctions: {
+    setSubmitting: (value: boolean) => void;
+    setStatus: ({
+      success,
+      error,
+    }: {
+      success?: boolean;
+      error?: boolean;
+    }) => void;
+  }
+) => void;
+
+export interface IEditArticle {
+  author: string;
+  title: string;
+  content: string;
+  editionYear: number;
+  editionNumber: number;
+  layout: string;
+  pages: string;
+  photo: string;
+  tags: string;
+  type: string;
+  url: string;
 }
