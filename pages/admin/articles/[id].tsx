@@ -46,35 +46,37 @@ const NewArticlePage = () => {
   }, [id]);
 
   return (
-    <WithAuthentication>
-      <div className={styles.container}>
-        <Head>
-          <title>readme - oppdater artikkel</title>
-        </Head>
-        <h1>Oppdater artikkel</h1>
-        {loading ? (
-          <Spinner animation="border" size="sm" variant="secondary" />
-        ) : (
-          <ArticleForm
-            article={article}
-            doHandleSubmit={(values, { setStatus, setSubmitting }) => {
-              updateArticle(
-                values,
-                id as string,
-                () => {
-                  setSubmitting(false);
-                  setStatus({ success: true });
-                },
-                () => {
-                  setSubmitting(false);
-                  setStatus({ error: true });
-                }
-              );
-            }}
-          />
-        )}
-      </div>
-    </WithAuthentication>
+    <>
+      <Head>
+        <title>readme - oppdater artikkel</title>
+      </Head>
+      <WithAuthentication>
+        <div className={styles.container}>
+          <h1>Oppdater artikkel</h1>
+          {loading ? (
+            <Spinner animation="border" size="sm" variant="secondary" />
+          ) : (
+            <ArticleForm
+              article={article}
+              doHandleSubmit={(values, { setStatus, setSubmitting }) => {
+                updateArticle(
+                  values,
+                  id as string,
+                  () => {
+                    setSubmitting(false);
+                    setStatus({ success: true });
+                  },
+                  () => {
+                    setSubmitting(false);
+                    setStatus({ error: true });
+                  }
+                );
+              }}
+            />
+          )}
+        </div>
+      </WithAuthentication>
+    </>
   );
 };
 

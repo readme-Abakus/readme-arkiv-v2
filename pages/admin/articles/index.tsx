@@ -10,30 +10,32 @@ import Head from "next/head";
 const ArticleList: NextPage = () => {
   const [data, loading, error, pageNum, nextPage, prevPage] = useArticleList();
   return (
-    <WithAuthentication>
+    <>
       <Head>
         <title>readme - artikler</title>
       </Head>
-      <div className={styles.articleList}>
-        <h1>Artikler</h1>
-        {loading ? (
-          <div>Loading...</div>
-        ) : (
-          <>
-            {data?.map((article, i) => (
-              <ListElement key={i} article={article} />
-            ))}
+      <WithAuthentication>
+        <div className={styles.articleList}>
+          <h1>Artikler</h1>
+          {loading ? (
+            <div>Loading...</div>
+          ) : (
+            <>
+              {data?.map((article, i) => (
+                <ListElement key={i} article={article} />
+              ))}
 
-            <div className={styles.pagination}>
-              <Button disabled={pageNum === 0} onClick={() => prevPage()}>
-                &lt;&lt;
-              </Button>
-              <Button onClick={() => nextPage()}>&gt;&gt;</Button>
-            </div>
-          </>
-        )}
-      </div>
-    </WithAuthentication>
+              <div className={styles.pagination}>
+                <Button disabled={pageNum === 0} onClick={() => prevPage()}>
+                  &lt;&lt;
+                </Button>
+                <Button onClick={() => nextPage()}>&gt;&gt;</Button>
+              </div>
+            </>
+          )}
+        </div>
+      </WithAuthentication>
+    </>
   );
 };
 
