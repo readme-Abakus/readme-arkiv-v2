@@ -16,18 +16,20 @@ const ArticleList: NextPage = () => {
           {loading ? (
             <Spinner animation="border" />
           ) : (
-            <>
-              {data?.map((article, i) => (
-                <ListElement key={i} article={article} />
-              ))}
+            <Fade appear in>
+              <div>
+                {data?.map((article, i) => (
+                  <ListElement key={i} article={article} />
+                ))}
 
-              <div className={styles.pagination}>
-                <Button disabled={pageNum === 0} onClick={() => prevPage()}>
-                  &lt;&lt;
-                </Button>
-                <Button onClick={() => nextPage()}>&gt;&gt;</Button>
+                <div className={styles.pagination}>
+                  <Button disabled={pageNum === 0} onClick={() => prevPage()}>
+                    &lt;&lt;
+                  </Button>
+                  <Button onClick={() => nextPage()}>&gt;&gt;</Button>
+                </div>
               </div>
-            </>
+            </Fade>
           )}
         </div>
       </Fade>
