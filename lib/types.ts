@@ -53,4 +53,5 @@ export interface IEditArticle {
   tags: string;
   type: string;
   url: string;
+  id?: string;
 }

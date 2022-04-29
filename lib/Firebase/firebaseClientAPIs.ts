@@ -1,5 +1,12 @@
 import { ref, deleteObject } from "firebase/storage";
-import { doc, deleteDoc, collection, addDoc } from "firebase/firestore";
+import {
+  doc,
+  deleteDoc,
+  collection,
+  addDoc,
+  getDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { db, storage } from "./firebase";
 import { IArticle, IEditArticle } from "../types";
 
@@ -56,6 +63,46 @@ export const addNewArticle = async (
   }
 };
 
+export const getArticleByID = async (id: string) => {
+  const articleDoc = await getDoc(doc(db, `articles/${id}`));
+
+  const article = articleDoc.data() as IArticle;
+  return article;
+};
+
+export const updateArticle = async (
+  valuesToPost: IEditArticle,
+  id: string,
+  onSuccess?: () => void,
+  onError?: () => void
+) => {
+  const article: IArticle = {
+    ...valuesToPost,
+    pages: valuesToPost.pages.split(",").map((v) => parseInt(v)),
+    tags: valuesToPost.tags.split(",").map((v) => v.trim()),
+    edition: `${valuesToPost.editionYear}-0${valuesToPost.editionNumber}`,
+    id: id,
+  };
+  try {
+    const url = getArticlePDFURL(article);
+    article.url = url;
+    const articleRef = doc(db, `articles/${article.id}`);
+    await updateDoc(articleRef, article as { [x: string]: any });
+    console.log("Article added to DB");
+    if (onSuccess) {
+      onSuccess();
+    }
+  } catch (error) {
+    console.error(
+      "Something when wrong during edition upload, failed with error: ",
+      error
+    );
+    if (onError) {
+      onError();
+    }
+  }
+};
+
 const getArticlePDFURL = (article: IArticle) => {
   const year = article.edition.split("-")[0];
   let pdfURL = getPDFDownloadURL(year, article.edition);
@@ -80,7 +127,7 @@ const getPageNumber = (article: IArticle) => {
 const getPDFDownloadURL = (year: string, name: string) => {
   const root =
     process.env.NODE_ENV === "development"
-      ? "localhost:9199"
+      ? "http://localhost:9199"
       : "https://storage.googleapis.com";
   let url = `${root}/${ref(storage).bucket}/pdf/${year}/${name}`;
   if (!url.endsWith(".pdf")) {
