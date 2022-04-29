@@ -1,10 +1,10 @@
 import { NextPage } from "next";
 import { Button } from "react-bootstrap";
-import { WithAuthentication } from "../../components/WithAuthentication";
-import { useArticleList } from "../../lib/Firebase/hooks";
+import { WithAuthentication } from "../../../components/WithAuthentication";
+import { useArticleList } from "../../../lib/Firebase/hooks";
 
 import styles from "../../styles/ArticleList.module.css";
-import { ListElement } from "../../components/Admin/Articles/ListElement";
+import { ListElement } from "../../../components/Admin/Articles/ListElement";
 
 const ArticleList: NextPage = () => {
   const [data, loading, error, pageNum, nextPage, prevPage] = useArticleList();

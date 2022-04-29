@@ -1,8 +1,8 @@
 import Head from "next/head";
-import { ArticleForm } from "../../components/Admin/Articles/ArticleForm";
-import { addNewArticle } from "../../lib/Firebase/firebaseClientAPIs";
+import { ArticleForm } from "../../../components/Admin/Articles/ArticleForm";
+import { addNewArticle } from "../../../lib/Firebase/firebaseClientAPIs";
 
-import styles from "../../styles/Article.module.css";
+import styles from "../../../styles/Article.module.css";
 
 const NewArticlePage = () => (
   <div className={styles.container}>
