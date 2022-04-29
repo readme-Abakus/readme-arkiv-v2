@@ -20,7 +20,7 @@ export interface IArticle {
   tags: string[];
   type: string;
   url: string;
-  id?: string;
+  id: string;
 }
 
 export interface ISettings {

@@ -30,7 +30,7 @@ export const addNewArticle = async (
   onError: () => void
 ) => {
   // Making a true copy to avoid pass-by-reference issues
-  const article: IArticle = {
+  const article: Partial<IArticle> = {
     ...valuesToPost,
     pages: valuesToPost.pages.split(",").map((v) => parseInt(v)),
     tags: valuesToPost.tags.split(",").map((v) => v.trim()),
@@ -38,7 +38,7 @@ export const addNewArticle = async (
   };
 
   try {
-    const url = getArticlePDFURL(article);
+    const url = getArticlePDFURL(article as IArticle);
     article.url = url;
     await addDoc(collection(db, "articles"), article);
     console.log("Article added to DB");
