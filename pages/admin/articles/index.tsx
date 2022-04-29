@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { Button } from "react-bootstrap";
+import { Button, Fade } from "react-bootstrap";
 import { WithAuthentication } from "../../../components/WithAuthentication";
 import { useArticleList } from "../../../lib/Firebase/hooks";
 
@@ -15,25 +15,27 @@ const ArticleList: NextPage = () => {
         <title>readme - artikler</title>
       </Head>
       <WithAuthentication>
-        <div className={styles.articleList}>
-          <h1>Artikler</h1>
-          {loading ? (
-            <div>Loading...</div>
-          ) : (
-            <>
-              {data?.map((article, i) => (
-                <ListElement key={i} article={article} />
-              ))}
+        <Fade appear in>
+          <div className={styles.articleList}>
+            <h1>Artikler</h1>
+            {loading ? (
+              <div>Loading...</div>
+            ) : (
+              <>
+                {data?.map((article, i) => (
+                  <ListElement key={i} article={article} />
+                ))}
 
-              <div className={styles.pagination}>
-                <Button disabled={pageNum === 0} onClick={() => prevPage()}>
-                  &lt;&lt;
-                </Button>
-                <Button onClick={() => nextPage()}>&gt;&gt;</Button>
-              </div>
-            </>
-          )}
-        </div>
+                <div className={styles.pagination}>
+                  <Button disabled={pageNum === 0} onClick={() => prevPage()}>
+                    &lt;&lt;
+                  </Button>
+                  <Button onClick={() => nextPage()}>&gt;&gt;</Button>
+                </div>
+              </>
+            )}
+          </div>
+        </Fade>
       </WithAuthentication>
     </>
   );

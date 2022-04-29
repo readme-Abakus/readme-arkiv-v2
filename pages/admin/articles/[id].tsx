@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Spinner } from "react-bootstrap";
+import { Fade, Spinner } from "react-bootstrap";
 import { ArticleForm } from "../../../components/Admin/Articles/ArticleForm";
 import { WithAuthentication } from "../../../components/WithAuthentication";
 
@@ -51,30 +51,32 @@ const NewArticlePage = () => {
         <title>readme - oppdater artikkel</title>
       </Head>
       <WithAuthentication>
-        <div className={styles.container}>
-          <h1>Oppdater artikkel</h1>
-          {loading ? (
-            <Spinner animation="border" size="sm" variant="secondary" />
-          ) : (
-            <ArticleForm
-              article={article}
-              doHandleSubmit={(values, { setStatus, setSubmitting }) => {
-                updateArticle(
-                  values,
-                  id as string,
-                  () => {
-                    setSubmitting(false);
-                    setStatus({ success: true });
-                  },
-                  () => {
-                    setSubmitting(false);
-                    setStatus({ error: true });
-                  }
-                );
-              }}
-            />
-          )}
-        </div>
+        <Fade appear in>
+          <div className={styles.container}>
+            <h1>Oppdater artikkel</h1>
+            {loading ? (
+              <Spinner animation="border" size="sm" variant="secondary" />
+            ) : (
+              <ArticleForm
+                article={article}
+                doHandleSubmit={(values, { setStatus, setSubmitting }) => {
+                  updateArticle(
+                    values,
+                    id as string,
+                    () => {
+                      setSubmitting(false);
+                      setStatus({ success: true });
+                    },
+                    () => {
+                      setSubmitting(false);
+                      setStatus({ error: true });
+                    }
+                  );
+                }}
+              />
+            )}
+          </div>
+        </Fade>
       </WithAuthentication>
     </>
   );
