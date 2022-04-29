@@ -5,11 +5,15 @@ import { useArticleList } from "../../../lib/Firebase/hooks";
 
 import styles from "../../../styles/ArticleList.module.css";
 import { ListElement } from "../../../components/Admin/Articles/ListElement";
+import Head from "next/head";
 
 const ArticleList: NextPage = () => {
   const [data, loading, error, pageNum, nextPage, prevPage] = useArticleList();
   return (
     <WithAuthentication>
+      <Head>
+        <title>readme - artikler</title>
+      </Head>
       <div className={styles.articleList}>
         <h1>Artikler</h1>
         {loading ? (
