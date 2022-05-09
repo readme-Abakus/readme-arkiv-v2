@@ -9,6 +9,7 @@ import algoliasearch from "algoliasearch/lite";
 import "instantsearch.css/themes/reset.css";
 
 import styles from "../styles/Search.module.css";
+import { Fade } from "react-bootstrap";
 
 const searchClient = algoliasearch(
   "K9OSMLFRD3",
@@ -21,17 +22,21 @@ const Search: NextPage = () => {
       <Head>
         <title>readme - søk</title>
       </Head>
-      <h1>Artikkelsøk</h1>
-      <InstantSearch searchClient={searchClient} indexName="Articles">
-        <SearchBox />
-        <AppTable />
-        <PoweredBy
-          translations={{
-            searchBy: "Søk levert av ",
-          }}
-          className={styles.poweredBy}
-        />
-      </InstantSearch>
+      <Fade appear in>
+        <div>
+          <h1>Artikkelsøk</h1>
+          <InstantSearch searchClient={searchClient} indexName="Articles">
+            <SearchBox />
+            <AppTable />
+            <PoweredBy
+              translations={{
+                searchBy: "Søk levert av ",
+              }}
+              className={styles.poweredBy}
+            />
+          </InstantSearch>
+        </div>
+      </Fade>
     </>
   );
 };

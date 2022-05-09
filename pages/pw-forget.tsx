@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { FormEventHandler, useState } from "react";
-import { Form, Alert } from "react-bootstrap";
+import { Form, Alert, Fade } from "react-bootstrap";
 import { useSendPasswordResetEmail } from "react-firebase-hooks/auth";
 
 import { SubmitButton } from "../components/Admin/Common/SubmitButton";
@@ -38,30 +38,32 @@ const PasswordForgetForm = () => {
         <title>readme - tilbakestill passord</title>
       </Head>
 
-      <Form onSubmit={onSubmit}>
-        <Form.Group controlId="email">
-          <Form.Label>E-post</Form.Label>
-          <Form.Control
-            name="email"
-            value={email}
-            onChange={(event) => setEmail(event.currentTarget.value)}
-            type="text"
-            placeholder="E-post"
+      <Fade appear in>
+        <Form onSubmit={onSubmit}>
+          <Form.Group controlId="email">
+            <Form.Label>E-post</Form.Label>
+            <Form.Control
+              name="email"
+              value={email}
+              onChange={(event) => setEmail(event.currentTarget.value)}
+              type="text"
+              placeholder="E-post"
+            />
+          </Form.Group>
+          <SubmitButton
+            buttonText="Tilbakestill passord"
+            isSubmitting={sending}
+            isValid={isValid}
           />
-        </Form.Group>
-        <SubmitButton
-          buttonText="Tilbakestill passord"
-          isSubmitting={sending}
-          isValid={isValid}
-        />
-        {error && <Alert variant="danger">{error.message}</Alert>}
-        {success && (
-          <Alert variant="success">
-            E-post sendt! Sjekk innboksen din og følg lenken for å tilbakestille
-            passordet.
-          </Alert>
-        )}
-      </Form>
+          {error && <Alert variant="danger">{error.message}</Alert>}
+          {success && (
+            <Alert variant="success">
+              E-post sendt! Sjekk innboksen din og følg lenken for å
+              tilbakestille passordet.
+            </Alert>
+          )}
+        </Form>
+      </Fade>
     </>
   );
 };
