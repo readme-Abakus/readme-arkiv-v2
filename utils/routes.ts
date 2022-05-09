@@ -4,10 +4,10 @@ const ADMIN = "/admin";
 const SIGN_IN = "/signin";
 const PASSWORD_FORGET = "/pw-forget";
 const NEW_EDITION = ADMIN + "/new_edition";
-const NEW_ARTICLE = ADMIN + "/new_article";
-const EDIT_ARTICLE = ADMIN + "/edit_article/:id";
 const EDITION_LIST = ADMIN + "/editions";
 const ARTICLE_LIST = ADMIN + "/articles";
+const NEW_ARTICLE = ARTICLE_LIST + "/new";
+const EDIT_ARTICLE = ARTICLE_LIST + "/:id";
 
 export const ROUTES = {
   HOME,

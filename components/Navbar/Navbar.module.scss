@@ -1,0 +1,139 @@
+@import "../../styles/variables.scss";
+
+.lightSwitch {
+  margin-left: auto !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar {
+  height: 60px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  li {
+    text-decoration: none;
+    text-align: center;
+  }
+  a {
+    transition: color 0.3s ease;
+    text-decoration: none;
+    color: $link-color-light;
+    &:hover {
+      color: $link-color-hover-light;
+    }
+    &.active {
+      color: $link-color-active-light;
+    }
+  }
+
+  & > a:first-child {
+    font-size: 1.25rem;
+    margin-right: 1rem;
+  }
+}
+
+[data-theme="dark"] {
+  .navbar {
+    a {
+      color: $link-color-dark;
+      &:hover {
+        color: $link-color-hover-dark;
+      }
+      &.active {
+        color: $link-color-active-dark;
+      }
+    }
+  }
+  .icon {
+    color: $link-color-dark;
+    border-color: $link-color-dark;
+    &:hover {
+      color: $link-color-hover-dark;
+      border-color: $link-color-hover-dark;
+    }
+    &.active {
+      color: $link-color-active-dark;
+      border-color: $link-color-active-dark;
+    }
+  }
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0;
+
+  li {
+    margin-left: 0.5rem;
+
+    &:not(:last-child) {
+      margin-right: 0.5rem;
+    }
+  }
+}
+
+.icon {
+  display: none;
+  cursor: pointer;
+  user-select: none;
+  padding: 0.25rem 0.75rem;
+  border-radius: 5px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+  color: $link-color-light;
+  border: $link-color-light solid 1px;
+  &:hover {
+    color: $link-color-hover-light;
+    border-color: $link-color-hover-light;
+  }
+  &.active {
+    color: $link-color-active-light;
+    border-color: $link-color-active-light;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .links {
+    z-index: 9;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    top: 60px;
+    left: 0;
+    opacity: 0;
+    background-color: $bg-color-light;
+    visibility: hidden;
+    padding-bottom: 0.5rem;
+    border-bottom: grey solid 4px;
+
+    > * {
+      padding: 0.5rem 0;
+    }
+    li {
+      margin: 0rem;
+      &:not(:last-child) {
+        margin-right: 0rem;
+      }
+    }
+
+    &.active {
+      visibility: visible;
+      opacity: 1;
+      display: block;
+      transition: 0.3s all;
+    }
+  }
+  [data-theme="dark"] .links {
+    background-color: $bg-color-dark;
+  }
+
+  .icon {
+    display: block;
+  }
+}
