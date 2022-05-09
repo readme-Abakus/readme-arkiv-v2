@@ -29,7 +29,7 @@ const SearchTable: FC<InfiniteHitsProvided & StateResultsProvided> = ({
     <>
       {searchState && searchState.query ? (
         <Fade in appear>
-          <>
+          <div>
             <Table
               striped
               bordered
@@ -74,7 +74,7 @@ const SearchTable: FC<InfiniteHitsProvided & StateResultsProvided> = ({
                 Vis mer
               </Button>
             )}
-          </>
+          </div>
         </Fade>
       ) : null}
     </>
