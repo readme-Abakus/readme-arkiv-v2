@@ -1,0 +1,26 @@
+.editionForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.alertInfo {
+  margin-top: 10px;
+  width: 35vw;
+}
+
+.progressBar {
+  width: 35vw;
+  height: 25px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 768px) {
+  .alertInfo {
+    width: 60vw;
+  }
+  .progressBar {
+    width: 60vw;
+  }
+}
