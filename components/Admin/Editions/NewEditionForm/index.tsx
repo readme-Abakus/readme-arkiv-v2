@@ -95,7 +95,7 @@ const NewEditionForm: NextPage = () => {
         return (
           <Fade appear in>
             <Form className={styles.editionForm} onSubmit={handleSubmit}>
-              <Row>
+              <Row className={styles.formRow}>
                 <Form.Group as={Col}>
                   <Form.Label>Utgaveår</Form.Label>
                   <Form.Control
@@ -127,7 +127,7 @@ const NewEditionForm: NextPage = () => {
                   </Form.Control.Feedback>
                 </Form.Group>
               </Row>
-              <Row>
+              <Row className={styles.formRow}>
                 <Form.Group>
                   <Form.Control
                     name='editionFile'

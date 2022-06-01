@@ -9,6 +9,10 @@
   width: 35vw;
 }
 
+.formRow {
+  margin-bottom: 10px;
+}
+
 .progressBar {
   width: 35vw;
   height: 25px;
