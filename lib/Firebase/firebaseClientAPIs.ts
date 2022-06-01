@@ -1,4 +1,4 @@
-import { ref, deleteObject } from "firebase/storage";
+import { ref, deleteObject, uploadBytesResumable } from "firebase/storage";
 import {
   doc,
   deleteDoc,
@@ -6,12 +6,78 @@ import {
   addDoc,
   getDoc,
   updateDoc,
+  getDocs,
+  query,
+  where,
 } from "firebase/firestore";
 import { db, storage } from "./firebase";
-import { IArticle, IEditArticle } from "../types";
+import { IArticle, IEditArticle, IEdition, INewEditionData } from "../types";
 
 export const deleteArticle = async (id: string) => {
   await deleteDoc(doc(db, `articles/${id}`));
+};
+
+export const addEdition = async (
+  edition: INewEditionData,
+  callback?: () => void,
+  errorCallback?: () => void,
+  updateProgressCallback?: (progress: number) => void
+) => {
+  const path = `pdf/${edition.editionYear}/${edition.editionFile.name}`;
+  const metadata = {
+    contentType: "application/pdf",
+    customMetadata: {
+      listinglop: String(edition.listingslop),
+    },
+  };
+  const pdfRef = ref(storage, path);
+
+  const uploadTask = uploadBytesResumable(
+    pdfRef,
+    edition.editionFile,
+    metadata
+  );
+
+  uploadTask.on(
+    "state_changed",
+    (snapshot) => {
+      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+      if (
+        updateProgressCallback &&
+        typeof updateProgressCallback === "function"
+      ) {
+        updateProgressCallback(progress);
+      }
+    },
+    (error) => {
+      switch (error.code) {
+        case "storage/unauthorized":
+          throw Error("Unknown error, file upload failed");
+
+        case "storage/unknown":
+          throw Error("Unknown error, file upload failed");
+        default:
+      }
+
+      if (errorCallback && typeof errorCallback === "function") {
+        errorCallback();
+      }
+    },
+    () => {
+      const downloadURL = getPDFDownloadURL(
+        `${edition.editionYear}`,
+        edition.editionFile.name
+      );
+      console.log(`File available at ${downloadURL}`);
+      const editionName = edition.editionFile.name.replace(".pdf", "");
+      updateArticlePDFURL(editionName, downloadURL);
+
+      if (callback && typeof callback === "function") {
+        callback();
+      }
+    }
+  );
 };
 
 export const deleteEdition = async (editionString: string) => {
@@ -110,6 +176,19 @@ const getArticlePDFURL = (article: IArticle) => {
     pdfURL = `${pdfURL}#page=${getPageNumber(article)}`;
   }
   return pdfURL;
+};
+
+const updateArticlePDFURL = async (editionName: unknown, newURL: string) => {
+  const articles = await getDocs(
+    query(collection(db, "articles"), where("edition", "==", editionName))
+  );
+  if (articles && !articles.empty) {
+    articles.forEach(async (docSnap) => {
+      await updateDoc(docSnap.ref, {
+        url: `${newURL}#page=${getPageNumber(docSnap.data() as IArticle)}`,
+      });
+    });
+  }
 };
 
 const getPageNumber = (article: IArticle) => {
