@@ -13,6 +13,10 @@
   margin-bottom: 10px;
 }
 
+.checkbox > input[type="checkbox"]:not(:checked) {
+  background-color: white;
+}
+
 .progressBar {
   width: 35vw;
   height: 25px;

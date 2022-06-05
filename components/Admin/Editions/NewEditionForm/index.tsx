@@ -99,30 +99,30 @@ const NewEditionForm: NextPage = () => {
                 <Form.Group as={Col}>
                   <Form.Label>Utgaveår</Form.Label>
                   <Form.Control
-                    placeholder='Utgaveår'
-                    type='number'
-                    name='editionYear'
+                    placeholder="Utgaveår"
+                    type="number"
+                    name="editionYear"
                     value={values.editionYear}
                     onChange={handleChange}
                     isValid={touched.editionYear && !errors.editionYear}
                     isInvalid={!!errors.editionYear}
                   />
-                  <Form.Control.Feedback type='invalid'>
+                  <Form.Control.Feedback type="invalid">
                     {errors.editionYear}
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col}>
                   <Form.Label>Utgavenummer</Form.Label>
                   <Form.Control
-                    placeholder='Utgavenummer'
-                    type='number'
-                    name='editionNumber'
+                    placeholder="Utgavenummer"
+                    type="number"
+                    name="editionNumber"
                     value={values.editionNumber}
                     onChange={handleChange}
                     isValid={touched.editionNumber && !errors.editionNumber}
                     isInvalid={!!errors.editionNumber}
                   />
-                  <Form.Control.Feedback type='invalid'>
+                  <Form.Control.Feedback type="invalid">
                     {errors.editionNumber}
                   </Form.Control.Feedback>
                 </Form.Group>
@@ -130,8 +130,8 @@ const NewEditionForm: NextPage = () => {
               <Row className={styles.formRow}>
                 <Form.Group>
                   <Form.Control
-                    name='editionFile'
-                    type='file'
+                    name="editionFile"
+                    type="file"
                     onChange={(event) => {
                       const newValues = { ...values }; // copy the original object
                       newValues.editionFile = (
@@ -140,22 +140,23 @@ const NewEditionForm: NextPage = () => {
                       setFieldValue("editionFile", newValues.editionFile);
                     }}
                   ></Form.Control>
-                  <Form.Control.Feedback type='invalid'>
+                  <Form.Control.Feedback type="invalid">
                     {errors.editionFile}
                   </Form.Control.Feedback>
                 </Form.Group>
               </Row>
               <Form.Group>
                 <Form.Check
-                  type='switch'
-                  name='listingslop'
-                  label='Listingsløputgave'
+                  className={styles.checkbox}
+                  type="switch"
+                  name="listingslop"
+                  label="Listingsløputgave"
                   onChange={handleChange}
-                  id='validationFormik0'
+                  id="validationFormik0"
                 />
               </Form.Group>
               <SubmitButton
-                buttonText='Last opp utgave'
+                buttonText="Last opp utgave"
                 isSubmitting={isSubmitting}
                 isValid={isValid}
               />
@@ -170,15 +171,15 @@ const NewEditionForm: NextPage = () => {
                 />
               ) : null}
               {status.error ? (
-                <Alert className={styles.alertInfo} variant='error'>
+                <Alert className={styles.alertInfo} variant="error">
                   Noe gikk galt!
                   <br />
                   Vent litt, og prøv igjen. Dersom problemet vedvarer, kontakt
                   ansvarlig utvikler.
                   <hr />
-                  <div className='d-flex justify-content-end'>
+                  <div className="d-flex justify-content-end">
                     <Button
-                      variant='secondary'
+                      variant="secondary"
                       onClick={() => {
                         resetForm();
                         setStatus({
@@ -194,7 +195,7 @@ const NewEditionForm: NextPage = () => {
                 </Alert>
               ) : null}
               {status.success ? (
-                <Alert className={styles.alertInfo} variant='primary'>
+                <Alert className={styles.alertInfo} variant="primary">
                   Opplasting fullført!
                   <br />
                   Merk at det kan ta litt tid før utgaven dukker opp på
