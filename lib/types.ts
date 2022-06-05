@@ -41,6 +41,29 @@ export type ISubmitArticleFunction = (
   }
 ) => void;
 
+export type ISubmitEditionFunction = (
+  values: INewEditionData,
+  statusFunctions: {
+    setSubmitting: (value: boolean) => void;
+    setStatus: ({
+      success,
+      error,
+      progress,
+    }: {
+      success?: boolean;
+      error?: boolean;
+      progress?: number;
+    }) => void;
+  }
+) => void;
+
+export interface INewEditionData {
+  editionYear: number;
+  editionNumber: number;
+  editionFile: any;
+  listingslop: boolean;
+}
+
 export interface IEditArticle {
   author: string;
   title: string;
