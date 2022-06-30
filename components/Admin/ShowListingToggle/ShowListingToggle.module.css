@@ -1,8 +1,10 @@
 .toggleContainer {
   margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.toggleContainer > p {
+.toggleContainer > span {
   margin-right: 5px;
-  margin-bottom: 0;
 }

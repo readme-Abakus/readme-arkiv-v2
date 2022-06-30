@@ -13,8 +13,8 @@ export const ShowListingToggle: FC = () => {
   }
 
   return (
-    <div className={style.toggleContainer}>
-      <p>Vis listingsutgaver:</p>
+    <label className={style.toggleContainer}>
+      <span>Vis listingsutgaver:</span>
       <Switch
         onChange={toggleShowListing}
         checked={settings?.showListing ?? false}
@@ -25,6 +25,6 @@ export const ShowListingToggle: FC = () => {
           <Spinner animation="border" size="sm" variant="secondary" />
         ) : null}
       </div>
-    </div>
+    </label>
   );
 };
