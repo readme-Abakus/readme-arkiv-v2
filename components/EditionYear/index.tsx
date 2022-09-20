@@ -1,6 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 import { FC } from "react";
 import { IEditionData } from "../../lib/types";
+import { ROUTES } from "../../utils/routes";
 
 import styles from "./EditionYear.module.scss";
 
@@ -11,19 +13,22 @@ export const EditionYear: FC<{ data: IEditionData }> = ({ data }) => {
       <hr />
       <div className={styles.imagesContainer}>
         {data.editions.map((edition) => (
-          <a
-            key={edition.edition}
-            href={edition.pdfUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            key={`${data.year}-${edition.edition}`}
+            href={ROUTES.EDITION.replace(
+              ":id",
+              `${data.year}-${edition.edition}`
+            )}
           >
-            <Image
-              src={edition.imageUrl}
-              height={setImageHeight(data.year, parseInt(edition.edition))}
-              width={200}
-              alt={`Forside på utgave ${data.year}-${edition.edition}`}
-            />
-          </a>
+            <a target="_blank" rel="noopener noreferrer">
+              <Image
+                src={edition.imageUrl}
+                height={setImageHeight(data.year, parseInt(edition.edition))}
+                width={200}
+                alt={`Forside på utgave ${data.year}-${edition.edition}`}
+              />
+            </a>
+          </Link>
         ))}
       </div>
       <hr />

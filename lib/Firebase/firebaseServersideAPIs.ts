@@ -52,6 +52,40 @@ export async function getEditions(
   return finalData.sort((a, b) => b.year - a.year);
 }
 
+export async function getEditionIDs(
+  filterListingEditions: boolean = false
+): Promise<string[]> {
+  const pdfRefs = await storage.bucket().getFiles({ prefix: "pdf/" });
+  const showListing = await (
+    await db.collection("settings").get()
+  ).docs[0].get("showListing");
+
+  const IDs: string[] = [];
+
+  await Promise.all(
+    pdfRefs[0].map(async (pdfRef) => {
+      const [metadata] = await pdfRef.getMetadata();
+      const isListing = metadata.metadata?.listinglop.toLowerCase() === "true";
+      const matches = pdfRef.name.match(/[0-9]{4}-[0-9]{2}/g);
+      let match: string | undefined;
+
+      if (matches) {
+        match = matches[0];
+      } else {
+        return;
+      }
+
+      if (filterListingEditions && isListing && !showListing) {
+        return;
+      }
+
+      IDs.push(match);
+    })
+  );
+
+  return IDs;
+}
+
 const getDownloadURL = (bucketName: string, fullPath: string) =>
   `${
     process.env.NODE_ENV === "production"
