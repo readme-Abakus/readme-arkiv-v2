@@ -8,8 +8,9 @@ import styles from "./Layout.module.css";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const router = useRouter();
+  console.log(router);
 
-  if (router.asPath.startsWith("/edition")) {
+  if (router.route.startsWith("/edition")) {
     return <>{children}</>;
   }
   return (
