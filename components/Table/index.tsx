@@ -7,8 +7,10 @@ import {
   StateResultsProvided,
 } from "react-instantsearch-core";
 import { useTheme } from "next-themes";
+import { ROUTES } from "../../utils/routes";
 
 import styles from "./Table.module.css";
+import Link from "next/link";
 
 const parseTags = (tags: Array<string> | string) => {
   if (Array.isArray(tags)) {
@@ -52,13 +54,11 @@ const SearchTable: FC<InfiniteHitsProvided & StateResultsProvided> = ({
                 {hits.map((hit) => (
                   <tr key={hit._id}>
                     <td>
-                      <a
-                        href={hit.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {hit.edition}
-                      </a>
+                      <Link href={ROUTES.EDITION.replace(":id", hit.edition)}>
+                        <a target="_blank" rel="noopener noreferrer">
+                          {hit.edition}
+                        </a>
+                      </Link>
                     </td>
                     <td>{hit.title}</td>
                     <td>{hit.author}</td>
