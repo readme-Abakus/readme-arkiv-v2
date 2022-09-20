@@ -8,7 +8,6 @@ import styles from "./Layout.module.css";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const router = useRouter();
-  console.log(router);
 
   // The edition page takes up the entire viewport, so we wanna render without the layout
   if (router.route.startsWith("/edition")) {
