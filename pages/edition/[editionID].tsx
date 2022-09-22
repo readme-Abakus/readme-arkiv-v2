@@ -32,13 +32,7 @@ const EditionPage = ({ editionID }: { editionID: string }) => {
         style={{ position: "fixed", height: "100vh", width: "100vw" }}
         data={editionURL}
         type="application/pdf"
-      >
-        <embed
-          style={{ position: "fixed", height: "100vh", width: "100vw" }}
-          src={editionURL}
-          type="application/pdf"
-        />
-      </object>
+      />
     </>
   );
 };
