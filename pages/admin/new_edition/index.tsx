@@ -10,6 +10,7 @@ const NewEdition: NextPage = () => {
         <title>readme – Legg til utgave</title>
       </Head>
       <WithAuthentication>
+        <h1>Ny utgave</h1>
         <NewEditionForm />
       </WithAuthentication>
     </>
