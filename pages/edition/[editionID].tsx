@@ -32,7 +32,9 @@ const EditionPage = ({ editionID }: { editionID: string }) => {
         style={{ position: "fixed", height: "100vh", width: "100vw" }}
         data={editionURL}
         type="application/pdf"
-      />
+      >
+        <a href={editionURL}>Last ned</a>
+      </object>
     </>
   );
 };
