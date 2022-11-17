@@ -59,16 +59,16 @@ const SearchTable: FC<InfiniteHitsProvided & StateResultsProvided> = ({
                 {hits.map((hit) => (
                   <tr key={hit._id}>
                     <td>
-                      <Link
+                      <a
                         href={
                           ROUTES.EDITION.replace(":id", hit.edition) +
                           `#page=${getPageNumber(hit.url)}`
                         }
+                        target="_blank"
+                        rel="noopener noreferrer"
                       >
-                        <a target="_blank" rel="noopener noreferrer">
-                          {hit.edition}
-                        </a>
-                      </Link>
+                        {hit.edition}
+                      </a>
                     </td>
                     <td>{hit.title}</td>
                     <td>{hit.author}</td>

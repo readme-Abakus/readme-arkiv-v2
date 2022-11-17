@@ -13,22 +13,22 @@ export const EditionYear: FC<{ data: IEditionData }> = ({ data }) => {
       <hr />
       <div className={styles.imagesContainer}>
         {data.editions.map((edition) => (
-          <Link
+          <a
             key={`${data.year}-${edition.edition}`}
             href={ROUTES.EDITION.replace(
               ":id",
               `${data.year}-${edition.edition}`
             )}
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <a target="_blank" rel="noopener noreferrer">
-              <Image
-                src={edition.imageUrl}
-                height={setImageHeight(data.year, parseInt(edition.edition))}
-                width={200}
-                alt={`Forside på utgave ${data.year}-${edition.edition}`}
-              />
-            </a>
-          </Link>
+            <Image
+              src={edition.imageUrl}
+              height={setImageHeight(data.year, parseInt(edition.edition))}
+              width={200}
+              alt={`Forside på utgave ${data.year}-${edition.edition}`}
+            />
+          </a>
         ))}
       </div>
       <hr />

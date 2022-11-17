@@ -21,18 +21,18 @@ export const ListElement: FC<ListElementProps> = ({ article }) => {
         {edition} | {title}
       </p>
       <div className={styles.end}>
-        <Link
+        <a
           href={
             ROUTES.EDITION.replace(":id", edition) +
             `#page=${getPageNumber(article)}`
           }
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          <a target="_blank" rel="noopener noreferrer">
-            <i className={`material-icons md-36 ${styles.open}`}>
-              remove_red_eye
-            </i>
-          </a>
-        </Link>
+          <i className={`material-icons md-36 ${styles.open}`}>
+            remove_red_eye
+          </i>
+        </a>
         <Link href={ROUTES.EDIT_ARTICLE.replace(":id", id)}>
           <a style={{ color: "unset" }}>
             <i className={`material-icons md-36 ${styles.edit}`}>edit</i>
