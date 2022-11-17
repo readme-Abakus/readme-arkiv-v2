@@ -20,6 +20,11 @@ const parseTags = (tags: Array<string> | string) => {
   }
 };
 
+// This is a temporary hack since the pages list isnt indexed in algolia
+const getPageNumber = (url: string) => {
+  return url.split("=").at(-1);
+};
+
 const SearchTable: FC<InfiniteHitsProvided & StateResultsProvided> = ({
   hits,
   refineNext,
@@ -54,7 +59,12 @@ const SearchTable: FC<InfiniteHitsProvided & StateResultsProvided> = ({
                 {hits.map((hit) => (
                   <tr key={hit._id}>
                     <td>
-                      <Link href={ROUTES.EDITION.replace(":id", hit.edition)}>
+                      <Link
+                        href={
+                          ROUTES.EDITION.replace(":id", hit.edition) +
+                          `#page=${getPageNumber(hit.url)}`
+                        }
+                      >
                         <a target="_blank" rel="noopener noreferrer">
                           {hit.edition}
                         </a>
