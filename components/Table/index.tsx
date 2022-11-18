@@ -10,7 +10,6 @@ import { useTheme } from "next-themes";
 import { ROUTES } from "../../utils/routes";
 
 import styles from "./Table.module.css";
-import Link from "next/link";
 
 const parseTags = (tags: Array<string> | string) => {
   if (Array.isArray(tags)) {
