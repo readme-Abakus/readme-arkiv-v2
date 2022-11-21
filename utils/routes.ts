@@ -1,4 +1,5 @@
 const HOME = "/";
+const EDITION = "/edition/:id";
 const SEARCH = "/search";
 const ADMIN = "/admin";
 const SIGN_IN = "/signin";
@@ -11,6 +12,7 @@ const EDIT_ARTICLE = ARTICLE_LIST + "/:id";
 
 export const ROUTES = {
   HOME,
+  EDITION,
   SEARCH,
   ADMIN,
   SIGN_IN,

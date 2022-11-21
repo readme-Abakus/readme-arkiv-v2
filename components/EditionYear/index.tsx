@@ -1,6 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 import { FC } from "react";
 import { IEditionData } from "../../lib/types";
+import { ROUTES } from "../../utils/routes";
 
 import styles from "./EditionYear.module.scss";
 
@@ -12,8 +14,11 @@ export const EditionYear: FC<{ data: IEditionData }> = ({ data }) => {
       <div className={styles.imagesContainer}>
         {data.editions.map((edition) => (
           <a
-            key={edition.edition}
-            href={edition.pdfUrl}
+            key={`${data.year}-${edition.edition}`}
+            href={ROUTES.EDITION.replace(
+              ":id",
+              `${data.year}-${edition.edition}`
+            )}
             target="_blank"
             rel="noopener noreferrer"
           >

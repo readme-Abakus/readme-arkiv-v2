@@ -7,6 +7,7 @@ import {
   StateResultsProvided,
 } from "react-instantsearch-core";
 import { useTheme } from "next-themes";
+import { ROUTES } from "../../utils/routes";
 
 import styles from "./Table.module.css";
 
@@ -16,6 +17,11 @@ const parseTags = (tags: Array<string> | string) => {
   } else {
     return tags;
   }
+};
+
+// This is a temporary hack since the pages list isnt indexed in algolia
+const getPageNumber = (url: string) => {
+  return url.split("=").at(-1);
 };
 
 const SearchTable: FC<InfiniteHitsProvided & StateResultsProvided> = ({
@@ -53,7 +59,10 @@ const SearchTable: FC<InfiniteHitsProvided & StateResultsProvided> = ({
                   <tr key={hit._id}>
                     <td>
                       <a
-                        href={hit.url}
+                        href={
+                          ROUTES.EDITION.replace(":id", hit.edition) +
+                          `#page=${getPageNumber(hit.url)}`
+                        }
                         target="_blank"
                         rel="noopener noreferrer"
                       >

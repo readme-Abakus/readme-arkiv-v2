@@ -191,7 +191,7 @@ const updateArticlePDFURL = async (editionName: unknown, newURL: string) => {
   }
 };
 
-const getPageNumber = (article: IArticle) => {
+export const getPageNumber = (article: IArticle) => {
   const [editionYear, editionNumber] = article.edition.split("-");
   if (
     parseInt(editionYear) > 2013 ||
