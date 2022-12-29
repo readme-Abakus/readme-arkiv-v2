@@ -7,6 +7,10 @@ const nextConfig = {
   async rewrites() {
     return [
       {
+        source: "/edition/:year-:no.pdf",
+        destination: editionURLPattern,
+      },
+      {
         source: "/edition/:year-:no",
         destination: editionURLPattern,
       },

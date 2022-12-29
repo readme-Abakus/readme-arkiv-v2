@@ -1,5 +1,5 @@
 const HOME = "/";
-const EDITION = "/edition/:id";
+const EDITION = "/edition/:id.pdf";
 const SEARCH = "/search";
 const ADMIN = "/admin";
 const SIGN_IN = "/signin";
