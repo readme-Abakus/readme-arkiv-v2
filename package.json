@@ -25,7 +25,6 @@
     "react-instantsearch-dom": "^6.19.0",
     "react-switch": "^7.0.0",
     "sass": "^1.48.0",
-    "yarn": "^1.22.19",
     "yup": "^0.32.11"
   },
   "devDependencies": {
