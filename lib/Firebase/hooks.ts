@@ -7,6 +7,10 @@ import {
   orderBy,
   query,
   QueryDocumentSnapshot,
+  QueryEndAtConstraint,
+  QueryLimitConstraint,
+  QueryOrderByConstraint,
+  QueryStartAtConstraint,
   SnapshotOptions,
   startAfter,
   updateDoc,
@@ -34,9 +38,17 @@ const firstField = "edition";
 const secondField = "pages";
 const pageSize = 20;
 const baseQuery = [orderBy(firstField, "desc"), orderBy(secondField, "desc")];
+type Query =
+  | QueryOrderByConstraint
+  | QueryLimitConstraint
+  | QueryStartAtConstraint
+  | QueryEndAtConstraint;
 
 export const useArticleList = () => {
-  const [dynamicQuery, setQuery] = useState([...baseQuery, limit(pageSize)]);
+  const [dynamicQuery, setQuery] = useState<Query[]>([
+    ...baseQuery,
+    limit(pageSize),
+  ]);
 
   const [data, loading, error] = useCollectionData<IArticle>(
     query(
