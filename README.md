@@ -45,7 +45,9 @@ Du kan nå åpne nettsiden på [http://localhost:3000](http://localhost:3000).
 Det er satt opp Firebase-emulatorer for Functions, Firestore, Storage og Auth. Det er satt opp testdata til de tre siste. Emulatorene kan styres/justeres/inspiseres fra `localhost:4000`. Auth-emulatoren lastes inn med en testbruker som har e-post andreas.h.haaversen@gmail.com og passord `password`. Bruk denne om du vil se admin-sidene (`localhost:3000/admin`).
 
 ## Deploy
-Dette er ikke satt opp enda, info kommer!
+Det er satt opp automatisk deploy til Vercel ved hjelp av deres GitHub-integrasjon. Push til master vil utløse et nytt bygg av nettsiden.
+
+Det er også satt opp en callback-URL i Vercel som kan brukes til å utløse et nytt bygg. Dette skjer når nye utgaver lastes opp eller slettes, siden sidene som bruker PDF-ene eller bildene er statisk generert.
 
 ## Oversikt over systemet og dets funksjoner
 (*OBS*: Dette er masse nerde-detaljer)
