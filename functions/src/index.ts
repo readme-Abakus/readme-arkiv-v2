@@ -19,7 +19,7 @@ const runtimeOpts: RuntimeOptions = {
 const THUMB_MAX_WIDTH = 620;
 
 const VERCEL_REBUILD_URL =
-  "https://api.vercel.com/v1/integrations/deploy/prj_EMutmNh2b9jV8LM7p843xbrKastq/YmXMYVqB6P";
+  "https://api.vercel.com/v1/integrations/deploy/prj_EMutmNh2b9jV8LM7p843xbrKastq/yZPSj6goDw";
 
 exports.handlePDFUpload = functions
   .region("europe-west1")
