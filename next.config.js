@@ -21,7 +21,7 @@ const nextConfig = {
 const editionURLPattern = `${
   process.env.NODE_ENV === "production"
     ? "https://storage.googleapis.com"
-    : "http://localhost:9199"
+    : "http://127.0.0.1:9199"
 }/readme-arkiv.appspot.com/pdf/:year/:year-:no.pdf`;
 
 module.exports = nextConfig;
