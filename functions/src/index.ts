@@ -82,8 +82,17 @@ exports.handlePDFUpload = functions
     );
 
     if (process.env.NODE_ENV === "production") {
-      await fetch(VERCEL_REBUILD_URL, { method: "POST" });
       console.log("Pinging Vercel for rebuild.");
+      await fetch(VERCEL_REBUILD_URL, { method: "POST" })
+        .then((response) => {
+          console.log("Got response from Vercel for rebuild", response);
+        })
+        .catch((err) => {
+          console.error(
+            "Got error when trying to ping Vercel for rebuild",
+            err
+          );
+        });
     } else {
       console.log(
         `In env ${process.env.NODE_ENV}, not pinging Vercel for rebuild.`
