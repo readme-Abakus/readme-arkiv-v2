@@ -53,7 +53,7 @@ exports.handlePDFUpload = onObjectFinalized(
 
     await pdf2jpg(tempFilePath, { page: 1 }).then(
       (buffer: string | NodeJS.ArrayBufferView) =>
-        fs.writeFileSync(tempPNGFilePath, buffer)
+        fs.writeFileSync(tempPNGFilePath, buffer),
     );
 
     const metadata = {
@@ -78,7 +78,7 @@ exports.handlePDFUpload = onObjectFinalized(
     fs.createReadStream(tempPNGFilePath).pipe(pipeline);
 
     await new Promise((resolve, reject) =>
-      thumbnailUploadStream.on("finish", resolve).on("error", reject)
+      thumbnailUploadStream.on("finish", resolve).on("error", reject),
     );
 
     if (process.env.NODE_ENV === "production") {
@@ -90,17 +90,17 @@ exports.handlePDFUpload = onObjectFinalized(
         .catch((err) => {
           console.error(
             "Got error when trying to ping Vercel for rebuild",
-            err
+            err,
           );
         });
     } else {
       console.log(
-        `In env ${process.env.NODE_ENV}, not pinging Vercel for rebuild.`
+        `In env ${process.env.NODE_ENV}, not pinging Vercel for rebuild.`,
       );
     }
 
     return fs.remove(workingDir);
-  }
+  },
 );
 
 exports.handlePdfDelete = onObjectDeleted(async (object) => {
@@ -114,7 +114,7 @@ exports.handlePdfDelete = onObjectDeleted(async (object) => {
     console.log("Pinging Vercel for rebuild.");
   } else {
     console.log(
-      `In env ${process.env.NODE_ENV}, not pinging Vercel for rebuild.`
+      `In env ${process.env.NODE_ENV}, not pinging Vercel for rebuild.`,
     );
   }
 });
@@ -125,13 +125,13 @@ exports.handleSettingsChange = onDocumentWritten(
     if (process.env.NODE_ENV === "production") {
       await fetch(
         "https://api.vercel.com/v1/integrations/deploy/prj_EMutmNh2b9jV8LM7p843xbrKastq/YmXMYVqB6P",
-        { method: "POST" }
+        { method: "POST" },
       );
       console.log("Pinging Vercel for rebuild.");
     } else {
       console.log(
-        `In env ${process.env.NODE_ENV}, not pinging Vercel for rebuild.`
+        `In env ${process.env.NODE_ENV}, not pinging Vercel for rebuild.`,
       );
     }
-  }
+  },
 );
