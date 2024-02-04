@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/fs-extra": "^11.0.4",
     "@types/node-fetch": "^2.6.2",
+    "@types/sharp": "^0.32.0",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "algoliasearch": "^4.12.0",
     "bootstrap": "^5.1.3",
