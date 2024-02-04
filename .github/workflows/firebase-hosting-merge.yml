@@ -20,13 +20,10 @@ jobs:
           npm i
           cd ..
 
-      # - name: Run install base
-      #   uses: borales/actions-yarn@v4
-      #   with:
-      #     cmd: install
       - name: Deploy to Firebase Functions
         uses: w9jds/firebase-action@master
         with:
           args: deploy --only functions
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          GCP_SA_KEY: ${{ secrets.FIREBASE_TOKEN }}
+          PROJECT_ID: readme-arkiv
