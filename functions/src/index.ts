@@ -21,7 +21,7 @@ const VERCEL_REBUILD_URL =
 
 exports.handlePDFUpload = onObjectFinalized(
   {
-    // region: "europe-west1",
+    region: "europe-west1",
     timeoutSeconds: 180,
     memory: "512MiB",
   },
@@ -104,7 +104,7 @@ exports.handlePDFUpload = onObjectFinalized(
 );
 
 exports.handlePdfDelete = onObjectDeleted(
-  // { region: "europe-west1" },
+  { region: "europe-west1" },
   async (object) => {
     const filePath = object.data.name as string;
     if (!filePath.match(/pdf\/\d{4}\/.+\.pdf/g)) {
