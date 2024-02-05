@@ -15,7 +15,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
       - name: Install
-        uses: "borales/actions-yarn@v4"
+        uses: "borales/actions-yarn@v4.2.0"
         with:
           cmd: install
           dir: functions
