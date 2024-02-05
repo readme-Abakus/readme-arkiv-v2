@@ -11,6 +11,11 @@ import {
   onObjectDeleted,
 } from "firebase-functions/v2/storage";
 import { onDocumentWritten } from "firebase-functions/v2/firestore";
+import { setGlobalOptions } from "firebase-functions/v2/options";
+
+setGlobalOptions({
+  maxInstances: 5,
+});
 
 admin.initializeApp();
 
@@ -19,7 +24,7 @@ const THUMB_MAX_WIDTH = 620;
 const VERCEL_REBUILD_URL =
   "https://api.vercel.com/v1/integrations/deploy/prj_EMutmNh2b9jV8LM7p843xbrKastq/yZPSj6goDw";
 
-exports.handlePDFUpload = onObjectFinalized(
+exports.handlePDFUploadv2 = onObjectFinalized(
   {
     region: "europe-west1",
     timeoutSeconds: 180,
@@ -103,7 +108,7 @@ exports.handlePDFUpload = onObjectFinalized(
   },
 );
 
-exports.handlePdfDelete = onObjectDeleted(
+exports.handlePdfDeletev2 = onObjectDeleted(
   { region: "europe-west1" },
   async (object) => {
     const filePath = object.data.name as string;
@@ -122,7 +127,7 @@ exports.handlePdfDelete = onObjectDeleted(
   },
 );
 
-exports.handleSettingsChange = onDocumentWritten(
+exports.handleSettingsChangev2 = onDocumentWritten(
   "/settings/{docID}",
   async () => {
     if (process.env.NODE_ENV === "production") {
