@@ -18,12 +18,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "18"
-      # - run: cd functions && npm i
-      - name: Install
-        uses: "borales/actions-yarn@v4.2.0"
-        with:
-          cmd: install --ignore-engines
-          dir: functions
+      - run: cd functions && npm i
+      - run: cd functions && npm install --os=linux --cpu=x64 sharp
+      # - name: Install
+      #   uses: "borales/actions-yarn@v4.2.0"
+      #   with:
+      #     cmd: install --ignore-engines
+      #     dir: functions
 
       # - name: Install-base
       #   uses: "borales/actions-yarn@v4"
