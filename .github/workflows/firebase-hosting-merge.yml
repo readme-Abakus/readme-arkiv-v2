@@ -20,10 +20,10 @@ jobs:
           cmd: install
           dir: functions
 
-      - name: Install-base
-        uses: "borales/actions-yarn@v4"
-        with:
-          cmd: install
+      # - name: Install-base
+      #   uses: "borales/actions-yarn@v4"
+      #   with:
+      #     cmd: install
 
       - name: Deploy to Firebase Functions
         uses: w9jds/firebase-action@master
