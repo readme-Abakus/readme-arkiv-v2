@@ -17,7 +17,7 @@ jobs:
       - name: Install
         uses: "borales/actions-yarn@v4.2.0"
         with:
-          cmd: install
+          cmd: install --ignore-engines
           dir: functions
 
       # - name: Install-base
