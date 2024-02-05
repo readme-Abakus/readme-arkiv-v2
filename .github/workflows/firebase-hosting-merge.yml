@@ -15,7 +15,10 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
       - name: Install
-        run: cd functions && npm install
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: cd functions && npm ci
       # - name: Install
       #   uses: "borales/actions-yarn@v4.2.0"
       #   with:
