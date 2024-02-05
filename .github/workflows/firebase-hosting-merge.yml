@@ -17,7 +17,7 @@ jobs:
       - name: Install
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "18"
       - run: cd functions && npm i
       # - name: Install
       #   uses: "borales/actions-yarn@v4.2.0"
