@@ -103,21 +103,24 @@ exports.handlePDFUpload = onObjectFinalized(
   },
 );
 
-exports.handlePdfDelete = onObjectDeleted(async (object) => {
-  const filePath = object.data.name as string;
-  if (!filePath.match(/pdf\/\d{4}\/.+\.pdf/g)) {
-    return console.log("Object is not a pdf.");
-  }
+exports.handlePdfDelete = onObjectDeleted(
+  { region: "europe-west1" },
+  async (object) => {
+    const filePath = object.data.name as string;
+    if (!filePath.match(/pdf\/\d{4}\/.+\.pdf/g)) {
+      return console.log("Object is not a pdf.");
+    }
 
-  if (process.env.NODE_ENV === "production") {
-    await fetch(VERCEL_REBUILD_URL, { method: "POST" });
-    console.log("Pinging Vercel for rebuild.");
-  } else {
-    console.log(
-      `In env ${process.env.NODE_ENV}, not pinging Vercel for rebuild.`,
-    );
-  }
-});
+    if (process.env.NODE_ENV === "production") {
+      await fetch(VERCEL_REBUILD_URL, { method: "POST" });
+      console.log("Pinging Vercel for rebuild.");
+    } else {
+      console.log(
+        `In env ${process.env.NODE_ENV}, not pinging Vercel for rebuild.`,
+      );
+    }
+  },
+);
 
 exports.handleSettingsChange = onDocumentWritten(
   "/settings/{docID}",
