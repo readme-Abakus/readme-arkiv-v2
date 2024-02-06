@@ -3,7 +3,6 @@ name: Deploy to Firebase Functions on merge
   push:
     branches:
       - main
-      - fix/adding-google-lint
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
