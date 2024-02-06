@@ -13,19 +13,15 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
-      - name: Set Node.js 18.x
-        uses: actions/setup-node@v3
+      - name: Install
+        uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: "18"
+      - run: cd functions && npm install
 
-      - name: Run install
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: install
-          cwd: functions
       - name: Deploy to Firebase Functions
         uses: w9jds/firebase-action@master
         with:
           args: deploy --only functions
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          GCP_SA_KEY: ${{ secrets.FIREBASE_TOKEN }}
