@@ -22,6 +22,6 @@ jobs:
       - name: Deploy to Firebase Functions
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only functions --debug
+          args: deploy --only functions
         env:
           GCP_SA_KEY: ${{ secrets.FIREBASE_TOKEN }}
