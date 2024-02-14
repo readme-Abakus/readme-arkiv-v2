@@ -15,7 +15,7 @@ export async function getEditions(
   await Promise.all(
     pdfRefs[0].map(async (pdfRef) => {
       const [metadata] = await pdfRef.getMetadata();
-      const isListing = metadata.metadata?.listinglop.toLowerCase() === "true";
+      const isListing = metadata.metadata?.listinglop?.toLowerCase() === "true";
       const matches = pdfRef.name.match(/[0-9]{4}-[0-9]{2}/g);
       let [year, edition] = ["0000", "00"];
 
