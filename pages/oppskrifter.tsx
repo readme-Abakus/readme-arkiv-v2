@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { Fade } from "react-bootstrap";
 
-const Recipes = () => {
+const Oppskrifter = () => {
   return (
     <Fade appear in>
       <div>
@@ -17,4 +17,4 @@ const Recipes = () => {
   );
 };
 
-export default Recipes;
+export default Oppskrifter;
