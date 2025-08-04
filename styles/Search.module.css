@@ -8,7 +8,7 @@
   transition: all 0.3s ease;
 }
 
-[data-theme="dark"] .poweredBy > a {
+[class="dark"] .poweredBy > a {
   background-color: white;
   border-radius: 15px;
   padding: 2.5px 10px;

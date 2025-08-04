@@ -34,9 +34,9 @@ export const ListElement: FC<ListElementProps> = ({ article }) => {
           </i>
         </a>
         <Link href={ROUTES.EDIT_ARTICLE.replace(":id", id)}>
-          <a style={{ color: "unset" }}>
-            <i className={`material-icons md-36 ${styles.edit}`}>edit</i>
-          </a>
+          {/* <a style={{ color: "unset" }}> */}
+          <i className={`material-icons md-36 ${styles.edit}`}>edit</i>
+          {/* </a> */}
         </Link>
         <DeleteButton onClick={() => deleteArticle(id)} />
       </div>

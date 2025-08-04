@@ -85,9 +85,9 @@ const LinkButton = ({
   }
   return (
     <Link href={route} passHref>
-      <a className={className} onClick={onClick}>
-        {children}
-      </a>
+      {/* <a className={className} onClick={onClick}> */}
+      {children}
+      {/* </a> */}
     </Link>
   );
 };
