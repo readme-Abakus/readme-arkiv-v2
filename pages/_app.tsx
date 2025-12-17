@@ -5,7 +5,7 @@ import Layout from "../components/Layout";
 import { ThemeProvider } from "next-themes";
 import SSRProvider from "react-bootstrap/SSRProvider";
 
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import { Favicon } from "../components/Favicon";
 
 import { HeroUIProvider } from "@heroui/react";

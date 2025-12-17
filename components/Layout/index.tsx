@@ -12,7 +12,9 @@ export default function Layout({ children }: { children: ReactNode }) {
       <header className={styles.header}>
         <ReadmeLogo maxWidth={"750px"} />
       </header>
-      <div className={styles.content}>{children}</div>
+      <div className="p-[40px] pb-[80px] gap-[20px] flex flex-col items-center">
+        {children}
+      </div>
       <Footer />
     </div>
   );
