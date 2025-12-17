@@ -1,93 +1,140 @@
-import { FC, ReactNode, useState } from "react";
-import Link from "next/link";
+import { FC, useState } from "react";
 
 import { LightSwitch } from "../LightSwitch";
-
-import styles from "./Navbar.module.scss";
 import { ROUTES } from "../../utils/routes";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../lib/Firebase/firebase";
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/router";
+import {
+  Link,
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  NavbarMenu,
+  NavbarMenuItem,
+  NavbarMenuToggle,
+  PressEvent,
+} from "@heroui/react";
+import { ReadmeLogo } from "../ReadmeLogo";
 
 export const AppNavbar: FC = () => {
   const [user, loading] = useAuthState(auth);
 
-  const [open, setOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  return (
-    <nav className={styles.navbar}>
-      <LinkButton route={ROUTES.HOME} exactMatch onClick={() => setOpen(false)}>
-        Arkiv
-      </LinkButton>
-      <ul className={open ? `${styles.links} ${styles.active}` : styles.links}>
-        <li>
-          <LinkButton route={ROUTES.SEARCH} onClick={() => setOpen(false)}>
-            Søk
-          </LinkButton>
-        </li>
-        <li>
-          <a href="https://abakus.no/" onClick={() => setOpen(false)}>
-            Abakus.no
-          </a>
-        </li>
-        <li className={styles.lightSwitch}>
-          <LightSwitch />
-        </li>
-        {!loading && user && (
-          <>
-            <li>
-              <LinkButton route={ROUTES.ADMIN} onClick={() => setOpen(false)}>
-                Admin
-              </LinkButton>
-            </li>
-            <li>
-              <a
-                href="#"
-                onClick={() => {
-                  setOpen(false);
-                  signOut(auth);
-                }}
-              >
-                Logg ut
-              </a>
-            </li>
-          </>
-        )}
-      </ul>
-      <span
-        className={`material-icons ${styles.icon} ${open ? styles.active : ""}`}
-        onClick={() => setOpen(!open)}
-      >
-        menu
-      </span>
-    </nav>
-  );
-};
-
-const LinkButton = ({
-  route,
-  onClick,
-  children,
-  exactMatch = false,
-}: {
-  route: string;
-  onClick?: () => void;
-  exactMatch?: boolean;
-  children: ReactNode;
-}) => {
   const router = useRouter();
-  let className;
-  if (exactMatch) {
-    className = router.pathname == route ? styles.active : "";
-  } else {
-    className = router.pathname.startsWith(route) ? styles.active : "";
-  }
+
+  type NavbarPage = {
+    name: string;
+    route?: string;
+    hidden?: boolean;
+    onPress?: (e: PressEvent) => void;
+  };
+
+  const leftItems: NavbarPage[] = [
+    { name: "Arkiv", route: ROUTES.HOME },
+    { name: "Søk", route: ROUTES.SEARCH },
+    { name: "Abakus.no", route: "https://abakus.no/" },
+  ];
+
+  const rightItems: NavbarPage[] = [
+    { name: "Admin", route: ROUTES.ADMIN, hidden: loading || !user },
+    {
+      name: "Log out",
+      onPress: () => {
+        setIsMenuOpen(false);
+        signOut(auth);
+      },
+      hidden: loading || !user,
+    },
+  ];
+
   return (
-    <Link href={route} passHref>
-      {/* <a className={className} onClick={onClick}> */}
-      {children}
-      {/* </a> */}
-    </Link>
+    <Navbar onMenuOpenChange={setIsMenuOpen} isMenuOpen={isMenuOpen}>
+      <NavbarContent justify="start" className="sm:hidden">
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+        />
+      </NavbarContent>
+
+      <NavbarContent className="hidden sm:flex" justify="start">
+        {leftItems.map(
+          (item, index) =>
+            !item.hidden && (
+              <NavbarItem isActive={router.pathname === item.route} key={index}>
+                <Link
+                  color="foreground"
+                  href={item.route}
+                  onPress={item.onPress}
+                >
+                  {item.name}
+                </Link>
+              </NavbarItem>
+            )
+        )}
+      </NavbarContent>
+
+      <NavbarBrand className="justify-center">
+        <ReadmeLogo maxWidth={"150px"} />
+      </NavbarBrand>
+
+      <NavbarContent justify="end">
+        <LightSwitch />
+        <div className="hidden sm:flex gap-4">
+          {rightItems.map(
+            (item, index) =>
+              !item.hidden && (
+                <NavbarItem
+                  isActive={router.pathname === item.route}
+                  key={index}
+                >
+                  <Link
+                    color="foreground"
+                    href={item.route}
+                    onPress={item.onPress}
+                  >
+                    {item.name}
+                  </Link>
+                </NavbarItem>
+              )
+          )}
+        </div>
+      </NavbarContent>
+
+      <NavbarMenu>
+        {leftItems.map(
+          (item, index) =>
+            !item.hidden && (
+              <NavbarMenuItem key={`${item}-${index}`}>
+                <Link
+                  color="foreground"
+                  href={item.route}
+                  onPress={item.onPress}
+                  size="lg"
+                >
+                  {item.name}
+                </Link>
+              </NavbarMenuItem>
+            )
+        )}
+        {rightItems.map(
+          (item, index) =>
+            !item.hidden && (
+              <NavbarMenuItem key={`${item}-${index}`}>
+                <Link
+                  color={item.name == "Log out" ? "danger" : "foreground"}
+                  href={item.route}
+                  onPress={item.onPress}
+                  size="lg"
+                >
+                  {item.name}
+                </Link>
+              </NavbarMenuItem>
+            )
+        )}
+      </NavbarMenu>
+    </Navbar>
   );
 };

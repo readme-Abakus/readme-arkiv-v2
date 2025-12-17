@@ -20,25 +20,6 @@ body {
   transition: all 0.3s ease;
 }
 
-[class="dark"] body {
-  background-color: $bg-color-dark;
-  color: $text-color-dark;
-  transition: all 0.3s ease;
-}
-
-[class="dark"] input {
-  background-color: $input-color-dark;
-  color: white;
-}
-
-[class="dark"] textarea {
-  background-color: $input-color-dark;
-  color: white;
-}
-
-[class="dark"] input::placeholder {
-  color: $placeholder-color-dark;
-}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
