@@ -1,23 +1,23 @@
 import { FC } from "react";
-import { Table, Fade, Button } from "react-bootstrap";
 import {
   connectInfiniteHits,
   connectStateResults,
   InfiniteHitsProvided,
   StateResultsProvided,
 } from "react-instantsearch-core";
-import { useTheme } from "next-themes";
 import { ROUTES } from "../../utils/routes";
-
-import styles from "./Table.module.css";
-
-const parseTags = (tags: Array<string> | string) => {
-  if (Array.isArray(tags)) {
-    return tags.join(", ");
-  } else {
-    return tags;
-  }
-};
+import {
+  Button,
+  Chip,
+  Link,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+  Tooltip,
+} from "@heroui/react";
 
 // This is a temporary hack since the pages list isnt indexed in algolia
 const getPageNumber = (url: string) => {
@@ -29,62 +29,84 @@ const SearchTable: FC<InfiniteHitsProvided & StateResultsProvided> = ({
   refineNext,
   hasMore,
   searchState,
+  searching,
 }) => {
-  const { theme } = useTheme();
   return (
     <>
       {searchState && searchState.query ? (
-        <Fade in appear>
-          <div>
-            <Table
-              striped
-              bordered
-              hover
-              variant={theme}
-              responsive="lg"
-              className={styles.searchTable}
-            >
-              <thead>
-                <tr>
-                  <th>Utgave</th>
-                  <th>Tittel</th>
-                  <th>Forfatter</th>
-                  <th>Layout</th>
-                  <th>Spalte</th>
-                  <th>Stikkord</th>
-                </tr>
-              </thead>
-              <tbody>
-                {hits.map((hit) => (
-                  <tr key={hit._id}>
-                    <td>
-                      <a
+          <Table
+            isStriped     
+            // removeWrapper
+            // className="bg-transparent border-none"
+            classNames={{
+              wrapper: "shadow-none",
+            }}
+            bottomContent={
+              hasMore && (
+                <div className="flex w-full justify-center">
+                  <Button variant="solid" color="primary" onPress={refineNext} isLoading={searching}>
+                    Vis mer
+                  </Button>
+                </div>
+              )
+            }
+          >
+            <TableHeader>
+              <TableColumn>Utgave</TableColumn>
+              <TableColumn>Tittel</TableColumn>
+              <TableColumn>Forfatter</TableColumn>
+              <TableColumn>Layout</TableColumn>
+              <TableColumn>Spalte</TableColumn>
+              <TableColumn>Stikkord</TableColumn>
+            </TableHeader>
+            <TableBody emptyContent="Ingen artikler funnet.">
+              {hits.map((hit, i) => 
+                  (
+                  <TableRow key={i}>
+                    <TableCell>
+                      <Link
+                        className="text-nowrap"
                         href={
                           ROUTES.EDITION.replace(":id", hit.edition) +
                           `#page=${getPageNumber(hit.url)}`
                         }
-                        target="_blank"
-                        rel="noopener noreferrer"
                       >
                         {hit.edition}
-                      </a>
-                    </td>
-                    <td>{hit.title}</td>
-                    <td>{hit.author}</td>
-                    <td>{hit.layout}</td>
-                    <td>{hit.type}</td>
-                    <td>{parseTags(hit.tags)}</td>
-                  </tr>
+                      </Link>
+                    </TableCell>
+                    <TableCell className="font-bold">{hit.title}</TableCell>
+                    <TableCell>{hit.author}</TableCell>
+                    <TableCell>{hit.layout}</TableCell>
+                    <TableCell>{hit.type}</TableCell>
+                    <TableCell>
+                      <div className="flex gap-[5px] flex-wrap">
+                        {(Array.isArray(hit.tags)? hit.tags : [hit.tags]).map(
+                          (tag: string, i: number) =>
+                            tag && tag.trim() && (
+                              <Tooltip
+                                content={tag}
+                                delay={500}
+                                color="danger"
+                              >
+                              <Chip
+                                key={i}
+                                size="sm"
+                                variant={"flat"}
+                                color="primary"
+                                className="[&>*]:overflow-hidden [&>*]:max-w-[100px] [&>*]:text-ellipsis"
+                                
+                                >
+                                {tag}
+                              </Chip>
+                                </Tooltip>
+                            )
+                        )}
+                      </div>
+                    </TableCell>
+                  </TableRow>
                 ))}
-              </tbody>
-            </Table>
-            {hasMore && (
-              <Button className={styles.showMore} onClick={refineNext}>
-                Vis mer
-              </Button>
-            )}
-          </div>
-        </Fade>
+            </TableBody>
+          </Table>
       ) : null}
     </>
   );

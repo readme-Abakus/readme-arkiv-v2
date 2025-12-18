@@ -1,9 +1,7 @@
 import { connectSearchBox } from "react-instantsearch-dom";
-import { Spinner } from "react-bootstrap";
-
-import styles from "./SearchBox.module.css";
 import { SearchBoxProvided } from "react-instantsearch-core";
 import { FC } from "react";
+import { Input, Spinner } from "@heroui/react";
 
 const PlainSearchBox: FC<SearchBoxProvided> = ({
   currentRefinement,
@@ -11,21 +9,17 @@ const PlainSearchBox: FC<SearchBoxProvided> = ({
   isSearchStalled,
 }) => {
   return (
-    <div className={styles.searchBox}>
-      <input
-        value={currentRefinement}
-        onChange={(event) => refine(event.currentTarget.value)}
-        placeholder="Søk..."
-        size={32}
-      />
-      <div className={styles.end}>
-        {isSearchStalled ? (
-          <Spinner animation="border" />
-        ) : (
-          <i className={`material-icons md-36`}>search</i>
-        )}
-      </div>
-    </div>
+    <Input
+      isClearable
+      value={currentRefinement}
+      onChange={(event) => refine(event.currentTarget.value)}
+      onClear={() => refine("")}
+      className="w-[300px]"
+      placeholder="Skriv for å søke ..."
+      startContent={
+        <span className="material-symbols-outlined md">search</span>
+      }
+    />
   );
 };
 
