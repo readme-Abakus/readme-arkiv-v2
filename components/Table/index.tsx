@@ -18,6 +18,7 @@ import {
   TableRow,
   Tooltip,
 } from "@heroui/react";
+import { readmeIfy } from "../ReadmeLogo";
 
 // This is a temporary hack since the pages list isnt indexed in algolia
 const getPageNumber = (url: string) => {
@@ -74,9 +75,9 @@ const SearchTable: FC<InfiniteHitsProvided & StateResultsProvided> = ({
                         {hit.edition}
                       </Link>
                     </TableCell>
-                    <TableCell className="font-bold">{hit.title}</TableCell>
-                    <TableCell>{hit.author}</TableCell>
-                    <TableCell>{hit.layout}</TableCell>
+                    <TableCell className="font-bold">{readmeIfy(hit.title)}</TableCell>
+                    <TableCell>{readmeIfy(hit.author)}</TableCell>
+                    <TableCell>{readmeIfy(hit.layout)}</TableCell>
                     <TableCell>{hit.type}</TableCell>
                     <TableCell>
                       <div className="flex gap-[5px] flex-wrap">
@@ -84,7 +85,7 @@ const SearchTable: FC<InfiniteHitsProvided & StateResultsProvided> = ({
                           (tag: string, i: number) =>
                             tag && tag.trim() && (
                               <Tooltip
-                                content={tag}
+                                content={readmeIfy(tag)}
                                 delay={500}
                                 color="danger"
                               >
@@ -96,7 +97,7 @@ const SearchTable: FC<InfiniteHitsProvided & StateResultsProvided> = ({
                                 className="[&>*]:overflow-hidden [&>*]:max-w-[100px] [&>*]:text-ellipsis"
                                 
                                 >
-                                {tag}
+                                {readmeIfy(tag)}
                               </Chip>
                                 </Tooltip>
                             )
