@@ -1,43 +1,239 @@
 import { NextPage } from "next";
-import { Button, Fade, Spinner } from "react-bootstrap";
 import { WithAuthentication } from "../../../components/WithAuthentication";
 import { useArticleList } from "../../../lib/Firebase/hooks";
 
-import styles from "../../../styles/ArticleList.module.css";
-import { ListElement } from "../../../components/Admin/Articles/ListElement";
 import Head from "next/head";
+import {
+  addToast,
+  Button,
+  ButtonGroup,
+  Chip,
+  Link,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Spinner,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+  Tooltip,
+} from "@heroui/react";
+import React, { Key, useState } from "react";
+import { IArticle } from "../../../lib/types";
+import { ROUTES } from "../../../utils/routes";
+import {
+  deleteArticle,
+  getPageNumber,
+} from "../../../lib/Firebase/firebaseClientAPIs";
 
 const ArticleList: NextPage = () => {
   const [data, loading, error, pageNum, nextPage, prevPage] = useArticleList();
+
+  const [deleteModalActiveArticle, setDeleteModalActiveArticle] = useState<
+    IArticle | undefined
+  >();
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
+
+  const handleDeleteActiveArticle = () => {
+    setIsDeleteLoading(true);
+    deleteModalActiveArticle &&
+      deleteArticle(deleteModalActiveArticle.id).then(() => {
+        addToast({
+          title: (
+            <p>
+              Artikkelen{" "}
+              <span className="italic">{deleteModalActiveArticle.title}</span>{" "}
+              er slettet!
+            </p>
+          ),
+          color: "success",
+        });
+        setIsDeleteLoading(false);
+        setDeleteModalActiveArticle(undefined);
+      });
+  };
+
+  const renderCell = React.useCallback((article: IArticle, columnKey: Key) => {
+    switch (columnKey) {
+      case "edition":
+        return (
+          <Chip color="primary" size="sm" variant="flat">
+            {article.edition}
+          </Chip>
+        );
+      case "actions":
+        return (
+          <div className="relative flex items-center gap-1">
+            <Tooltip content="Åpne artikkel i utgave">
+              <Button
+                isIconOnly
+                radius="full"
+                variant="light"
+                size="sm"
+                as={Link}
+                href={
+                  ROUTES.EDITION.replace(":id", article.edition) +
+                  `#page=${getPageNumber(article)}`
+                }
+                startContent={
+                  <span className="material-symbols-outlined md">
+                    open_in_new
+                  </span>
+                }
+              ></Button>
+            </Tooltip>
+            <Tooltip content="Rediger artikkel">
+              <Button
+                isIconOnly
+                radius="full"
+                variant="light"
+                size="sm"
+                as={Link}
+                href={ROUTES.EDIT_ARTICLE.replace(":id", article.id)}
+                startContent={
+                  <span className="material-symbols-outlined md">edit</span>
+                }
+              ></Button>
+            </Tooltip>
+            <Tooltip color="danger" content="Slett artikkel">
+              <Button
+                isIconOnly
+                radius="full"
+                variant="light"
+                size="sm"
+                color="danger"
+                onPress={() => setDeleteModalActiveArticle(article)}
+                startContent={
+                  <span className="material-symbols-outlined md">delete</span>
+                }
+              ></Button>
+            </Tooltip>
+          </div>
+        );
+      default:
+        return article[columnKey as keyof IArticle];
+    }
+  }, []);
+
   return (
     <>
       <Head>
         <title>readme - artikler</title>
       </Head>
       <WithAuthentication>
-        <Fade appear in>
-          <div className={styles.articleList}>
-            <h1>Artikler</h1>
-            {loading ? (
-              <Spinner animation="border" />
-            ) : (
-              <Fade appear in>
-                <div>
-                  {data?.map((article, i) => (
-                    <ListElement key={i} article={article} />
-                  ))}
+        <div className="flex flex-row place-content-between items-center px-5 w-full">
+          <h1 className="text-3xl font-bold text-default-foreground">
+            Artikler
+          </h1>
+          <Button
+            color="primary"
+            size="sm"
+            radius="full"
+            as={Link}
+            href={ROUTES.NEW_ARTICLE}
+            startContent={
+              <span className="material-symbols-outlined md">add_2</span>
+            }
+          >
+            Ny artikkel
+          </Button>
+        </div>
 
-                  <div className={styles.pagination}>
-                    <Button disabled={pageNum === 0} onClick={() => prevPage()}>
-                      &lt;&lt;
-                    </Button>
-                    <Button onClick={() => nextPage()}>&gt;&gt;</Button>
-                  </div>
-                </div>
-              </Fade>
+        <Table
+          aria-label="Artikkel tabell"
+          isStriped
+          classNames={{
+            wrapper: "shadow-none",
+          }}
+        >
+          <TableHeader>
+            <TableColumn key={"title"}>Tittel</TableColumn>
+            <TableColumn key={"edition"} width={90}>
+              Utgave
+            </TableColumn>
+            <TableColumn key={"author"}>Forfatter</TableColumn>
+            <TableColumn key={"layout"}>Layout</TableColumn>
+            <TableColumn key={"actions"} width={50} align="center">
+              Handlinger
+            </TableColumn>
+          </TableHeader>
+          <TableBody
+            items={data ?? []}
+            isLoading={loading}
+            loadingContent={<Spinner color="primary"></Spinner>}
+          >
+            {(item) => (
+              <TableRow key={item.id}>
+                {(columnKey) => (
+                  <TableCell>{renderCell(item, columnKey)}</TableCell>
+                )}
+              </TableRow>
             )}
-          </div>
-        </Fade>
+          </TableBody>
+        </Table>
+        <ButtonGroup>
+          <Button
+            color="primary"
+            onPress={prevPage}
+            isDisabled={pageNum === 0}
+            radius="full"
+            startContent={
+              <span className="material-symbols-outlined md">arrow_back</span>
+            }
+          >
+            Forrige
+          </Button>
+          <Button
+            color="primary"
+            onPress={nextPage}
+            radius="full"
+            endContent={
+              <span className="material-symbols-outlined md">
+                arrow_forward
+              </span>
+            }
+          >
+            Neste
+          </Button>
+        </ButtonGroup>
+        <Modal
+          isOpen={!!deleteModalActiveArticle}
+          onClose={() => setDeleteModalActiveArticle(undefined)}
+        >
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader>Slett artikkel</ModalHeader>
+                <ModalBody>
+                  <span>
+                    Er du sikker på at du vil slette artikkelen{" "}
+                    <span className="italic">
+                      {deleteModalActiveArticle?.title}
+                    </span>
+                    ?
+                  </span>
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="default" onPress={onClose}>
+                    Avbryt
+                  </Button>
+                  <Button
+                    color="danger"
+                    onPress={handleDeleteActiveArticle}
+                    isLoading={isDeleteLoading}
+                  >
+                    Slett
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
       </WithAuthentication>
     </>
   );

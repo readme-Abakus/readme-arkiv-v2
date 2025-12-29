@@ -1,13 +1,9 @@
 import { NextPage } from "next";
-import Link from "next/link";
 import Head from "next/head";
-import { Button, Fade } from "react-bootstrap";
 import { ROUTES } from "../../utils/routes";
-
 import { ShowListingToggle } from "../../components/Admin/ShowListingToggle";
 import { WithAuthentication } from "../../components/WithAuthentication";
-
-import styles from "../../styles/Admin.module.css";
+import { Button, Link } from "@heroui/react";
 
 const Admin: NextPage = () => {
   return (
@@ -16,27 +12,42 @@ const Admin: NextPage = () => {
         <title>readme - admin</title>
       </Head>
       <WithAuthentication>
-        <Fade appear in>
-          <div className={styles.container}>
-            <h1>Admin</h1>
-            <div className="d-grid gap-2">
-              <Link href={ROUTES.NEW_EDITION} passHref>
-                <Button variant="primary">Legg til ny utgave</Button>
-              </Link>
-              <Link href={ROUTES.EDITION_LIST} passHref>
-                <Button variant="primary">Vis utgavelisten</Button>
-              </Link>
-              <Link href={ROUTES.NEW_ARTICLE} passHref>
-                <Button variant="primary">Legg til ny artikkel</Button>
-              </Link>
-              <Link href={ROUTES.ARTICLE_LIST} passHref>
-                <Button variant="primary">Vis artikkellisten</Button>
-              </Link>
-
-              <ShowListingToggle />
-            </div>
-          </div>
-        </Fade>
+        <div className="flex flex-col items-center gap-[10px]">
+          <h1 className="text-2xl font-bold text-default-foreground">Admin</h1>
+          <Button
+            as={Link}
+            href={ROUTES.NEW_EDITION}
+            className="w-full"
+            color="primary"
+          >
+            Legg til ny utgave
+          </Button>
+          <Button
+            as={Link}
+            href={ROUTES.EDITION_LIST}
+            className="w-full"
+            color="primary"
+          >
+            Vis utgavelisten
+          </Button>
+          <Button
+            as={Link}
+            href={ROUTES.NEW_ARTICLE}
+            className="w-full"
+            color="primary"
+          >
+            Legg til ny artikkel
+          </Button>
+          <Button
+            as={Link}
+            href={ROUTES.ARTICLE_LIST}
+            className="w-full"
+            color="primary"
+          >
+            Vis artikkellisten
+          </Button>
+          <ShowListingToggle />
+        </div>
       </WithAuthentication>
     </>
   );

@@ -104,9 +104,9 @@ export const useSettings = () => {
     query(collection(db, "settings").withConverter(settingsConverter))
   );
 
-  const updateSettings = (newSettings: ISettings) => {
+  const updateSettings = async (newSettings: ISettings) => {
     if (snapshot) {
-      updateDoc(snapshot.docs[0].ref, { ...newSettings });
+      await updateDoc(snapshot.docs[0].ref, { ...newSettings });
     }
   };
 

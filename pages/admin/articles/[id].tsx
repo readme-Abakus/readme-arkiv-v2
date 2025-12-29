@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Fade, Spinner } from "react-bootstrap";
 import { ArticleForm } from "../../../components/Admin/Articles/ArticleForm";
 import { WithAuthentication } from "../../../components/WithAuthentication";
 
@@ -12,6 +11,7 @@ import {
 import { IEditArticle } from "../../../lib/types";
 
 import styles from "../../../styles/Article.module.css";
+import { Spinner } from "@heroui/react";
 
 const NewArticlePage = () => {
   const router = useRouter();
@@ -51,32 +51,32 @@ const NewArticlePage = () => {
         <title>readme - oppdater artikkel</title>
       </Head>
       <WithAuthentication>
-        <Fade appear in>
-          <div className={styles.container}>
-            <h1>Oppdater artikkel</h1>
-            {loading ? (
-              <Spinner animation="border" size="sm" variant="secondary" />
-            ) : (
-              <ArticleForm
-                article={article}
-                doHandleSubmit={(values, { setStatus, setSubmitting }) => {
-                  updateArticle(
-                    values,
-                    id as string,
-                    () => {
-                      setSubmitting(false);
-                      setStatus({ success: true });
-                    },
-                    () => {
-                      setSubmitting(false);
-                      setStatus({ error: true });
-                    }
-                  );
-                }}
-              />
-            )}
-          </div>
-        </Fade>
+        <div className="flex flex-col gap-[20px] items-center">
+          <h1 className="text-2xl font-bold text-default-foreground">
+            Oppdater artikkel
+          </h1>
+          {loading ? (
+            <Spinner size="lg" />
+          ) : (
+            <ArticleForm
+              article={article}
+              doHandleSubmit={(values, { setStatus, setSubmitting }) => {
+                updateArticle(
+                  values,
+                  id as string,
+                  () => {
+                    setSubmitting(false);
+                    setStatus({ success: true });
+                  },
+                  () => {
+                    setSubmitting(false);
+                    setStatus({ error: true });
+                  }
+                );
+              }}
+            />
+          )}
+        </div>
       </WithAuthentication>
     </>
   );
