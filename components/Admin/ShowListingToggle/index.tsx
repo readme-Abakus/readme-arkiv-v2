@@ -18,22 +18,22 @@ export const ShowListingToggle: FC = () => {
     );
   }
   return (
-    settings && (
-      <div className="flex items-center gap-[10px]">
-        <Tooltip
-          content={
-            "Brukes for å vise/skjule Listingsløp utgaver på arkivets forside."
-          }
-        >
-          <span>Vis listingutgaver:</span>
-        </Tooltip>
+    <div className="flex items-center gap-[10px]">
+      <Tooltip
+        content={
+          "Brukes for å vise/skjule Listingsløp utgaver på arkivets forside."
+        }
+      >
+        <span>Vis listingutgaver:</span>
+      </Tooltip>
+      {loading ? (
+        <Spinner variant="dots" className="w-[48px]" />
+      ) : (
         <Switch
           onChange={toggleShowListing}
-          isSelected={settings.showListing}
-          disabled={loading}
+          isSelected={settings?.showListing}
         />
-        {loading && <Spinner size="sm" />}
-      </div>
-    )
+      )}
+    </div>
   );
 };

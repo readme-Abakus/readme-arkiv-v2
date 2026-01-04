@@ -19,7 +19,7 @@ export const ReadmeLogo: FC<{
           maxWidth,
         }}
       >
-        <Image src={logoSrc} alt="readmeLogoHvit" layout={"responsive"} />
+        <Image src={logoSrc} alt="readmeLogoHvit" />
       </div>
       <div
         className={styles.logoSort + " logoSort"}
@@ -28,7 +28,7 @@ export const ReadmeLogo: FC<{
           maxWidth,
         }}
       >
-        <Image src={blackLogoSrc} alt="readmeLogoHvit" layout={"responsive"} />
+        <Image src={blackLogoSrc} alt="readmeLogoHvit" />
       </div>
     </div>
   );
