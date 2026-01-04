@@ -106,7 +106,7 @@ const NewEditionForm: NextPage = () => {
 
         return (
           <Form
-            className="flex flex-col gap-[10px] w-[350px]"
+            className="flex flex-col gap-[10px] max-w-[350px] w-full"
             onSubmit={handleSubmit}
           >
             <div className="flex items-start gap-[20px] w-full">

@@ -81,7 +81,7 @@ const Editions: NextPage<{ editionData: IEditionData[] }> = ({
           {editionData.map((year) => (
             <div className="flex flex-col gap-[10px] items-start mb-10">
               <h2 className="text-xl font-bold px-1">{year.year}</h2>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-[15px]">
+              <div className="grid grid-cols-[repeat(1,_minmax(0,_400px))] lg:grid-cols-[repeat(2,_minmax(0,_400px))] gap-[15px]">
                 {year.editions.map((edition, i) => (
                   <EditionCard
                     key={i}
@@ -136,7 +136,7 @@ const EditionCard: NextPage<{
   edition: IEdition;
   onDeletePressed: () => void;
 }> = ({ year, edition, onDeletePressed }) => (
-  <Card isFooterBlurred radius="sm" className="w-[400px]">
+  <Card isFooterBlurred radius="sm">
     <CardBody className="flex flex-row gap-[20px] items-center p-3">
       <Image src={edition.imageUrl} width={50} className="rounded-none" />
       <span className="font-bold grow">{`Utgave ${edition.edition}`}</span>

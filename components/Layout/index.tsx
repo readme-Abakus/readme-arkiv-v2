@@ -9,7 +9,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <div className={`text-foreground bg-background ${styles.app}`}>
       <AppNavbar />
-      <div className="p-[40px] pb-[80px] gap-[20px] flex flex-col items-center">
+      <div className="p-[20px] md:p-[40px] pb-[80px] gap-[20px] flex flex-col items-center">
         {children}
       </div>
       <Footer />

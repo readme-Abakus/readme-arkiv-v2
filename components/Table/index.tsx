@@ -35,79 +35,91 @@ const SearchTable: FC<InfiniteHitsProvided & StateResultsProvided> = ({
   return (
     <>
       {searchState && searchState.query ? (
-          <Table
-            isStriped     
-            // removeWrapper
-            // className="bg-transparent border-none"
-            classNames={{
-              wrapper: "shadow-none",
-            }}
-            bottomContent={
-              hasMore && (
-                <div className="flex w-full justify-center">
-                  <Button variant="solid" color="primary" onPress={refineNext} isLoading={searching}>
-                    Vis mer
-                  </Button>
-                </div>
-              )
-            }
-          >
-            <TableHeader>
-              <TableColumn>Utgave</TableColumn>
-              <TableColumn>Tittel</TableColumn>
-              <TableColumn>Forfatter</TableColumn>
-              <TableColumn>Layout</TableColumn>
-              <TableColumn>Spalte</TableColumn>
-              <TableColumn>Stikkord</TableColumn>
-            </TableHeader>
-            <TableBody emptyContent="Ingen artikler funnet.">
-              {hits.map((hit, i) => 
-                  (
-                  <TableRow key={i}>
-                    <TableCell>
-                      <Link
-                        className="text-nowrap"
-                        href={
-                          ROUTES.EDITION.replace(":id", hit.edition) +
-                          `#page=${getPageNumber(hit.url)}`
-                        }
-                      >
-                        {hit.edition}
-                      </Link>
-                    </TableCell>
-                    <TableCell className="font-bold">{readmeIfy(hit.title)}</TableCell>
-                    <TableCell>{readmeIfy(hit.author)}</TableCell>
-                    <TableCell>{readmeIfy(hit.layout)}</TableCell>
-                    <TableCell>{hit.type}</TableCell>
-                    <TableCell>
-                      <div className="flex gap-[5px] flex-wrap">
-                        {(Array.isArray(hit.tags)? hit.tags : [hit.tags]).map(
-                          (tag: string, i: number) =>
-                            tag && tag.trim() && (
-                              <Tooltip
-                                content={readmeIfy(tag)}
-                                delay={500}
-                                color="danger"
-                              >
-                              <Chip
-                                key={i}
-                                size="sm"
-                                variant={"flat"}
-                                color="primary"
-                                className="[&>*]:overflow-hidden [&>*]:max-w-[100px] [&>*]:text-ellipsis"
-                                
-                                >
-                                {readmeIfy(tag)}
-                              </Chip>
-                                </Tooltip>
-                            )
-                        )}
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
+        <Table
+          isStriped
+          aria-label="Search results"
+          classNames={{
+            wrapper: "shadow-none p-0 rounded-sm",
+          }}
+          bottomContent={
+            hasMore && (
+              <div className="flex w-full justify-center">
+                <Button
+                  variant="solid"
+                  color="primary"
+                  onPress={refineNext}
+                  isLoading={searching}
+                >
+                  Vis mer
+                </Button>
+              </div>
+            )
+          }
+        >
+          <TableHeader>
+            <TableColumn>Utgave</TableColumn>
+            <TableColumn>Tittel</TableColumn>
+            <TableColumn>Forfatter</TableColumn>
+            <TableColumn className="rounded-e-lg sm:rounded-none">
+              Layout
+            </TableColumn>
+            <TableColumn className="hidden md:table-cell">Spalte</TableColumn>
+            <TableColumn className="hidden sm:table-cell">Stikkord</TableColumn>
+          </TableHeader>
+          <TableBody emptyContent="Ingen artikler funnet.">
+            {hits.map((hit, i) => (
+              <TableRow key={i}>
+                <TableCell>
+                  <Link
+                    className="text-nowrap"
+                    href={
+                      ROUTES.EDITION.replace(":id", hit.edition) +
+                      `#page=${getPageNumber(hit.url)}`
+                    }
+                    size="sm"
+                  >
+                    {hit.edition}
+                  </Link>
+                </TableCell>
+                <TableCell className="font-bold">
+                  {readmeIfy(hit.title)}
+                </TableCell>
+                <TableCell>{readmeIfy(hit.author)}</TableCell>
+                <TableCell className="before:rounded-e-lg sm:before:rounded-none">
+                  {readmeIfy(hit.layout)}
+                </TableCell>
+                <TableCell className="hidden md:table-cell">
+                  {hit.type}
+                </TableCell>
+                <TableCell className="hidden sm:table-cell">
+                  <div className="flex gap-[5px] flex-wrap">
+                    {(Array.isArray(hit.tags) ? hit.tags : [hit.tags]).map(
+                      (tag: string, i: number) =>
+                        tag &&
+                        tag.trim() && (
+                          <Tooltip
+                            content={readmeIfy(tag)}
+                            delay={500}
+                            color="danger"
+                            key={i}
+                          >
+                            <Chip
+                              size="sm"
+                              variant={"flat"}
+                              color="primary"
+                              className="[&>*]:overflow-hidden [&>*]:max-w-[100px] [&>*]:text-ellipsis"
+                            >
+                              {readmeIfy(tag)}
+                            </Chip>
+                          </Tooltip>
+                        )
+                    )}
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       ) : null}
     </>
   );

@@ -150,7 +150,7 @@ export const ArticleForm: FC<ArticleFormProps> = ({
         return (
           <Form
             onSubmit={handleSubmit}
-            className="flex flex-col gap-[15px] w-[600px] items-center"
+            className="flex flex-col gap-[15px] max-w-[600px] w-full items-center"
           >
             <div className="flex gap-[25px] w-full">
               <Input

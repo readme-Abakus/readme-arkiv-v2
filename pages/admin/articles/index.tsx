@@ -126,7 +126,7 @@ const ArticleList: NextPage = () => {
         <title>readme - artikler</title>
       </Head>
       <WithAuthentication>
-        <div className="flex flex-row place-content-between items-center px-5 w-full">
+        <div className="flex flex-row place-content-between items-center w-full">
           <h1 className="text-3xl font-bold text-default-foreground">
             Artikler
           </h1>
@@ -148,7 +148,7 @@ const ArticleList: NextPage = () => {
           aria-label="Artikkel tabell"
           isStriped
           classNames={{
-            wrapper: "shadow-none",
+            wrapper: "shadow-none p-0 rounded-sm",
           }}
         >
           <TableHeader>
@@ -156,8 +156,12 @@ const ArticleList: NextPage = () => {
             <TableColumn key={"edition"} width={90}>
               Utgave
             </TableColumn>
-            <TableColumn key={"author"}>Forfatter</TableColumn>
-            <TableColumn key={"layout"}>Layout</TableColumn>
+            <TableColumn key={"author"} className="hidden sm:table-cell">
+              Forfatter
+            </TableColumn>
+            <TableColumn key={"layout"} className="hidden sm:table-cell">
+              Layout
+            </TableColumn>
             <TableColumn key={"actions"} width={50} align="center">
               Handlinger
             </TableColumn>
@@ -170,18 +174,24 @@ const ArticleList: NextPage = () => {
             {(item) => (
               <TableRow key={item.id}>
                 {(columnKey) => (
-                  <TableCell>{renderCell(item, columnKey)}</TableCell>
+                  <TableCell
+                    className={
+                      columnKey == "author" || columnKey == "layout"
+                        ? "hidden sm:table-cell"
+                        : ""
+                    }
+                  >
+                    {renderCell(item, columnKey)}
+                  </TableCell>
                 )}
               </TableRow>
             )}
           </TableBody>
         </Table>
-        <ButtonGroup>
+        <ButtonGroup size="sm" color="primary" radius="full">
           <Button
-            color="primary"
             onPress={prevPage}
             isDisabled={pageNum === 0}
-            radius="full"
             startContent={
               <span className="material-symbols-outlined md">arrow_back</span>
             }
@@ -189,9 +199,7 @@ const ArticleList: NextPage = () => {
             Forrige
           </Button>
           <Button
-            color="primary"
             onPress={nextPage}
-            radius="full"
             endContent={
               <span className="material-symbols-outlined md">
                 arrow_forward
