@@ -4,10 +4,19 @@ import { INewEditionData, ISubmitEditionFunction } from "../../../../lib/types";
 import { Formik } from "formik";
 import { addEdition } from "../../../../lib/Firebase/firebaseClientAPIs";
 import { PDFDocument } from "pdf-lib";
-import { Alert, Button, Checkbox, Form, Link, NumberInput, Progress, Tooltip } from "@heroui/react";
+import {
+  Alert,
+  Button,
+  Checkbox,
+  Form,
+  Link,
+  NumberInput,
+  Progress,
+  Tooltip,
+} from "@heroui/react";
 import { FileInput } from "../FileInput";
 import { ROUTES } from "../../../../utils/routes";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 const schema = Yup.object().shape({
   editionYear: Yup.number()
@@ -40,7 +49,7 @@ const NewEditionForm: NextPage = () => {
       type: (editionFile as File).type,
     });
 
-    // Make sure we set the correc title metadata
+    // Make sure we set the correct title metadata
     // As this is what chrome uses as the title for
     // When it displays the pdf in the browser
     const pdfFile = await PDFDocument.load(await fileToUpload.arrayBuffer());
@@ -49,16 +58,11 @@ const NewEditionForm: NextPage = () => {
       type: (editionFile as File).type,
     });
 
-    setSubmitting(true);
-    addEdition(
-      { ...values, editionFile: fileToUpload },
-      () => {
-        setSubmitting(false);
-        setStatus({ success: true, progress: 100 });
-      },
-      () => setStatus({ error: true }),
-      (progress) => setStatus({ progress: progress })
-    );
+    await addEdition({ ...values, editionFile: fileToUpload }, (progress) =>
+      setStatus({ progress: progress })
+    )
+      .then(() => setStatus({ success: true, progress: 100 }))
+      .catch(() => setStatus({ error: true }));
   };
 
   const now = new Date();
@@ -95,7 +99,10 @@ const NewEditionForm: NextPage = () => {
         resetForm,
         setFieldValue,
       }) => {
-        const disableForm = useMemo(()=>isSubmitting || status.error || status.success, [isSubmitting, status.error, status.success])
+        const disableForm = useMemo(
+          () => isSubmitting || status.error || status.success,
+          [isSubmitting, status.error, status.success]
+        );
 
         return (
           <Form
@@ -145,21 +152,29 @@ const NewEditionForm: NextPage = () => {
               onChange={(file) => setFieldValue("editionFile", file)}
               label="Utgave"
               error={!!errors.editionFile}
-              errorMessage={typeof errors.editionFile === 'string' ? errors.editionFile : undefined}
+              errorMessage={
+                typeof errors.editionFile === "string"
+                  ? errors.editionFile
+                  : undefined
+              }
               isDisabled={disableForm}
               acceptFormat=".pdf"
               isRequired
             />
             <div className="flex items-center gap-[10px]">
-              <Tooltip className="max-w-[400px]" content="Marker om en utgave inneholder en eller flere artikler om Listingløpet. Hvis ønsket kan disse skjules midlertidig fra forsiden via instillingen på '/admin' siden. ">
-                <span className="text-small font-medium">Listingløp utgave:</span>
+              <Tooltip
+                className="max-w-[400px]"
+                content="Marker om en utgave inneholder en eller flere artikler om Listingløpet. Hvis ønsket kan disse skjules midlertidig fra forsiden via instillingen på '/admin' siden. "
+              >
+                <span className="text-small font-medium">
+                  Listingløp utgave:
+                </span>
               </Tooltip>
               <Checkbox
                 name="listingslop"
                 onChange={handleChange}
                 checked={values.listingslop}
                 isDisabled={disableForm}
-                
               />
             </div>
             {disableForm ? (
