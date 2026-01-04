@@ -54,7 +54,8 @@ const NewEditionForm: NextPage = () => {
     // When it displays the pdf in the browser
     const pdfFile = await PDFDocument.load(await fileToUpload.arrayBuffer());
     pdfFile.setTitle(editionTitle);
-    fileToUpload = new File([await pdfFile.save()], `${editionTitle}.pdf`, {
+    const pdfBytes = new Uint8Array(await pdfFile.save());
+    fileToUpload = new File([pdfBytes], `${editionTitle}.pdf`, {
       type: (editionFile as File).type,
     });
 
@@ -99,10 +100,7 @@ const NewEditionForm: NextPage = () => {
         resetForm,
         setFieldValue,
       }) => {
-        const disableForm = useMemo(
-          () => isSubmitting || status.error || status.success,
-          [isSubmitting, status.error, status.success]
-        );
+        const disableForm = isSubmitting || status.error || status.success;
 
         return (
           <Form

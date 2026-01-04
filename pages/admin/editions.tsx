@@ -78,8 +78,8 @@ const Editions: NextPage<{ editionData: IEditionData[] }> = ({
               Ny utgave
             </Button>
           </div>
-          {editionData.map((year) => (
-            <div className="flex flex-col gap-[10px] items-start mb-10">
+          {editionData.map((year, i) => (
+            <div key={i} className="flex flex-col gap-[10px] items-start mb-10">
               <h2 className="text-xl font-bold px-1">{year.year}</h2>
               <div className="grid grid-cols-[repeat(1,_minmax(0,_400px))] lg:grid-cols-[repeat(2,_minmax(0,_400px))] gap-[15px]">
                 {year.editions.map((edition, i) => (

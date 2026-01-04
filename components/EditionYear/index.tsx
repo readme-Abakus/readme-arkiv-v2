@@ -1,11 +1,11 @@
 import Image from "next/image";
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { IEditionData } from "../../lib/types";
 import { ROUTES } from "../../utils/routes";
 
 export const EditionYear: FC<{ data: IEditionData }> = ({ data }) => {
   return (
-    <div className="grid grid-cols-[repeat(auto-fit,200px)] gap-[40px] max-w-[calc(3*200px+2*40px)] w-full justify-center mb-10">
+    <div className="grid grid-cols-[repeat(auto-fit,200px)] gap-[40px] max-w-[calc(3*200px+2*40px)] w-full justify-center not-last:mb-10">
       <h2 className="text-3xl text-default-foreground font-bold col-span-full mb-[-20px]">
         {data.year}
       </h2>
@@ -34,7 +34,7 @@ export const EditionYear: FC<{ data: IEditionData }> = ({ data }) => {
 
 function setImageHeight(year: number, edition: number) {
   if (year >= 2018) {
-    return 255.5;
+    return 245;
   } else if (year > 2014 || (year === 2014 && edition > 1)) {
     return 253.5;
   } else {

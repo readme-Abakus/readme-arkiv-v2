@@ -4,6 +4,7 @@ import { SearchBox } from "../components/SearchBox";
 import { InstantSearch, PoweredBy } from "react-instantsearch-dom";
 import algoliasearch from "algoliasearch/lite";
 import "instantsearch.css/themes/reset.css";
+import { useEffect, useState } from "react";
 
 const searchClient = algoliasearch(
   "K9OSMLFRD3",
@@ -11,6 +12,9 @@ const searchClient = algoliasearch(
 );
 
 const Search = () => {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   return (
     <>
       <Head>
@@ -23,13 +27,15 @@ const Search = () => {
         <InstantSearch searchClient={searchClient} indexName="Articles">
           <SearchBox />
           <AppTable />
-          <PoweredBy
-            url=""
-            translations={{
-              searchBy: "Søk levert av ",
-            }}
-            className="text-sm mt-[15px] gap-[8px] dark:[&>a]:bg-white dark:[&>a]:rounded-full dark:[&>a]:px-[8px] dark:[&>a]:py-[4px]"
-          />
+          {mounted && (
+            <PoweredBy
+              url="www.algolia.com"
+              translations={{
+                searchBy: "Søk levert av ",
+              }}
+              className="text-sm gap-[8px] dark:[&>a]:bg-white dark:[&>a]:rounded-full dark:[&>a]:px-[8px] dark:[&>a]:py-[4px]"
+            />
+          )}
         </InstantSearch>
       </div>
     </>
