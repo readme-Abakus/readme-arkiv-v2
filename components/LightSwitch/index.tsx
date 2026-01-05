@@ -16,8 +16,6 @@ export const LightSwitch: FC = () => {
   return (
     <Button
       isIconOnly
-      size="sm"
-      variant="bordered"
       radius="full"
       onPress={() => setTheme(theme === "light" ? "dark" : "light")}
     >
