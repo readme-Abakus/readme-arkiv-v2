@@ -11,19 +11,18 @@ export const LightSwitch: FC = () => {
   // When mounted on client, now we can show the UI
   useEffect(() => setMounted(true), []);
 
-  if (!mounted) return null;
-
   return (
     <Button
       isIconOnly
       radius="full"
       onPress={() => setTheme(theme === "light" ? "dark" : "light")}
     >
-      {theme === "light" ? (
-        <span className="material-symbols-rounded sm">dark_mode</span>
-      ) : (
-        <span className="material-symbols-rounded sm">light_mode</span>
-      )}
+      {mounted &&
+        (theme === "light" ? (
+          <span className="material-symbols-rounded sm">dark_mode</span>
+        ) : (
+          <span className="material-symbols-rounded sm">light_mode</span>
+        ))}
     </Button>
   );
 };

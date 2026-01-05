@@ -1,5 +1,3 @@
-import { NextPage } from "next";
-
 import {
   Button,
   Card,
@@ -19,6 +17,7 @@ import { FC, useState } from "react";
 import { deleteEdition } from "../../../lib/Firebase/firebaseClientAPIs";
 import { IEdition, IEditionData } from "../../../lib/types";
 import { ROUTES } from "../../../utils/routes";
+import React from "react";
 
 const EditionsOverview: FC<{ editionData: IEditionData[] }> = ({
   editionData,
@@ -63,13 +62,13 @@ const EditionsOverview: FC<{ editionData: IEditionData[] }> = ({
           </Button>
         </div>
         {editionData.map((year, i) => (
-          <>
+          <React.Fragment key={year.year}>
             <h2 className="text-xl font-bold px-1 col-span-full mt-2">
               {year.year}
             </h2>
-            {year.editions.map((edition, i) => (
+            {year.editions.map((edition) => (
               <EditionCard
-                key={i}
+                key={`${year.year}-${edition.edition}`}
                 year={year.year}
                 edition={edition}
                 onDeletePressed={() => {
@@ -77,7 +76,7 @@ const EditionsOverview: FC<{ editionData: IEditionData[] }> = ({
                 }}
               />
             ))}
-          </>
+          </React.Fragment>
         ))}
       </div>
       <Modal
@@ -114,7 +113,7 @@ const EditionsOverview: FC<{ editionData: IEditionData[] }> = ({
   );
 };
 
-const EditionCard: NextPage<{
+const EditionCard: FC<{
   year: number;
   edition: IEdition;
   onDeletePressed: () => void;
