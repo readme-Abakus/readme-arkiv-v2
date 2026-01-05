@@ -81,7 +81,7 @@ const ArticleList: NextPage = () => {
                   `#page=${getPageNumber(article)}`
                 }
                 startContent={
-                  <span className="material-symbols-outlined md">
+                  <span className="material-symbols-rounded md">
                     open_in_new
                   </span>
                 }
@@ -96,7 +96,7 @@ const ArticleList: NextPage = () => {
                 as={Link}
                 href={ROUTES.EDIT_ARTICLE.replace(":id", article.id)}
                 startContent={
-                  <span className="material-symbols-outlined md">edit</span>
+                  <span className="material-symbols-rounded md">edit</span>
                 }
               ></Button>
             </Tooltip>
@@ -109,7 +109,7 @@ const ArticleList: NextPage = () => {
                 color="danger"
                 onPress={() => setDeleteModalActiveArticle(article)}
                 startContent={
-                  <span className="material-symbols-outlined md">delete</span>
+                  <span className="material-symbols-rounded md">delete</span>
                 }
               ></Button>
             </Tooltip>
@@ -137,7 +137,7 @@ const ArticleList: NextPage = () => {
             as={Link}
             href={ROUTES.NEW_ARTICLE}
             startContent={
-              <span className="material-symbols-outlined md">add_2</span>
+              <span className="material-symbols-rounded md">add_2</span>
             }
           >
             Ny artikkel
@@ -193,7 +193,7 @@ const ArticleList: NextPage = () => {
             onPress={prevPage}
             isDisabled={pageNum === 0}
             startContent={
-              <span className="material-symbols-outlined md">arrow_back</span>
+              <span className="material-symbols-rounded md">arrow_back</span>
             }
           >
             Forrige
@@ -201,9 +201,7 @@ const ArticleList: NextPage = () => {
           <Button
             onPress={nextPage}
             endContent={
-              <span className="material-symbols-outlined md">
-                arrow_forward
-              </span>
+              <span className="material-symbols-rounded md">arrow_forward</span>
             }
           >
             Neste

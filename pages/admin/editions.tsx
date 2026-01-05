@@ -72,7 +72,7 @@ const Editions: NextPage<{ editionData: IEditionData[] }> = ({
               as={Link}
               href={ROUTES.NEW_EDITION}
               startContent={
-                <span className="material-symbols-outlined md">add_2</span>
+                <span className="material-symbols-rounded md">add_2</span>
               }
             >
               Ny utgave
@@ -147,7 +147,7 @@ const EditionCard: NextPage<{
             variant="bordered"
             isIconOnly
             startContent={
-              <span className="material-symbols-outlined md">open_in_new</span>
+              <span className="material-symbols-rounded md">open_in_new</span>
             }
           />
         </Tooltip>
@@ -157,7 +157,7 @@ const EditionCard: NextPage<{
             variant="flat"
             isIconOnly
             startContent={
-              <span className="material-symbols-outlined md">delete</span>
+              <span className="material-symbols-rounded md">delete</span>
             }
             onPress={onDeletePressed}
           />

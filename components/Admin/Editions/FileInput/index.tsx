@@ -55,7 +55,7 @@ export const FileInput: FC<FileInputProps> = ({
                 }
               }}
             >
-              <span className="material-symbols-outlined md">upload</span>
+              <span className="material-symbols-rounded md">upload</span>
               <span className="font-semibold">Trykk for å laste opp</span>
               <span>eller dra og slipp</span>
             </label>
@@ -73,7 +73,7 @@ export const FileInput: FC<FileInputProps> = ({
           </>
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center">
-            <span className="material-symbols-outlined md">docs</span>
+            <span className="material-symbols-rounded md">docs</span>
             <span className="flex items-center gap-[5px]">
               <span className="truncate max-w-[220px] text-default-foreground">
                 {value.name}
@@ -86,7 +86,7 @@ export const FileInput: FC<FileInputProps> = ({
                 isDisabled={isDisabled}
                 size="sm"
               >
-                <span className="material-symbols-outlined md">close</span>
+                <span className="material-symbols-rounded md">close</span>
               </Button>
             </span>
           </div>

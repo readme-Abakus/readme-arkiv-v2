@@ -48,7 +48,7 @@ export const SignInForm: FC = () => {
           return validationErrors;
         }}
         startContent={
-          <span className="material-symbols-outlined sm">email</span>
+          <span className="material-symbols-rounded sm">email</span>
         }
       />
       <Input
@@ -57,9 +57,7 @@ export const SignInForm: FC = () => {
         placeholder="Passord"
         type={isPasswordVisible ? "text" : "password"}
         radius="full"
-        startContent={
-          <span className="material-symbols-outlined sm">lock</span>
-        }
+        startContent={<span className="material-symbols-rounded sm">lock</span>}
         onChange={(e) => setIsPasswordEmpty(e.target.value == "")}
         errorMessage={({ validationDetails, validationErrors }) => {
           if (validationDetails.valueMissing) return "Obligatorisk felt.";
@@ -73,11 +71,11 @@ export const SignInForm: FC = () => {
               onClick={togglePasswordVisibility}
             >
               {isPasswordVisible ? (
-                <span className="material-symbols-outlined sm">
+                <span className="material-symbols-rounded sm">
                   visibility_off
                 </span>
               ) : (
-                <span className="material-symbols-outlined sm">visibility</span>
+                <span className="material-symbols-rounded sm">visibility</span>
               )}
             </button>
           )

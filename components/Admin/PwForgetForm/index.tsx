@@ -29,7 +29,7 @@ export const PasswordForgetForm = () => {
           return validationErrors;
         }}
         startContent={
-          <span className="material-symbols-outlined sm">email</span>
+          <span className="material-symbols-rounded sm">email</span>
         }
       />
       <Button

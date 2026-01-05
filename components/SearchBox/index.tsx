@@ -25,9 +25,7 @@ const PlainSearchBox: FC<SearchBoxProvided> = ({
       onClear={() => refine("")}
       className="max-w-[300px] w-full"
       placeholder="Skriv for å søke ..."
-      startContent={
-        <span className="material-symbols-outlined md">search</span>
-      }
+      startContent={<span className="material-symbols-rounded md">search</span>}
     />
   );
 };

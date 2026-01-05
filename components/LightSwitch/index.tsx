@@ -22,9 +22,9 @@ export const LightSwitch: FC = () => {
       onPress={() => setTheme(theme === "light" ? "dark" : "light")}
     >
       {theme === "light" ? (
-        <span className="material-symbols-outlined sm">dark_mode</span>
+        <span className="material-symbols-rounded sm">dark_mode</span>
       ) : (
-        <span className="material-symbols-outlined sm">light_mode</span>
+        <span className="material-symbols-rounded sm">light_mode</span>
       )}
     </Button>
   );
