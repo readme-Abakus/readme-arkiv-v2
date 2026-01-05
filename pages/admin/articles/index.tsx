@@ -68,7 +68,7 @@ const ArticleList: NextPage = () => {
         );
       case "actions":
         return (
-          <div className="relative flex items-center gap-1">
+          <div className="relative flex items-center gap-[2px]">
             <Tooltip content="Åpne artikkel i utgave">
               <Button
                 isIconOnly
@@ -80,6 +80,7 @@ const ArticleList: NextPage = () => {
                   ROUTES.EDITION.replace(":id", article.edition) +
                   `#page=${getPageNumber(article)}`
                 }
+                className="text-foreground-500"
                 startContent={
                   <span className="material-symbols-rounded md">
                     open_in_new
@@ -95,6 +96,7 @@ const ArticleList: NextPage = () => {
                 size="sm"
                 as={Link}
                 href={ROUTES.EDIT_ARTICLE.replace(":id", article.id)}
+                className="text-foreground-500"
                 startContent={
                   <span className="material-symbols-rounded md">edit</span>
                 }

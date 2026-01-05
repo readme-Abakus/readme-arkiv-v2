@@ -34,7 +34,7 @@ export const SignInForm: FC = () => {
   }, [authUser, authLoading, router]);
 
   return (
-    <Form onSubmit={onSubmit} className="w-full">
+    <Form onSubmit={onSubmit} className="w-full gap-3">
       <Input
         isRequired
         name="email"

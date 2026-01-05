@@ -6,8 +6,10 @@ const PasswordForgetPage = () => (
     <Head>
       <title>readme - tilbakestill passord</title>
     </Head>
-    <div className="w-[300px] flex flex-col gap-[10px] items-center">
-      <h1 className="text-2xl font-bold">Glemt passord</h1>
+    <div className="w-[300px] flex flex-col gap-4 items-center">
+      <h1 className="text-3xl font-bold text-default-foreground">
+        Glemt passord
+      </h1>
       <PasswordForgetForm />
     </div>
   </>

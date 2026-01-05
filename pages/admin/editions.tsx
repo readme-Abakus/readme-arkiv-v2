@@ -60,9 +60,9 @@ const Editions: NextPage<{ editionData: IEditionData[] }> = ({
         <title>readme - utgaver</title>
       </Head>
       <WithAuthentication>
-        <div>
-          <div className="flex flex-row place-content-between items-center px-1 mb-5">
-            <h1 className="text-3xl font-bold text-default-foreground">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,_1fr))] w-full gap-3">
+          <div className="flex place-content-between items-center px-1 col-span-full">
+            <h1 className="text-3xl font-bold text-default-foreground ">
               Utgaver
             </h1>
             <Button
@@ -79,21 +79,21 @@ const Editions: NextPage<{ editionData: IEditionData[] }> = ({
             </Button>
           </div>
           {editionData.map((year, i) => (
-            <div key={i} className="flex flex-col gap-[10px] items-start mb-10">
-              <h2 className="text-xl font-bold px-1">{year.year}</h2>
-              <div className="grid grid-cols-[repeat(1,_minmax(0,_400px))] lg:grid-cols-[repeat(2,_minmax(0,_400px))] gap-[15px]">
-                {year.editions.map((edition, i) => (
-                  <EditionCard
-                    key={i}
-                    year={year.year}
-                    edition={edition}
-                    onDeletePressed={() => {
-                      handleOpenDeleteModal(`${year.year}-${edition.edition}`);
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
+            <>
+              <h2 className="text-xl font-bold px-1 col-span-full mt-2">
+                {year.year}
+              </h2>
+              {year.editions.map((edition, i) => (
+                <EditionCard
+                  key={i}
+                  year={year.year}
+                  edition={edition}
+                  onDeletePressed={() => {
+                    handleOpenDeleteModal(`${year.year}-${edition.edition}`);
+                  }}
+                />
+              ))}
+            </>
           ))}
         </div>
         <Modal
