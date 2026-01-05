@@ -123,33 +123,19 @@ export const AppNavbar: FC = () => {
               Abakus.no
             </DropdownItem>
             {!loading && user ? (
-              <DropdownSection
-                title="Admin"
-                classNames={{ heading: "text-default-foreground" }}
-              >
+              <>
                 <DropdownItem
                   key="edition_list"
                   as={Link}
                   className="text-foreground"
-                  href={ROUTES.EDITION_LIST}
-                  startContent={
-                    <span className="material-symbols-rounded md">book_5</span>
-                  }
-                >
-                  Utgaveliste
-                </DropdownItem>
-                <DropdownItem
-                  key="article_list"
-                  as={Link}
-                  className="text-foreground"
-                  href={ROUTES.ARTICLE_LIST}
+                  href={ROUTES.ADMIN}
                   startContent={
                     <span className="material-symbols-rounded md">
-                      text_snippet
+                      shield_person
                     </span>
                   }
                 >
-                  Artikkelliste
+                  Admin
                 </DropdownItem>
                 <DropdownItem
                   key="logout"
@@ -165,95 +151,11 @@ export const AppNavbar: FC = () => {
                 >
                   Log ut
                 </DropdownItem>
-              </DropdownSection>
+              </>
             ) : null}
           </DropdownMenu>
         </Dropdown>
       </div>
     </nav>
-    // <Navbar onMenuOpenChange={setIsMenuOpen} isMenuOpen={isMenuOpen}>
-    //   <NavbarContent justify="start" className="sm:hidden">
-    //     <NavbarMenuToggle
-    //       aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-    //     />
-    //   </NavbarContent>
-
-    //   <NavbarContent className="hidden sm:flex" justify="start">
-    //     {leftItems.map(
-    //       (item, index) =>
-    //         !item.hidden && (
-    //           <NavbarItem isActive={router.pathname === item.route} key={index}>
-    //             <Link
-    //               color="foreground"
-    //               href={item.route}
-    //               onPress={item.onPress}
-    //             >
-    //               {item.name}
-    //             </Link>
-    //           </NavbarItem>
-    //         )
-    //     )}
-    //   </NavbarContent>
-
-    //   <NavbarBrand className="justify-center">
-    //     <ReadmeLogo maxWidth={"150px"} />
-    //   </NavbarBrand>
-
-    //   <NavbarContent justify="end">
-    //     <LightSwitch />
-    //     <div className="hidden sm:flex gap-4">
-    //       {rightItems.map(
-    //         (item, index) =>
-    //           !item.hidden && (
-    //             <NavbarItem
-    //               isActive={router.pathname === item.route}
-    //               key={index}
-    //             >
-    //               <Link
-    //                 color="foreground"
-    //                 href={item.route}
-    //                 onPress={item.onPress}
-    //               >
-    //                 {item.name}
-    //               </Link>
-    //             </NavbarItem>
-    //           )
-    //       )}
-    //     </div>
-    //   </NavbarContent>
-
-    //   <NavbarMenu>
-    //     {leftItems.map(
-    //       (item, index) =>
-    //         !item.hidden && (
-    //           <NavbarMenuItem key={`${item}-${index}`}>
-    //             <Link
-    //               color="foreground"
-    //               href={item.route}
-    //               onPress={item.onPress}
-    //               size="lg"
-    //             >
-    //               {item.name}
-    //             </Link>
-    //           </NavbarMenuItem>
-    //         )
-    //     )}
-    //     {rightItems.map(
-    //       (item, index) =>
-    //         !item.hidden && (
-    //           <NavbarMenuItem key={`${item}-${index}`}>
-    //             <Link
-    //               color={item.name == "Log out" ? "danger" : "foreground"}
-    //               href={item.route}
-    //               onPress={item.onPress}
-    //               size="lg"
-    //             >
-    //               {item.name}
-    //             </Link>
-    //           </NavbarMenuItem>
-    //         )
-    //     )}
-    //   </NavbarMenu>
-    // </Navbar>
   );
 };
