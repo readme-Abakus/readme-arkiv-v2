@@ -3,6 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     domains: ["storage.googleapis.com", "localhost"],
+    minimumCacheTTL: 2678400, // 31 days cache for image optimisations (to avoid 500 limit)
   },
   async rewrites() {
     return [
