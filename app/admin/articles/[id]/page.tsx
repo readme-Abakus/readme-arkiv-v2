@@ -1,31 +1,28 @@
+"use client";
+
 import Head from "next/head";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ArticleForm } from "../../../components/Admin/Articles/ArticleForm";
-import { WithAuthentication } from "../../../components/WithAuthentication";
+import { ArticleForm } from "../../../../components/Admin/Articles/ArticleForm";
+import { WithAuthentication } from "../../../../components/WithAuthentication";
 
 import {
   getArticleByID,
   updateArticle,
-} from "../../../lib/Firebase/firebaseClientAPIs";
-import { IEditArticle } from "../../../lib/types";
+} from "../../../../lib/Firebase/firebaseClientAPIs";
+import { IEditArticle } from "../../../../lib/types";
 
-import styles from "../../../styles/Article.module.css";
 import { Button, Link, Spinner } from "@heroui/react";
-import { ROUTES } from "../../../utils/routes";
+import { ROUTES } from "../../../../utils/routes";
 
-const NewArticlePage = () => {
-  const router = useRouter();
-  const { id } = router.query;
+export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const [article, setArticle] = useState<IEditArticle>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!id) {
-      return;
-    }
     let isSubscribed = true;
     const fetchData = async () => {
+      const { id } = await params;
       const article = await getArticleByID(id as string);
       const [editionYear, editionNumber] = article.edition.split("-");
       const editArticle: IEditArticle = {
@@ -44,7 +41,7 @@ const NewArticlePage = () => {
     return () => {
       isSubscribed = false;
     };
-  }, [id]);
+  }, []);
 
   return (
     <>
@@ -74,7 +71,7 @@ const NewArticlePage = () => {
             doHandleSubmit={(values, { setStatus, setSubmitting }) => {
               updateArticle(
                 values,
-                id as string,
+                article?.id as string,
                 () => {
                   setSubmitting(false);
                   setStatus({ success: true });
@@ -90,6 +87,4 @@ const NewArticlePage = () => {
       </WithAuthentication>
     </>
   );
-};
-
-export default NewArticlePage;
+}

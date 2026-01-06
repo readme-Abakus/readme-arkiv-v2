@@ -1,12 +1,14 @@
+"use client";
+
 import { FC, FormEventHandler, useEffect, useState } from "react";
 import { auth } from "../../../lib/Firebase/firebase";
 import {
   useAuthState,
   useSignInWithEmailAndPassword,
 } from "react-firebase-hooks/auth";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { ROUTES } from "../../../utils/routes";
-import { Alert, Button, Form, Input } from "@heroui/react";
+import { Alert, Button, Form, Input, Link } from "@heroui/react";
 
 export const SignInForm: FC = () => {
   const [signInWithEmailAndPassword, userCredential, loading, error] =
@@ -92,6 +94,14 @@ export const SignInForm: FC = () => {
       >
         Logg inn
       </Button>
+      <Link
+        className="m-auto"
+        color="foreground"
+        size="sm"
+        href={ROUTES.PASSWORD_FORGET}
+      >
+        Glemt passord?
+      </Link>
     </Form>
   );
 };

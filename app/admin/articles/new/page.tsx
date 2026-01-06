@@ -1,15 +1,13 @@
-import Head from "next/head";
-import { ArticleForm } from "../../../components/Admin/Articles/ArticleForm";
-import { WithAuthentication } from "../../../components/WithAuthentication";
-import { addNewArticle } from "../../../lib/Firebase/firebaseClientAPIs";
-import { Button, Link } from "@heroui/react";
-import { ROUTES } from "../../../utils/routes";
+"use client";
 
-const NewArticlePage = () => (
-  <>
-    <Head>
-      <title>readme - ny artikkel</title>
-    </Head>
+import { Button, Link } from "@heroui/react";
+import { ROUTES } from "../../../../utils/routes";
+import { WithAuthentication } from "../../../../components/WithAuthentication";
+import { ArticleForm } from "../../../../components/Admin/Articles/ArticleForm";
+import { addNewArticle } from "../../../../lib/Firebase/firebaseClientAPIs";
+
+export default function Page() {
+  return (
     <WithAuthentication>
       <div className="flex items-center gap-2 max-w-[600px] w-full justify-start">
         <Button isIconOnly variant="light" as={Link} href={ROUTES.ARTICLE_LIST}>
@@ -35,7 +33,5 @@ const NewArticlePage = () => (
         }
       />
     </WithAuthentication>
-  </>
-);
-
-export default NewArticlePage;
+  );
+}

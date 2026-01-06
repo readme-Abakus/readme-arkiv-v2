@@ -6,10 +6,6 @@ import { Button } from "@heroui/react";
 // We prevent component render until we've mounted the component on the client
 export const LightSwitch: FC = () => {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  // When mounted on client, now we can show the UI
-  useEffect(() => setMounted(true), []);
 
   return (
     <Button
@@ -17,12 +13,11 @@ export const LightSwitch: FC = () => {
       radius="full"
       onPress={() => setTheme(theme === "light" ? "dark" : "light")}
     >
-      {mounted &&
-        (theme === "light" ? (
-          <span className="material-symbols-rounded sm">dark_mode</span>
-        ) : (
-          <span className="material-symbols-rounded sm">light_mode</span>
-        ))}
+      {theme === "light" ? (
+        <span className="material-symbols-rounded sm">dark_mode</span>
+      ) : (
+        <span className="material-symbols-rounded sm">light_mode</span>
+      )}
     </Button>
   );
 };

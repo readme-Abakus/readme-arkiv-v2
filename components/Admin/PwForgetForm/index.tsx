@@ -1,3 +1,5 @@
+"use client";
+
 import { FormEventHandler, useState } from "react";
 import { useSendPasswordResetEmail } from "react-firebase-hooks/auth";
 import { auth } from "../../../lib/Firebase/firebase";

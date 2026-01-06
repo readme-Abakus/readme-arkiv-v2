@@ -1,12 +1,13 @@
+import { Metadata } from "next";
 import Head from "next/head";
 
-const Recipes = () => {
+export const metadata: Metadata = {
+  title: "readme - Oppskrifter",
+};
+
+export default function Page() {
   return (
     <div>
-      <Head>
-        <title>readme - Oppskrifter</title>
-      </Head>
-
       <p>
         <a href="https://www.ethanchlebowski.com/cooking-techniques-recipes/lower-calorie-butter-chicken">
           Butter Chicken
@@ -19,6 +20,4 @@ const Recipes = () => {
       </p>
     </div>
   );
-};
-
-export default Recipes;
+}

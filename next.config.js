@@ -2,7 +2,21 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["storage.googleapis.com", "localhost"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "storage.googleapis.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "9199",
+        pathname: "/**",
+      },
+    ],
+    dangerouslyAllowLocalIP: true,
     minimumCacheTTL: 2678400, // 31 days cache for image optimisations (to avoid 500 limit)
   },
   async rewrites() {
