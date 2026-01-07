@@ -1,6 +1,7 @@
 "use client";
 
 import { WithAuthentication } from "@/components/WithAuthentication";
+import { BookOpen, FileText, Gear } from "@gravity-ui/icons";
 import { Tab, Tabs } from "@heroui/react";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo } from "react";
@@ -33,7 +34,7 @@ export default function AdminLayout({
               "gap-7 w-full relative rounded-none p-0 border-b border-divider",
             tab: "max-w-fit px-0 h-12",
             tabContent:
-              "group-data-[selected=true]:text-default-foreground text-default-500 font-semibold text-md flex",
+              "group-data-[selected=true]:text-default-foreground text-default-500 font-semibold flex gap-[6px] items-center",
           }}
         >
           <Tab
@@ -41,7 +42,7 @@ export default function AdminLayout({
             href={ROUTES.EDITION_LIST}
             title={
               <>
-                <span className="material-symbols-rounded md mr-1">book_5</span>
+                <BookOpen />
                 Utgaver
               </>
             }
@@ -51,9 +52,7 @@ export default function AdminLayout({
             href={ROUTES.ARTICLE_LIST}
             title={
               <>
-                <span className="material-symbols-rounded md mr-1">
-                  text_snippet
-                </span>
+                <FileText />
                 Artikler
               </>
             }
@@ -63,9 +62,7 @@ export default function AdminLayout({
             href={ROUTES.SETTINGS}
             title={
               <>
-                <span className="material-symbols-rounded md mr-1">
-                  settings
-                </span>
+                <Gear />
                 Instillinger
               </>
             }

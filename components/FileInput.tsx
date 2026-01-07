@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import { Button, NumberInput } from "@heroui/react";
 import { FC } from "react";
+import { Xmark, File, ArrowUpFromSquare } from "@gravity-ui/icons";
 
 interface FileInputProps {
   value: File | undefined;
@@ -55,7 +56,7 @@ export const FileInput: FC<FileInputProps> = ({
                 }
               }}
             >
-              <span className="material-symbols-rounded md">upload</span>
+              <ArrowUpFromSquare height={20} width={20} className="mb-2" />
               <span className="font-semibold">Trykk for å laste opp</span>
               <span>eller dra og slipp</span>
             </label>
@@ -73,7 +74,7 @@ export const FileInput: FC<FileInputProps> = ({
           </>
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center">
-            <span className="material-symbols-rounded md">docs</span>
+            <File height={20} width={20} className="mb-2" />
             <span className="flex items-center gap-[5px]">
               <span className="truncate max-w-[220px] text-default-foreground">
                 {value.name}
@@ -86,7 +87,7 @@ export const FileInput: FC<FileInputProps> = ({
                 isDisabled={isDisabled}
                 size="sm"
               >
-                <span className="material-symbols-rounded md">close</span>
+                <Xmark />
               </Button>
             </span>
           </div>
