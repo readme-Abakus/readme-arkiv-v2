@@ -113,7 +113,7 @@ export const addNewArticle = async (
 export const getArticleByID = async (id: string) => {
   const articleDoc = await getDoc(doc(db, `articles/${id}`));
 
-  const article = articleDoc.data() as IArticle;
+  const article = { ...articleDoc.data(), id: articleDoc.id } as IArticle;
   return article;
 };
 
