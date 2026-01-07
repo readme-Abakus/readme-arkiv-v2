@@ -19,10 +19,12 @@ import { FC, useState } from "react";
 import { deleteEdition } from "../../../../lib/Firebase/firebaseClientAPIs";
 import { IEdition, IEditionData } from "../../../../lib/types";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 const EditionsOverview: FC<{ editionData: IEditionData[] }> = ({
   editionData,
 }) => {
+  const router = useRouter();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selectedEdition, setSelectedEdition] = useState<string | undefined>();
 
@@ -39,6 +41,7 @@ const EditionsOverview: FC<{ editionData: IEditionData[] }> = ({
           "Merk at det kan ta 5-10 minutter før endringen er synlig på forsiden.",
         color: "success",
       });
+      router.refresh();
     });
   };
 
