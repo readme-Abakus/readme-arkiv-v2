@@ -1,8 +1,8 @@
-import Head from "next/head";
-import { WithAuthentication } from "../../../components/WithAuthentication";
-import EditionsOverview from "../../../components/Admin/Editions";
+import { WithAuthentication } from "@/components/WithAuthentication";
+import EditionsOverview from "app/admin/editions/EditionsOverview";
 import { getEditions } from "../../../lib/Firebase/firebaseServersideAPIs";
 import { Metadata } from "next";
+import EditionsHeading from "./EditionsHeading";
 
 export const metadata: Metadata = {
   title: "readme - utgaver",
@@ -13,7 +13,10 @@ export default async function Page() {
 
   return (
     <WithAuthentication>
-      <EditionsOverview editionData={editionData} />
+      <div className="flex flex-col items-left gap-5 max-w-[1200px] w-full">
+        <EditionsHeading />
+        <EditionsOverview editionData={editionData} />
+      </div>
     </WithAuthentication>
   );
 }

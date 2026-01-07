@@ -1,6 +1,6 @@
 import Head from "next/head";
-import { WithAuthentication } from "../../components/WithAuthentication";
-import Admin from "./admin";
+import { WithAuthentication } from "@/components/WithAuthentication";
+import Admin from "./Admin";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

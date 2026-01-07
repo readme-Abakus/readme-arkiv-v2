@@ -1,7 +1,7 @@
 "use client";
 
 import { FC } from "react";
-import { useSettings } from "../../../lib/Firebase/hooks";
+import { useSettings } from "../../lib/Firebase/hooks";
 import { addToast, Spinner, Switch, Tooltip } from "@heroui/react";
 
 export const ShowListingToggle: FC = () => {

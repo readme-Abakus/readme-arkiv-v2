@@ -1,7 +1,7 @@
 "use client";
 
 import { ROUTES } from "../../utils/routes";
-import { ShowListingToggle } from "../../components/Admin/ShowListingToggle";
+import { ShowListingToggle } from "./ShowListingToggle";
 import { Button, Link } from "@heroui/react";
 
 export default function Admin() {

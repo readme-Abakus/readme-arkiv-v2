@@ -2,13 +2,13 @@
 
 import { Button, Link } from "@heroui/react";
 import { ROUTES } from "../../../utils/routes";
-import { ArticleOverview } from "../../../components/Admin/Articles";
+import PageHeader from "@/components/PageHeader";
 
-export default function Articles() {
+export default function ArticlesHeading() {
   return (
-    <>
-      <div className="flex flex-row place-content-between items-center w-full">
-        <h1 className="text-3xl font-bold text-default-foreground">Artikler</h1>
+    <PageHeader
+      title="Artikler"
+      endContent={
         <Button
           color="primary"
           size="sm"
@@ -21,8 +21,7 @@ export default function Articles() {
         >
           Ny artikkel
         </Button>
-      </div>
-      <ArticleOverview />
-    </>
+      }
+    />
   );
 }

@@ -1,12 +1,12 @@
 import { Tooltip } from "@heroui/react";
 
-export const TooltipLabel = ({
+export default function TooltipLabel({
   labelName,
   tooltipText,
 }: {
   labelName: string;
   tooltipText: string;
-}) => {
+}) {
   return (
     <>
       {labelName}
@@ -17,4 +17,4 @@ export const TooltipLabel = ({
       </Tooltip>
     </>
   );
-};
+}

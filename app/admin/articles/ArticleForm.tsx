@@ -1,8 +1,10 @@
+"use client";
+
 import { FC, ClipboardEvent } from "react";
 
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { ISubmitArticleFunction, IEditArticle } from "../../../../lib/types";
+import { ISubmitArticleFunction, IEditArticle } from "../../../lib/types";
 import {
   Alert,
   Autocomplete,
@@ -13,7 +15,7 @@ import {
   NumberInput,
   Textarea,
 } from "@heroui/react";
-import { TooltipLabel } from "../../Common/TooltipLabel";
+import TooltipLabel from "@/components/TooltipLabel";
 
 interface ArticleFormProps {
   doHandleSubmit: ISubmitArticleFunction;

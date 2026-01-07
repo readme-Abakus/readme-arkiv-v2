@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { PasswordForgetForm } from "../../components/Admin/PwForgetForm";
+import PasswordForgetForm from "./PasswordForgetForm";
 
 export const metadata: Metadata = {
   title: "readme - tilbakestill passord",

@@ -1,10 +1,9 @@
 "use client";
 
 import Head from "next/head";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ArticleForm } from "../../../../components/Admin/Articles/ArticleForm";
-import { WithAuthentication } from "../../../../components/WithAuthentication";
+import { ArticleForm } from "../ArticleForm";
+import { WithAuthentication } from "@/components/WithAuthentication";
 
 import {
   getArticleByID,
@@ -12,8 +11,9 @@ import {
 } from "../../../../lib/Firebase/firebaseClientAPIs";
 import { IEditArticle } from "../../../../lib/types";
 
-import { Button, Link, Spinner } from "@heroui/react";
+import { Spinner } from "@heroui/react";
 import { ROUTES } from "../../../../utils/routes";
+import PageHeader from "@/components/PageHeader";
 
 export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const [article, setArticle] = useState<IEditArticle>();
@@ -49,41 +49,33 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
         <title>readme - oppdater artikkel</title>
       </Head>
       <WithAuthentication>
-        <div className="flex items-center gap-2 max-w-[600px] w-full justify-start">
-          <Button
-            isIconOnly
-            variant="light"
-            as={Link}
-            href={ROUTES.ARTICLE_LIST}
-          >
-            <span className="material-symbols-rounded xl">arrow_back</span>
-          </Button>
-
-          <h1 className="text-2xl font-bold text-default-foreground">
-            Oppdater artikkel
-          </h1>
-        </div>
-        {loading ? (
-          <Spinner size="lg" />
-        ) : (
-          <ArticleForm
-            article={article}
-            doHandleSubmit={(values, { setStatus, setSubmitting }) => {
-              updateArticle(
-                values,
-                article?.id as string,
-                () => {
-                  setSubmitting(false);
-                  setStatus({ success: true });
-                },
-                () => {
-                  setSubmitting(false);
-                  setStatus({ error: true });
-                }
-              );
-            }}
+        <div className="flex flex-col items-left gap-5 max-w-[500px] w-full">
+          <PageHeader
+            title="Oppdater artikkel"
+            backButtonRoute={ROUTES.ARTICLE_LIST}
           />
-        )}
+          {loading ? (
+            <Spinner size="lg" />
+          ) : (
+            <ArticleForm
+              article={article}
+              doHandleSubmit={(values, { setStatus, setSubmitting }) => {
+                updateArticle(
+                  values,
+                  article?.id as string,
+                  () => {
+                    setSubmitting(false);
+                    setStatus({ success: true });
+                  },
+                  () => {
+                    setSubmitting(false);
+                    setStatus({ error: true });
+                  }
+                );
+              }}
+            />
+          )}
+        </div>
       </WithAuthentication>
     </>
   );

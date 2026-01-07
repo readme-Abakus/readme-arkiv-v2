@@ -1,9 +1,9 @@
 import "../styles/globals.scss";
 import { Metadata } from "next";
 import Providers from "./providers";
-import { AppNavbar } from "../components/Navbar";
-import { Footer } from "../components/Footer";
-import { Favicon } from "../components/Favicon";
+import { NavBar } from "app/NavBar";
+import { Footer } from "app/Footer";
+import { Favicon } from "app/Favicon";
 
 export const metadata: Metadata = {
   title: "readme - arkiv",
@@ -30,7 +30,7 @@ export default function RootLayout({
       <body>
         <Providers>
           <div className="relative min-h-screen">
-            <AppNavbar />
+            <NavBar />
             <main className="pt-5 px-5 md:px-10 pb-[100px] gap-[20px] flex flex-col items-center">
               {children}
             </main>

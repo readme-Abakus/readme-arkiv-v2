@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ReadmeLogo } from "../ReadmeLogo";
+import { ReadmeLogo } from "../components/ReadmeLogo";
 
 export const Footer: FC = () => {
   return (

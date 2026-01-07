@@ -1,3 +1,5 @@
+"use client";
+
 import { NextPage } from "next";
 import * as Yup from "yup";
 import { INewEditionData, ISubmitEditionFunction } from "../../../../lib/types";
@@ -14,7 +16,7 @@ import {
   Progress,
   Tooltip,
 } from "@heroui/react";
-import { FileInput } from "../FileInput";
+import { FileInput } from "../../../../components/FileInput";
 import { ROUTES } from "../../../../utils/routes";
 import { useEffect, useMemo } from "react";
 

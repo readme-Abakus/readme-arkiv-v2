@@ -1,6 +1,7 @@
 import { Metadata } from "next";
-import { WithAuthentication } from "../../../components/WithAuthentication";
-import Articles from "./articles";
+import { WithAuthentication } from "@/components/WithAuthentication";
+import ArticlesHeading from "./ArticlesHeading";
+import ArticleOverview from "./ArticlesOverview";
 
 export const metadata: Metadata = {
   title: "readme - artikler",
@@ -9,7 +10,8 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <WithAuthentication>
-      <Articles />
+      <ArticlesHeading />
+      <ArticleOverview />
     </WithAuthentication>
   );
 }

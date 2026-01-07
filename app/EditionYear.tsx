@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { FC, useMemo } from "react";
-import { IEditionData } from "../../lib/types";
-import { ROUTES } from "../../utils/routes";
+import { IEditionData } from "../lib/types";
+import { ROUTES } from "../utils/routes";
 
 export const EditionYear: FC<{ data: IEditionData }> = ({ data }) => {
   return (

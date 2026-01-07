@@ -1,16 +1,16 @@
 "use client";
 
-import { FC, FormEventHandler, useEffect, useState } from "react";
-import { auth } from "../../../lib/Firebase/firebase";
+import { FormEventHandler, useEffect, useState } from "react";
+import { auth } from "../../lib/Firebase/firebase";
 import {
   useAuthState,
   useSignInWithEmailAndPassword,
 } from "react-firebase-hooks/auth";
 import { useRouter } from "next/navigation";
-import { ROUTES } from "../../../utils/routes";
 import { Alert, Button, Form, Input, Link } from "@heroui/react";
+import { ROUTES } from "../../utils/routes";
 
-export const SignInForm: FC = () => {
+export default function SignInForm() {
   const [signInWithEmailAndPassword, userCredential, loading, error] =
     useSignInWithEmailAndPassword(auth);
   const [authUser, authLoading] = useAuthState(auth);
@@ -104,4 +104,4 @@ export const SignInForm: FC = () => {
       </Link>
     </Form>
   );
-};
+}

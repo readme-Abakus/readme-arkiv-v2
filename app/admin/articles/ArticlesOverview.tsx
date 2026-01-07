@@ -1,3 +1,5 @@
+"use client";
+
 import {
   addToast,
   Button,
@@ -28,7 +30,7 @@ import { IArticle } from "../../../lib/types";
 import React from "react";
 import { useArticleList } from "../../../lib/Firebase/hooks";
 
-export const ArticleOverview: FC = () => {
+export default function ArticleOverview() {
   const [data, loading, error, pageNum, nextPage, prevPage] = useArticleList();
 
   const [deleteModalActiveArticle, setDeleteModalActiveArticle] = useState<
@@ -219,4 +221,4 @@ export const ArticleOverview: FC = () => {
       </Modal>
     </>
   );
-};
+}

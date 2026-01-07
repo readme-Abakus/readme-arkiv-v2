@@ -18,7 +18,6 @@ import {
 import { FC, useState } from "react";
 import { deleteEdition } from "../../../lib/Firebase/firebaseClientAPIs";
 import { IEdition, IEditionData } from "../../../lib/types";
-import { ROUTES } from "../../../utils/routes";
 import React from "react";
 
 const EditionsOverview: FC<{ editionData: IEditionData[] }> = ({
@@ -46,23 +45,6 @@ const EditionsOverview: FC<{ editionData: IEditionData[] }> = ({
   return (
     <>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,_1fr))] w-full gap-3">
-        <div className="flex place-content-between items-center px-1 col-span-full">
-          <h1 className="text-3xl font-bold text-default-foreground ">
-            Utgaver
-          </h1>
-          <Button
-            color="primary"
-            size="sm"
-            radius="full"
-            as={Link}
-            href={ROUTES.NEW_EDITION}
-            startContent={
-              <span className="material-symbols-rounded md">add_2</span>
-            }
-          >
-            Ny utgave
-          </Button>
-        </div>
         {editionData.map((year, i) => (
           <React.Fragment key={year.year}>
             <h2 className="text-xl font-bold px-1 col-span-full mt-2">

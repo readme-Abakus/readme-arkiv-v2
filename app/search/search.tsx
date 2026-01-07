@@ -2,8 +2,8 @@
 
 import { InstantSearch, PoweredBy } from "react-instantsearch-dom";
 import algoliasearch from "algoliasearch/lite";
-import { SearchBox } from "../../components/SearchBox";
-import { AppTable } from "../../components/Table";
+import { SearchBox } from "./SearchBox";
+import { SearchTable } from "./SearchTable";
 import "instantsearch.css/themes/reset.css";
 import { useEffect, useState } from "react";
 
@@ -20,7 +20,7 @@ export default function Search() {
   return (
     <InstantSearch searchClient={searchClient} indexName="Articles">
       <SearchBox />
-      <AppTable />
+      <SearchTable />
       {mounted && (
         <PoweredBy
           translations={{
