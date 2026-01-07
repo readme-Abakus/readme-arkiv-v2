@@ -2,9 +2,12 @@
 
 import { NextPage } from "next";
 import * as Yup from "yup";
-import { INewEditionData, ISubmitEditionFunction } from "../../../../lib/types";
+import {
+  INewEditionData,
+  ISubmitEditionFunction,
+} from "../../../../../lib/types";
 import { Formik } from "formik";
-import { addEdition } from "../../../../lib/Firebase/firebaseClientAPIs";
+import { addEdition } from "../../../../../lib/Firebase/firebaseClientAPIs";
 import { PDFDocument } from "pdf-lib";
 import {
   Alert,
@@ -16,8 +19,8 @@ import {
   Progress,
   Tooltip,
 } from "@heroui/react";
-import { FileInput } from "../../../../components/FileInput";
-import { ROUTES } from "../../../../utils/routes";
+import { FileInput } from "../../../../../components/FileInput";
+import { ROUTES } from "../../../../../utils/routes";
 import { useEffect, useMemo } from "react";
 
 const schema = Yup.object().shape({

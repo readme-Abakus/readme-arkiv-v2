@@ -16,8 +16,8 @@ import {
   addToast,
 } from "@heroui/react";
 import { FC, useState } from "react";
-import { deleteEdition } from "../../../lib/Firebase/firebaseClientAPIs";
-import { IEdition, IEditionData } from "../../../lib/types";
+import { deleteEdition } from "../../../../lib/Firebase/firebaseClientAPIs";
+import { IEdition, IEditionData } from "../../../../lib/types";
 import React from "react";
 
 const EditionsOverview: FC<{ editionData: IEditionData[] }> = ({

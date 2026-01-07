@@ -14,7 +14,7 @@ import {
   DropdownTrigger,
   Link,
 } from "@heroui/react";
-import { ReadmeLogo } from "../components/ReadmeLogo";
+import { ReadmeLogo } from "./ReadmeLogo";
 
 export const NavBar: FC = () => {
   const [user, loading] = useAuthState(auth);

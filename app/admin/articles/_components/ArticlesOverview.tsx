@@ -21,14 +21,14 @@ import {
   Tooltip,
 } from "@heroui/react";
 import { FC, Key, useState } from "react";
-import { ROUTES } from "../../../utils/routes";
+import { ROUTES } from "../../../../utils/routes";
 import {
   deleteArticle,
   getPageNumber,
-} from "../../../lib/Firebase/firebaseClientAPIs";
-import { IArticle } from "../../../lib/types";
+} from "../../../../lib/Firebase/firebaseClientAPIs";
+import { IArticle } from "../../../../lib/types";
 import React from "react";
-import { useArticleList } from "../../../lib/Firebase/hooks";
+import { useArticleList } from "../../../../lib/Firebase/hooks";
 
 export default function ArticleOverview() {
   const [data, loading, error, pageNum, nextPage, prevPage] = useArticleList();

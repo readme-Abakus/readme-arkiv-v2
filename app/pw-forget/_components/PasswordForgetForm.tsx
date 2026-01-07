@@ -2,7 +2,7 @@
 
 import { FormEventHandler, useState } from "react";
 import { useSendPasswordResetEmail } from "react-firebase-hooks/auth";
-import { auth } from "../../lib/Firebase/firebase";
+import { auth } from "../../../lib/Firebase/firebase";
 import { Alert, Button, Form, Input } from "@heroui/react";
 
 export default function PasswordForgetForm() {

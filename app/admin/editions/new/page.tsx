@@ -1,5 +1,5 @@
 import { ROUTES } from "../../../../utils/routes";
-import NewEditionForm from "app/admin/editions/new/NewEditionForm";
+import NewEditionForm from "app/admin/editions/new/_components/NewEditionForm";
 import { WithAuthentication } from "@/components/WithAuthentication";
 import PageHeader from "@/components/PageHeader";
 

@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { WithAuthentication } from "@/components/WithAuthentication";
-import ArticlesHeading from "./ArticlesHeading";
-import ArticleOverview from "./ArticlesOverview";
+import ArticlesHeading from "./_components/ArticlesHeading";
+import ArticleOverview from "./_components/ArticlesOverview";
 
 export const metadata: Metadata = {
   title: "readme - artikler",

@@ -1,8 +1,8 @@
 import { WithAuthentication } from "@/components/WithAuthentication";
-import EditionsOverview from "app/admin/editions/EditionsOverview";
+import EditionsOverview from "app/admin/editions/_components/EditionsOverview";
 import { getEditions } from "../../../lib/Firebase/firebaseServersideAPIs";
 import { Metadata } from "next";
-import EditionsHeading from "./EditionsHeading";
+import EditionsHeading from "./_components/EditionsHeading";
 
 export const metadata: Metadata = {
   title: "readme - utgaver",

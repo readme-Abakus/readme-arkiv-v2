@@ -4,7 +4,7 @@ import { FC, ClipboardEvent } from "react";
 
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { ISubmitArticleFunction, IEditArticle } from "../../../lib/types";
+import { ISubmitArticleFunction, IEditArticle } from "../../../../lib/types";
 import {
   Alert,
   Autocomplete,

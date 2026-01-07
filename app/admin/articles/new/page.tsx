@@ -2,7 +2,7 @@
 
 import { ROUTES } from "../../../../utils/routes";
 import { WithAuthentication } from "@/components/WithAuthentication";
-import { ArticleForm } from "../ArticleForm";
+import { ArticleForm } from "../_components/ArticleForm";
 import { addNewArticle } from "../../../../lib/Firebase/firebaseClientAPIs";
 import PageHeader from "@/components/PageHeader";
 

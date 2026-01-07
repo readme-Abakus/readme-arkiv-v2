@@ -1,4 +1,4 @@
-import { EditionYear } from "app/EditionYear";
+import { EditionYear } from "@/components/EditionYear";
 import { getEditions } from "../lib/Firebase/firebaseServersideAPIs";
 
 // Never revalidated, similair to getStaticProps

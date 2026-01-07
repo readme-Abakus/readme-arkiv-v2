@@ -5,7 +5,7 @@ import {
   InfiniteHitsProvided,
   StateResultsProvided,
 } from "react-instantsearch-core";
-import { ROUTES } from "../../utils/routes";
+import { ROUTES } from "../../../utils/routes";
 import {
   Button,
   Chip,

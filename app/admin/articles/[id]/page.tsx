@@ -2,7 +2,7 @@
 
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { ArticleForm } from "../ArticleForm";
+import { ArticleForm } from "../_components/ArticleForm";
 import { WithAuthentication } from "@/components/WithAuthentication";
 
 import {

@@ -1,9 +1,9 @@
 import "../styles/globals.scss";
 import { Metadata } from "next";
 import Providers from "./providers";
-import { NavBar } from "app/NavBar";
-import { Footer } from "app/Footer";
-import { Favicon } from "app/Favicon";
+import { NavBar } from "@/components/NavBar";
+import { Footer } from "@/components/Footer";
+import { Favicon } from "@/components/Favicon";
 
 export const metadata: Metadata = {
   title: "readme - arkiv",

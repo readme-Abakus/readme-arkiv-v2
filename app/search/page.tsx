@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import Search from "./Search";
+import Search from "./_components/Search";
 
 export const metadata: Metadata = {
   title: "readme - søk",
