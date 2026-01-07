@@ -1,6 +1,6 @@
 import { Metadata } from "next";
-import ArticlesHeading from "./_components/ArticlesHeading";
-import ArticleOverview from "./_components/ArticlesOverview";
+import PageHeader from "@/components/PageHeader";
+import { ShowListingToggle } from "../_components/ShowListingToggle";
 
 export const metadata: Metadata = {
   title: "readme - artikler",
@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <div className="flex flex-col items-left gap-5 w-full">
-      <ArticlesHeading />
-      <ArticleOverview />
+      <PageHeader title="Instillinger" />
+      <ShowListingToggle />
     </div>
   );
 }
