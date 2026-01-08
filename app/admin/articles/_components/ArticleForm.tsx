@@ -345,38 +345,32 @@ export const ArticleForm: FC<ArticleFormProps> = ({
                 color="danger"
                 title="Oups!"
                 description="Noe gikk galt. Husket du å laste opp PDF-en først? Man kan ikke opprette en artikkel uten tilhørende utgave i databasen."
-                endContent={
-                  <Button
-                    variant="flat"
-                    color="danger"
-                    className="min-w-[110px]"
-                    onPress={() => {
-                      resetForm();
-                      setStatus({ success: false, error: false });
-                    }}
-                  >
-                    Tøm skjema
-                  </Button>
-                }
               />
             )}
             {status.success && (
               <Alert
                 color="success"
-                title="Artikkel er lagt til!"
-                description="Tøm skjemaet dersom du ønsker å legge til enda en artikkel."
+                title={
+                  article ? "Artikkel er endret!" : "Artikkel er lagt til!"
+                }
+                description={
+                  !article &&
+                  "Tøm skjemaet dersom du ønsker å legge til enda en artikkel."
+                }
                 endContent={
-                  <Button
-                    variant="flat"
-                    color="success"
-                    className="min-w-[110px]"
-                    onPress={() => {
-                      resetForm();
-                      setStatus({ success: false });
-                    }}
-                  >
-                    Tøm skjema
-                  </Button>
+                  !article && (
+                    <Button
+                      variant="flat"
+                      color="success"
+                      className="min-w-[110px]"
+                      onPress={() => {
+                        resetForm();
+                        setStatus({ success: false });
+                      }}
+                    >
+                      Tøm skjema
+                    </Button>
+                  )
                 }
               />
             )}
