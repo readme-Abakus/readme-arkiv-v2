@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
-import { ShowListingToggle } from "../_components/ShowListingToggle";
+import { ShowListingToggle } from "./_components/ShowListingToggle";
 
 export const metadata: Metadata = {
   title: "readme - artikler",

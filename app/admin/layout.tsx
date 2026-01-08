@@ -4,7 +4,7 @@ import { WithAuthentication } from "@/components/WithAuthentication";
 import { BookOpen, FileText, Gear } from "@gravity-ui/icons";
 import { Tab, Tabs } from "@heroui/react";
 import { usePathname } from "next/navigation";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { ROUTES } from "utils/routes";
 
 export default function AdminLayout({
