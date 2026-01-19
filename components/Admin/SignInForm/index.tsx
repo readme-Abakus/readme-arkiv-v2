@@ -43,7 +43,7 @@ export const SignInForm: FC = () => {
         radius="full"
         errorMessage={({ validationDetails, validationErrors }) => {
           if (validationDetails.typeMismatch)
-            return "Skriv in en gyldid mail adresse.";
+            return "Skriv inn en gyldlig mail adresse.";
           if (validationDetails.valueMissing) return "Obligatorisk felt.";
           return validationErrors;
         }}
@@ -90,7 +90,7 @@ export const SignInForm: FC = () => {
         radius="full"
         isLoading={loading}
       >
-        Log inn
+        Logg inn
       </Button>
     </Form>
   );

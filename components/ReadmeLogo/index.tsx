@@ -28,7 +28,7 @@ export const ReadmeLogo: FC<{
           maxWidth,
         }}
       >
-        <Image src={blackLogoSrc} alt="readmeLogoHvit" />
+        <Image src={blackLogoSrc} alt="readmeLogoSvart" />
       </div>
     </div>
   );
