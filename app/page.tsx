@@ -1,7 +1,7 @@
 import { EditionYear } from "@/components/EditionYear";
 import { getEditions } from "../lib/Firebase/firebaseServersideAPIs";
 
-// Never revalidated, similair to getStaticProps
+// Never revalidated, similar to getStaticProps
 export const revalidate = false;
 
 export default async function Page() {

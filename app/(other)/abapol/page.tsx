@@ -1,4 +1,3 @@
-import Head from "next/head";
 import Image from "next/image";
 import abapol from "../../../public/images/abapol.jpg";
 import { Metadata } from "next";

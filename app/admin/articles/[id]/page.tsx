@@ -1,6 +1,5 @@
 "use client";
 
-import Head from "next/head";
 import { useEffect, useState } from "react";
 import { ArticleForm } from "../_components/ArticleForm";
 import { WithAuthentication } from "@/components/WithAuthentication";
@@ -14,16 +13,24 @@ import { IEditArticle } from "../../../../lib/types";
 import { Spinner } from "@heroui/react";
 import { ROUTES } from "../../../../utils/routes";
 import PageHeader from "@/components/PageHeader";
+import { useRouter } from "next/navigation";
 
 export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const [article, setArticle] = useState<IEditArticle>();
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     let isSubscribed = true;
     const fetchData = async () => {
       const { id } = await params;
       const article = await getArticleByID(id as string);
+
+      if (!article && isSubscribed) {
+        router.push(ROUTES.ARTICLE_LIST);
+        return;
+      }
+
       const [editionYear, editionNumber] = article.edition.split("-");
       const editArticle: IEditArticle = {
         ...article,
@@ -41,42 +48,37 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
     return () => {
       isSubscribed = false;
     };
-  }, []);
+  }, [params]);
 
   return (
-    <>
-      <Head>
-        <title>readme - oppdater artikkel</title>
-      </Head>
-      <WithAuthentication>
-        <div className="flex flex-col items-left gap-5 max-w-[500px] w-full">
-          <PageHeader
-            title="Oppdater artikkel"
-            backButtonRoute={ROUTES.ARTICLE_LIST}
+    <WithAuthentication>
+      <div className="flex flex-col items-left gap-5 max-w-[500px] w-full">
+        <PageHeader
+          title="Oppdater artikkel"
+          backButtonRoute={ROUTES.ARTICLE_LIST}
+        />
+        {loading ? (
+          <Spinner size="lg" />
+        ) : (
+          <ArticleForm
+            article={article}
+            doHandleSubmit={(values, { setStatus, setSubmitting }) => {
+              updateArticle(
+                values,
+                article?.id as string,
+                () => {
+                  setSubmitting(false);
+                  setStatus({ success: true });
+                },
+                () => {
+                  setSubmitting(false);
+                  setStatus({ error: true });
+                }
+              );
+            }}
           />
-          {loading ? (
-            <Spinner size="lg" />
-          ) : (
-            <ArticleForm
-              article={article}
-              doHandleSubmit={(values, { setStatus, setSubmitting }) => {
-                updateArticle(
-                  values,
-                  article?.id as string,
-                  () => {
-                    setSubmitting(false);
-                    setStatus({ success: true });
-                  },
-                  () => {
-                    setSubmitting(false);
-                    setStatus({ error: true });
-                  }
-                );
-              }}
-            />
-          )}
-        </div>
-      </WithAuthentication>
-    </>
+        )}
+      </div>
+    </WithAuthentication>
   );
 }

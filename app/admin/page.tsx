@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { WithAuthentication } from "@/components/WithAuthentication";
 import Admin from "./_components/Admin";
 import { Metadata } from "next";
