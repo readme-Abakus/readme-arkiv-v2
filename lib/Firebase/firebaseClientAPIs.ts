@@ -19,65 +19,46 @@ export const deleteArticle = async (id: string) => {
 
 export const addEdition = async (
   edition: INewEditionData,
-  callback?: () => void,
-  errorCallback?: () => void,
-  updateProgressCallback?: (progress: number) => void
-) => {
-  const path = `pdf/${edition.editionYear}/${edition.editionFile.name}`;
-  const metadata = {
-    contentType: "application/pdf",
-    customMetadata: {
-      listinglop: String(edition.listingslop),
-    },
-  };
-  const pdfRef = ref(storage, path);
+  onProgressUpdate?: (progress: number) => void
+): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    const path = `pdf/${edition.editionYear}/${edition.editionFile.name}`;
+    const metadata = {
+      contentType: "application/pdf",
+      customMetadata: {
+        listinglop: String(edition.listingslop),
+      },
+    };
+    const pdfRef = ref(storage, path);
 
-  const uploadTask = uploadBytesResumable(
-    pdfRef,
-    edition.editionFile,
-    metadata
-  );
+    const uploadTask = uploadBytesResumable(
+      pdfRef,
+      edition.editionFile,
+      metadata
+    );
 
-  uploadTask.on(
-    "state_changed",
-    (snapshot) => {
-      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
-      if (
-        updateProgressCallback &&
-        typeof updateProgressCallback === "function"
-      ) {
-        updateProgressCallback(progress);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        onProgressUpdate && onProgressUpdate(progress);
+      },
+      (error) => {
+        console.error("could not upload pdf file: ", error.code);
+        reject(error);
+      },
+      () => {
+        const downloadURL = getPDFDownloadURL(
+          `${edition.editionYear}`,
+          edition.editionFile.name
+        );
+        console.log(`File available at ${downloadURL}`);
+        const editionName = edition.editionFile.name.replace(".pdf", "");
+        updateArticlePDFURL(editionName, downloadURL);
+        resolve();
       }
-    },
-    (error) => {
-      switch (error.code) {
-        case "storage/unauthorized":
-          throw Error("Unknown error, file upload failed");
-
-        case "storage/unknown":
-          throw Error("Unknown error, file upload failed");
-        default:
-      }
-
-      if (errorCallback && typeof errorCallback === "function") {
-        errorCallback();
-      }
-    },
-    () => {
-      const downloadURL = getPDFDownloadURL(
-        `${edition.editionYear}`,
-        edition.editionFile.name
-      );
-      console.log(`File available at ${downloadURL}`);
-      const editionName = edition.editionFile.name.replace(".pdf", "");
-      updateArticlePDFURL(editionName, downloadURL);
-
-      if (callback && typeof callback === "function") {
-        callback();
-      }
-    }
-  );
+    );
+  });
 };
 
 export const deleteEdition = async (editionString: string) => {

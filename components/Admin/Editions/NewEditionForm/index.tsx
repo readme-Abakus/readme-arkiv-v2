@@ -1,20 +1,22 @@
 import { NextPage } from "next";
 import * as Yup from "yup";
+import { INewEditionData, ISubmitEditionFunction } from "../../../../lib/types";
+import { Formik } from "formik";
+import { addEdition } from "../../../../lib/Firebase/firebaseClientAPIs";
+import { PDFDocument } from "pdf-lib";
 import {
   Alert,
   Button,
-  Col,
-  Fade,
+  Checkbox,
   Form,
-  ProgressBar,
-  Row,
-} from "react-bootstrap";
-import styles from "./NewEdition.module.css";
-import { INewEditionData, ISubmitEditionFunction } from "../../../../lib/types";
-import { Formik } from "formik";
-import { SubmitButton } from "../../Common/SubmitButton";
-import { addEdition } from "../../../../lib/Firebase/firebaseClientAPIs";
-import { PDFDocument } from "pdf-lib";
+  Link,
+  NumberInput,
+  Progress,
+  Tooltip,
+} from "@heroui/react";
+import { FileInput } from "../FileInput";
+import { ROUTES } from "../../../../utils/routes";
+import { useEffect, useMemo } from "react";
 
 const schema = Yup.object().shape({
   editionYear: Yup.number()
@@ -47,25 +49,21 @@ const NewEditionForm: NextPage = () => {
       type: (editionFile as File).type,
     });
 
-    // Make sure we set the correc title metadata
+    // Make sure we set the correct title metadata
     // As this is what chrome uses as the title for
     // When it displays the pdf in the browser
     const pdfFile = await PDFDocument.load(await fileToUpload.arrayBuffer());
     pdfFile.setTitle(editionTitle);
-    fileToUpload = new File([await pdfFile.save()], `${editionTitle}.pdf`, {
+    const pdfBytes = new Uint8Array(await pdfFile.save());
+    fileToUpload = new File([pdfBytes], `${editionTitle}.pdf`, {
       type: (editionFile as File).type,
     });
 
-    setSubmitting(true);
-    addEdition(
-      { ...values, editionFile: fileToUpload },
-      () => {
-        setSubmitting(false);
-        setStatus({ success: true, progress: 100 });
-      },
-      () => setStatus({ error: true }),
-      (progress) => setStatus({ progress: progress })
-    );
+    await addEdition({ ...values, editionFile: fileToUpload }, (progress) =>
+      setStatus({ progress: progress })
+    )
+      .then(() => setStatus({ success: true, progress: 100 }))
+      .catch(() => setStatus({ error: true }));
   };
 
   const now = new Date();
@@ -102,118 +100,153 @@ const NewEditionForm: NextPage = () => {
         resetForm,
         setFieldValue,
       }) => {
-        return (
-          <Fade appear in>
-            <Form className={styles.editionForm} onSubmit={handleSubmit}>
-              <Row className={styles.formRow}>
-                <Form.Group as={Col}>
-                  <Form.Label>Utgaveår</Form.Label>
-                  <Form.Control
-                    placeholder='Utgaveår'
-                    type='number'
-                    name='editionYear'
-                    value={values.editionYear}
-                    onChange={handleChange}
-                    isValid={touched.editionYear && !errors.editionYear}
-                    isInvalid={!!errors.editionYear}
-                  />
-                  <Form.Control.Feedback type='invalid'>
-                    {errors.editionYear}
-                  </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col}>
-                  <Form.Label>Utgavenummer</Form.Label>
-                  <Form.Control
-                    placeholder='Utgavenummer'
-                    type='number'
-                    name='editionNumber'
-                    value={values.editionNumber}
-                    onChange={handleChange}
-                    isValid={touched.editionNumber && !errors.editionNumber}
-                    isInvalid={!!errors.editionNumber}
-                  />
-                  <Form.Control.Feedback type='invalid'>
-                    {errors.editionNumber}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Row>
-              <Row className={styles.formRow}>
-                <Form.Group>
-                  <Form.Control
-                    name='editionFile'
-                    type='file'
-                    onChange={(event) => {
-                      const newValues = { ...values }; // copy the original object
-                      newValues.editionFile = (
-                        event.currentTarget as any
-                      ).files[0];
-                      setFieldValue("editionFile", newValues.editionFile);
-                    }}
-                  ></Form.Control>
-                  <Form.Control.Feedback type='invalid'>
-                    {errors.editionFile}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Row>
-              <Form.Group>
-                <Form.Check
-                  className={styles.checkbox}
-                  type='switch'
-                  name='listingslop'
-                  label='Listingsløputgave'
-                  onChange={handleChange}
-                  id='validationFormik0'
-                />
-              </Form.Group>
-              <SubmitButton
-                buttonText='Last opp utgave'
-                isSubmitting={isSubmitting}
-                isValid={isValid}
-              />
+        const disableForm = isSubmitting || status.error || status.success;
 
-              {isSubmitting || status?.success ? (
-                <ProgressBar
-                  className={styles.progressBar}
-                  striped
-                  animated={isSubmitting}
-                  now={status.progress}
-                  label={`${status.progress.toFixed(0)}%`}
-                />
-              ) : null}
-              {status.error ? (
-                <Alert className={styles.alertInfo} variant='error'>
-                  Noe gikk galt!
-                  <br />
-                  Vent litt, og prøv igjen. Dersom problemet vedvarer, kontakt
-                  ansvarlig utvikler.
-                  <hr />
-                  <div className='d-flex justify-content-end'>
-                    <Button
-                      variant='secondary'
-                      onClick={() => {
-                        resetForm();
-                        setStatus({
-                          success: false,
-                          error: false,
-                          progress: 0,
-                        });
-                      }}
-                    >
-                      Prøv igjen
-                    </Button>
-                  </div>
-                </Alert>
-              ) : null}
-              {status.success ? (
-                <Alert className={styles.alertInfo} variant='primary'>
-                  Opplasting fullført!
-                  <br />
-                  Merk at det kan ta litt tid før utgaven dukker opp på
-                  forsiden.
-                </Alert>
-              ) : null}
-            </Form>
-          </Fade>
+        return (
+          <Form
+            className="flex flex-col gap-[10px] max-w-[350px] w-full"
+            onSubmit={handleSubmit}
+          >
+            <div className="flex items-start gap-[20px] w-full">
+              <NumberInput
+                label="Utgaveår"
+                labelPlacement="outside"
+                name="editionYear"
+                value={values.editionYear}
+                onChange={(e) =>
+                  setFieldValue(
+                    "editionYear",
+                    typeof e === "number" ? e : Number(e.target?.value)
+                  )
+                }
+                errorMessage={errors.editionYear}
+                isInvalid={!!errors.editionYear}
+                formatOptions={{ useGrouping: false }}
+                isDisabled={disableForm}
+                className="flex-1"
+                isRequired
+              />
+              <NumberInput
+                label="Utgavenummer"
+                labelPlacement="outside"
+                name="editionNumber"
+                value={values.editionNumber}
+                onChange={(e) =>
+                  setFieldValue(
+                    "editionNumber",
+                    typeof e === "number" ? e : Number(e.target?.value)
+                  )
+                }
+                errorMessage={errors.editionNumber}
+                isInvalid={!!errors.editionNumber}
+                formatOptions={{ useGrouping: false }}
+                isDisabled={disableForm}
+                className="flex-1"
+                isRequired
+              />
+            </div>
+            <FileInput
+              value={values.editionFile}
+              onChange={(file) => setFieldValue("editionFile", file)}
+              label="Utgave"
+              error={!!errors.editionFile}
+              errorMessage={
+                typeof errors.editionFile === "string"
+                  ? errors.editionFile
+                  : undefined
+              }
+              isDisabled={disableForm}
+              acceptFormat=".pdf"
+              isRequired
+            />
+            <div className="flex items-center gap-[10px]">
+              <Tooltip
+                className="max-w-[400px]"
+                content="Marker om en utgave inneholder en eller flere artikler om Listingløpet. Hvis ønsket kan disse skjules midlertidig fra forsiden via instillingen på '/admin' siden. "
+              >
+                <span className="text-small font-medium">
+                  Listingløp utgave:
+                </span>
+              </Tooltip>
+              <Checkbox
+                name="listingslop"
+                onChange={handleChange}
+                checked={values.listingslop}
+                isDisabled={disableForm}
+              />
+            </div>
+            {disableForm ? (
+              <Progress
+                className="max-w-md"
+                showValueLabel={true}
+                size="md"
+                value={status.progress}
+              />
+            ) : (
+              <Button
+                type="submit"
+                variant="solid"
+                color="primary"
+                className="w-full mt-[20px]"
+                radius="full"
+                isDisabled={!isValid}
+              >
+                Last opp utgave
+              </Button>
+            )}
+            {status.error ? (
+              <Alert
+                color="danger"
+                title="Noe gikk galt!"
+                description="Vent litt, og prøv igjen. Dersom problemet vedvarer, kontakt ansvarlig utvikler."
+              >
+                <Button
+                  variant="flat"
+                  color="danger"
+                  className="mt-[10px]"
+                  onPress={() => {
+                    resetForm();
+                    setStatus({
+                      success: false,
+                      error: false,
+                      progress: 0,
+                    });
+                  }}
+                >
+                  Prøv igjen
+                </Button>
+              </Alert>
+            ) : null}
+            {status.success ? (
+              <Alert
+                color="success"
+                title="Opplasting fullført!"
+                description="Merk: det kan ta 5-10 minutter før utgaven dukker opp på forsiden! I mellomtiden kan du gjøre følgende:"
+              >
+                <div className="flex gap-[10px] mt-[10px]">
+                  <Button
+                    color="success"
+                    variant="flat"
+                    as={Link}
+                    href={ROUTES.EDITION.replace(
+                      ":id",
+                      `${values.editionYear}-0${values.editionNumber}`
+                    )}
+                  >
+                    Åpne utgave
+                  </Button>
+                  <Button
+                    color="success"
+                    variant="flat"
+                    as={Link}
+                    href={ROUTES.NEW_ARTICLE}
+                  >
+                    Legg til artikler
+                  </Button>
+                </div>
+              </Alert>
+            ) : null}
+          </Form>
         );
       }}
     </Formik>

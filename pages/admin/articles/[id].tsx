@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Fade, Spinner } from "react-bootstrap";
 import { ArticleForm } from "../../../components/Admin/Articles/ArticleForm";
 import { WithAuthentication } from "../../../components/WithAuthentication";
 
@@ -12,6 +11,8 @@ import {
 import { IEditArticle } from "../../../lib/types";
 
 import styles from "../../../styles/Article.module.css";
+import { Button, Link, Spinner } from "@heroui/react";
+import { ROUTES } from "../../../utils/routes";
 
 const NewArticlePage = () => {
   const router = useRouter();
@@ -51,32 +52,41 @@ const NewArticlePage = () => {
         <title>readme - oppdater artikkel</title>
       </Head>
       <WithAuthentication>
-        <Fade appear in>
-          <div className={styles.container}>
-            <h1>Oppdater artikkel</h1>
-            {loading ? (
-              <Spinner animation="border" size="sm" variant="secondary" />
-            ) : (
-              <ArticleForm
-                article={article}
-                doHandleSubmit={(values, { setStatus, setSubmitting }) => {
-                  updateArticle(
-                    values,
-                    id as string,
-                    () => {
-                      setSubmitting(false);
-                      setStatus({ success: true });
-                    },
-                    () => {
-                      setSubmitting(false);
-                      setStatus({ error: true });
-                    }
-                  );
-                }}
-              />
-            )}
-          </div>
-        </Fade>
+        <div className="flex items-center gap-2 max-w-[600px] w-full justify-start">
+          <Button
+            isIconOnly
+            variant="light"
+            as={Link}
+            href={ROUTES.ARTICLE_LIST}
+          >
+            <span className="material-symbols-rounded xl">arrow_back</span>
+          </Button>
+
+          <h1 className="text-2xl font-bold text-default-foreground">
+            Oppdater artikkel
+          </h1>
+        </div>
+        {loading ? (
+          <Spinner size="lg" />
+        ) : (
+          <ArticleForm
+            article={article}
+            doHandleSubmit={(values, { setStatus, setSubmitting }) => {
+              updateArticle(
+                values,
+                id as string,
+                () => {
+                  setSubmitting(false);
+                  setStatus({ success: true });
+                },
+                () => {
+                  setSubmitting(false);
+                  setStatus({ error: true });
+                }
+              );
+            }}
+          />
+        )}
       </WithAuthentication>
     </>
   );

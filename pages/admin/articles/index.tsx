@@ -1,43 +1,37 @@
 import { NextPage } from "next";
-import { Button, Fade, Spinner } from "react-bootstrap";
 import { WithAuthentication } from "../../../components/WithAuthentication";
-import { useArticleList } from "../../../lib/Firebase/hooks";
 
-import styles from "../../../styles/ArticleList.module.css";
-import { ListElement } from "../../../components/Admin/Articles/ListElement";
 import Head from "next/head";
+import { Button, Link } from "@heroui/react";
+import React from "react";
+import { ROUTES } from "../../../utils/routes";
+import { ArticleOverview } from "../../../components/Admin/Articles";
 
 const ArticleList: NextPage = () => {
-  const [data, loading, error, pageNum, nextPage, prevPage] = useArticleList();
   return (
     <>
       <Head>
         <title>readme - artikler</title>
       </Head>
       <WithAuthentication>
-        <Fade appear in>
-          <div className={styles.articleList}>
-            <h1>Artikler</h1>
-            {loading ? (
-              <Spinner animation="border" />
-            ) : (
-              <Fade appear in>
-                <div>
-                  {data?.map((article, i) => (
-                    <ListElement key={i} article={article} />
-                  ))}
-
-                  <div className={styles.pagination}>
-                    <Button disabled={pageNum === 0} onClick={() => prevPage()}>
-                      &lt;&lt;
-                    </Button>
-                    <Button onClick={() => nextPage()}>&gt;&gt;</Button>
-                  </div>
-                </div>
-              </Fade>
-            )}
-          </div>
-        </Fade>
+        <div className="flex flex-row place-content-between items-center w-full">
+          <h1 className="text-3xl font-bold text-default-foreground">
+            Artikler
+          </h1>
+          <Button
+            color="primary"
+            size="sm"
+            radius="full"
+            as={Link}
+            href={ROUTES.NEW_ARTICLE}
+            startContent={
+              <span className="material-symbols-rounded md">add_2</span>
+            }
+          >
+            Ny artikkel
+          </Button>
+        </div>
+        <ArticleOverview />
       </WithAuthentication>
     </>
   );

@@ -14,10 +14,10 @@
   grid-area: 1 / 1;
 }
 
-[data-theme="dark"] .logoHvit {
+[class="dark"] .logoHvit {
   opacity: 1;
 }
 
-[data-theme="dark"] .logoSort {
+[class="dark"] .logoSort {
   opacity: 0;
 }

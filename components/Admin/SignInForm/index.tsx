@@ -1,61 +1,97 @@
 import { FC, FormEventHandler, useEffect, useState } from "react";
-import { Form, Alert } from "react-bootstrap";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { useRouter } from "next/router";
-
 import { auth } from "../../../lib/Firebase/firebase";
-
-import { SubmitButton } from "../Common/SubmitButton";
+import {
+  useAuthState,
+  useSignInWithEmailAndPassword,
+} from "react-firebase-hooks/auth";
+import { useRouter } from "next/router";
 import { ROUTES } from "../../../utils/routes";
+import { Alert, Button, Form, Input } from "@heroui/react";
 
 export const SignInForm: FC = () => {
-  const [signInWithEmailAndPassword, user, loading, error] =
+  const [signInWithEmailAndPassword, userCredential, loading, error] =
     useSignInWithEmailAndPassword(auth);
+  const [authUser, authLoading] = useAuthState(auth);
   const router = useRouter();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isPasswordEmpty, setIsPasswordEmpty] = useState(true);
 
-  const onSubmit: FormEventHandler<HTMLFormElement> = (event) => {
-    signInWithEmailAndPassword(email, password);
-    event.preventDefault();
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
+
+  const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    let data = Object.fromEntries(new FormData(e.currentTarget));
+    signInWithEmailAndPassword(data.email as string, data.password as string);
   };
 
   useEffect(() => {
-    if (user) {
+    if (!authLoading && authUser) {
       router.push(ROUTES.ADMIN);
     }
-  }, [user, router]);
+  }, [authUser, authLoading, router]);
 
-  const isValid = password !== "" && email !== "";
   return (
-    <Form onSubmit={onSubmit}>
-      {error && <Alert variant="danger">{error.message}</Alert>}
-      <Form.Group controlId="email">
-        <Form.Label>E-post</Form.Label>
-        <Form.Control
-          name="email"
-          value={email}
-          onChange={(value) => setEmail(value.currentTarget.value)}
-          type="text"
-          placeholder="E-post"
-        />
-      </Form.Group>
-      <Form.Group controlId="password">
-        <Form.Label>Passord</Form.Label>
-        <Form.Control
-          name="password"
-          value={password}
-          onChange={(value) => setPassword(value.currentTarget.value)}
-          type="password"
-          placeholder="Passord"
-        />
-      </Form.Group>
-      <SubmitButton
-        buttonText="Logg inn"
-        isSubmitting={loading}
-        isValid={isValid}
+    <Form onSubmit={onSubmit} className="w-full gap-3">
+      <Input
+        isRequired
+        name="email"
+        placeholder="E-post"
+        type="email"
+        radius="full"
+        errorMessage={({ validationDetails, validationErrors }) => {
+          if (validationDetails.typeMismatch)
+            return "Skriv inn en gyldlig mail adresse.";
+          if (validationDetails.valueMissing) return "Obligatorisk felt.";
+          return validationErrors;
+        }}
+        startContent={
+          <span className="material-symbols-rounded sm">email</span>
+        }
       />
+      <Input
+        isRequired
+        name="password"
+        placeholder="Passord"
+        type={isPasswordVisible ? "text" : "password"}
+        radius="full"
+        startContent={<span className="material-symbols-rounded sm">lock</span>}
+        onChange={(e) => setIsPasswordEmpty(e.target.value == "")}
+        errorMessage={({ validationDetails, validationErrors }) => {
+          if (validationDetails.valueMissing) return "Obligatorisk felt.";
+          return validationErrors;
+        }}
+        endContent={
+          !isPasswordEmpty && (
+            <button
+              type="button"
+              className="flex items-center cursor-pointer"
+              onClick={togglePasswordVisibility}
+            >
+              {isPasswordVisible ? (
+                <span className="material-symbols-rounded sm">
+                  visibility_off
+                </span>
+              ) : (
+                <span className="material-symbols-rounded sm">visibility</span>
+              )}
+            </button>
+          )
+        }
+      />
+      {error && <Alert color="danger">Feil e-post eller brukernavn!</Alert>}
+      <Button
+        type="submit"
+        variant="solid"
+        color="primary"
+        className="w-full"
+        radius="full"
+        isLoading={loading}
+      >
+        Logg inn
+      </Button>
     </Form>
   );
 };

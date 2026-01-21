@@ -1,12 +1,10 @@
 import { FC } from "react";
 import { ReadmeLogo } from "../ReadmeLogo";
 
-import style from "./Footer.module.scss";
-
 export const Footer: FC = () => {
   return (
-    <div className={style.footer}>
-      <p>Laget med 📸✍🏻📰 av </p>
+    <div className="mb-5 absolute bottom-0 left-1/2 -translate-x-1/2 *:mx-auto">
+      <p className="mb-2">Laget med 📸✍🏻📰 av </p>
       <ReadmeLogo maxWidth={"7em"} />
     </div>
   );

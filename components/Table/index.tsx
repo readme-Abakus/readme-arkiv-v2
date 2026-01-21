@@ -1,23 +1,24 @@
 import { FC } from "react";
-import { Table, Fade, Button } from "react-bootstrap";
 import {
   connectInfiniteHits,
   connectStateResults,
   InfiniteHitsProvided,
   StateResultsProvided,
 } from "react-instantsearch-core";
-import { useTheme } from "next-themes";
 import { ROUTES } from "../../utils/routes";
-
-import styles from "./Table.module.css";
-
-const parseTags = (tags: Array<string> | string) => {
-  if (Array.isArray(tags)) {
-    return tags.join(", ");
-  } else {
-    return tags;
-  }
-};
+import {
+  Button,
+  Chip,
+  Link,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+  Tooltip,
+} from "@heroui/react";
+import { readmeIfy } from "../ReadmeLogo";
 
 // This is a temporary hack since the pages list isnt indexed in algolia
 const getPageNumber = (url: string) => {
@@ -29,62 +30,96 @@ const SearchTable: FC<InfiniteHitsProvided & StateResultsProvided> = ({
   refineNext,
   hasMore,
   searchState,
+  searching,
 }) => {
-  const { theme } = useTheme();
   return (
     <>
       {searchState && searchState.query ? (
-        <Fade in appear>
-          <div>
-            <Table
-              striped
-              bordered
-              hover
-              variant={theme}
-              responsive="lg"
-              className={styles.searchTable}
-            >
-              <thead>
-                <tr>
-                  <th>Utgave</th>
-                  <th>Tittel</th>
-                  <th>Forfatter</th>
-                  <th>Layout</th>
-                  <th>Spalte</th>
-                  <th>Stikkord</th>
-                </tr>
-              </thead>
-              <tbody>
-                {hits.map((hit) => (
-                  <tr key={hit._id}>
-                    <td>
-                      <a
-                        href={
-                          ROUTES.EDITION.replace(":id", hit.edition) +
-                          `#page=${getPageNumber(hit.url)}`
-                        }
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {hit.edition}
-                      </a>
-                    </td>
-                    <td>{hit.title}</td>
-                    <td>{hit.author}</td>
-                    <td>{hit.layout}</td>
-                    <td>{hit.type}</td>
-                    <td>{parseTags(hit.tags)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-            {hasMore && (
-              <Button className={styles.showMore} onClick={refineNext}>
-                Vis mer
-              </Button>
-            )}
-          </div>
-        </Fade>
+        <Table
+          isStriped
+          aria-label="Search results"
+          classNames={{
+            wrapper: "shadow-none p-0 rounded-sm",
+          }}
+          bottomContent={
+            hasMore && (
+              <div className="flex w-full justify-center">
+                <Button
+                  variant="solid"
+                  color="primary"
+                  onPress={refineNext}
+                  isLoading={searching}
+                >
+                  Vis mer
+                </Button>
+              </div>
+            )
+          }
+        >
+          <TableHeader>
+            <TableColumn>Utgave</TableColumn>
+            <TableColumn>Tittel</TableColumn>
+            <TableColumn>Forfatter</TableColumn>
+            <TableColumn className="rounded-e-lg sm:rounded-none">
+              Layout
+            </TableColumn>
+            <TableColumn className="hidden md:table-cell">Spalte</TableColumn>
+            <TableColumn className="hidden sm:table-cell">Stikkord</TableColumn>
+          </TableHeader>
+          <TableBody emptyContent="Ingen artikler funnet.">
+            {hits.map((hit, i) => (
+              <TableRow key={i}>
+                <TableCell>
+                  <Link
+                    className="text-nowrap"
+                    href={
+                      ROUTES.EDITION.replace(":id", hit.edition) +
+                      `#page=${getPageNumber(hit.url)}`
+                    }
+                    size="sm"
+                  >
+                    {hit.edition}
+                  </Link>
+                </TableCell>
+                <TableCell className="font-bold">
+                  {readmeIfy(hit.title)}
+                </TableCell>
+                <TableCell>{readmeIfy(hit.author)}</TableCell>
+                <TableCell className="before:rounded-e-lg sm:before:rounded-none">
+                  {readmeIfy(hit.layout)}
+                </TableCell>
+                <TableCell className="hidden md:table-cell">
+                  {hit.type}
+                </TableCell>
+                <TableCell className="hidden sm:table-cell">
+                  <div className="flex gap-[5px] flex-wrap">
+                    {(Array.isArray(hit.tags) ? hit.tags : [hit.tags]).map(
+                      (tag: string, i: number) =>
+                        tag &&
+                        tag.trim() && (
+                          <Tooltip
+                            content={readmeIfy(tag)}
+                            delay={500}
+                            color="danger"
+                            key={i}
+                          >
+                            <Chip
+                              size="sm"
+                              variant={"flat"}
+                              color="primary"
+                              className="[&>*]:overflow-hidden [&>*]:max-w-[100px] [&>*]:text-ellipsis"
+                            >
+                              {readmeIfy(tag)}
+                            </Chip>
+                          </Tooltip>
+                        )
+                    )}
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       ) : null}
     </>
   );

@@ -2,10 +2,18 @@ import { FC, ClipboardEvent } from "react";
 
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { Form, Col, Button, Alert, Fade, Row } from "react-bootstrap";
-
-import { SubmitButton } from "../../Common/SubmitButton";
 import { ISubmitArticleFunction, IEditArticle } from "../../../../lib/types";
+import {
+  Alert,
+  Autocomplete,
+  AutocompleteItem,
+  Button,
+  Form,
+  Input,
+  NumberInput,
+  Textarea,
+} from "@heroui/react";
+import { TooltipLabel } from "../../Common/TooltipLabel";
 
 interface ArticleFormProps {
   doHandleSubmit: ISubmitArticleFunction;
@@ -44,9 +52,15 @@ export const ArticleForm: FC<ArticleFormProps> = ({
       .required("Utgavenummer må fylles ut."),
     content: Yup.string().required("Artikkelen må ha noe innhold."),
     pages: Yup.string()
-      .matches(new RegExp("^[0-9]+(,\\s{1}[0-9]+)*$"))
+      .matches(
+        new RegExp("^[0-9]+(,\\s{1}[0-9]+)*$"),
+        'Skriv inn som en liste med tall, separert med komma og mellomrom: "10, 12, 13".'
+      )
       .required("Artikkelen må ha sidetall, og de må oppgis på rett form."),
-    tags: Yup.string().matches(new RegExp("^[\\S]+(,\\s{1}[\\S]+)*$")),
+    tags: Yup.string().matches(
+      new RegExp("^[\\S]+(,\\s{1}[\\S]+)*$"),
+      'Skriv inn som en liste med ord som beskriver artikkelens innhold, separert med komma og mellomrom: "hei, på, deg".'
+    ),
   });
 
   const now = new Date();
@@ -65,6 +79,23 @@ export const ArticleForm: FC<ArticleFormProps> = ({
     tags: tags || "",
   };
 
+  const columnSuggestions = [
+    "Leder",
+    "Side 3",
+    "Gløsløken",
+    "Utgavens master",
+    "Siving",
+    "Ikke-Siving",
+    "Redaksjonen Anbefaler",
+    "Konkurranse",
+    "Smått & Nett",
+  ];
+
+  const columnSuggestionItems = columnSuggestions.map((item) => ({
+    key: item,
+    value: item,
+  }));
+
   return (
     <Formik
       enableReinitialize
@@ -78,6 +109,7 @@ export const ArticleForm: FC<ArticleFormProps> = ({
       {({
         handleSubmit,
         handleChange,
+        handleBlur,
         values,
         touched,
         isValid,
@@ -88,6 +120,8 @@ export const ArticleForm: FC<ArticleFormProps> = ({
         resetForm,
         setFieldValue,
       }) => {
+        const disabled = isSubmitting || status.error || status.success;
+
         function onPaste(event: ClipboardEvent<HTMLTextAreaElement>) {
           event.preventDefault();
           const cursorPosition = event.currentTarget.selectionStart ?? 0;
@@ -112,236 +146,239 @@ export const ArticleForm: FC<ArticleFormProps> = ({
           }
           setFieldValue("content", textToSet);
         }
-        return (
-          <Fade appear in>
-            <Form onSubmit={handleSubmit}>
-              <Row>
-                <Form.Group as={Col}>
-                  <Form.Label>Tittel</Form.Label>
-                  <Form.Control
-                    placeholder="Tittel"
-                    type="text"
-                    name="title"
-                    value={values.title}
-                    onChange={handleChange}
-                    isValid={touched.title && !errors.title}
-                    isInvalid={!!errors.title}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.title}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Row>
-              <Row>
-                <Form.Group as={Col}>
-                  <Form.Label>Skribent</Form.Label>
-                  <Form.Control
-                    placeholder="Skribent"
-                    type="text"
-                    name="author"
-                    value={values.author}
-                    onChange={handleChange}
-                    isValid={touched.author && !errors.author}
-                    isInvalid={!!errors.author}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.author}
-                  </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col}>
-                  <Form.Label>Spalte</Form.Label>
-                  <Form.Control
-                    placeholder="Spalte"
-                    type="text"
-                    name="type"
-                    value={values.type}
-                    onChange={handleChange}
-                    isValid={touched.type && !errors.type}
-                    isInvalid={!!errors.type}
-                  />
-                </Form.Group>
-              </Row>
-              <Row>
-                <Form.Group as={Col}>
-                  <Form.Label>Layout</Form.Label>
-                  <Form.Control
-                    placeholder="Layout"
-                    type="text"
-                    name="layout"
-                    value={values.layout}
-                    onChange={handleChange}
-                    isValid={touched.layout && !errors.layout}
-                    isInvalid={!!errors.layout}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.layout}
-                  </Form.Control.Feedback>
-                </Form.Group>
 
-                <Form.Group as={Col}>
-                  <Form.Label>Foto</Form.Label>
-                  <Form.Control
-                    placeholder="Foto"
-                    type="text"
-                    name="photo"
-                    value={values.photo}
-                    onChange={handleChange}
-                    isValid={touched.photo && !errors.photo}
-                    isInvalid={!!errors.photo}
+        return (
+          <Form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-[15px] max-w-[600px] w-full items-center"
+          >
+            <div className="flex gap-[25px] w-full">
+              <Input
+                label="Tittel"
+                labelPlacement="outside"
+                placeholder="Tittel"
+                name="title"
+                value={values.title}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                isDisabled={disabled}
+                isInvalid={touched.title && !!errors.title}
+                errorMessage={errors.title}
+                isRequired
+              />
+              <Autocomplete
+                label={
+                  <TooltipLabel
+                    labelName="Spalte"
+                    tooltipText="Spalten kan være et av forslagene fra listen eller egendefinert ved å skrive inn i feltet."
                   />
-                </Form.Group>
-              </Row>
-              <Row>
-                <Form.Group as={Col}>
-                  <Form.Label>Utgaveår</Form.Label>
-                  <Form.Control
-                    placeholder="Utgaveår"
-                    type="number"
-                    name="editionYear"
-                    value={values.editionYear}
-                    onChange={handleChange}
-                    isValid={touched.editionYear && !errors.editionYear}
-                    isInvalid={!!errors.editionYear}
+                }
+                labelPlacement="outside"
+                placeholder="Spalte"
+                name="type"
+                inputValue={values.type}
+                onInputChange={(value) => {
+                  setFieldValue("type", value);
+                }}
+                onBlur={handleBlur}
+                isDisabled={disabled}
+                isInvalid={touched.type && !!errors.type}
+                errorMessage={errors.type}
+                allowsCustomValue
+                defaultItems={columnSuggestionItems}
+              >
+                {(item) => (
+                  <AutocompleteItem key={item.key}>
+                    {item.value}
+                  </AutocompleteItem>
+                )}
+              </Autocomplete>
+            </div>
+            <div className="flex gap-[25px] w-full">
+              <NumberInput
+                label="Utgaveår"
+                labelPlacement="outside"
+                placeholder="Utgaveår"
+                name="editionYear"
+                value={values.editionYear}
+                onChange={(e) =>
+                  setFieldValue(
+                    "editionYear",
+                    typeof e === "number" ? e : Number(e.target?.value)
+                  )
+                }
+                onBlur={handleBlur}
+                isDisabled={disabled}
+                isInvalid={touched.editionYear && !!errors.editionYear}
+                errorMessage={errors.editionYear}
+                formatOptions={{ useGrouping: false }}
+                isRequired
+              />
+              <NumberInput
+                label="Utgavenummer"
+                labelPlacement="outside"
+                placeholder="Utgavenummer"
+                name="editionNumber"
+                value={values.editionNumber}
+                onChange={(e) =>
+                  setFieldValue(
+                    "editionNumber",
+                    typeof e === "number" ? e : Number(e.target?.value)
+                  )
+                }
+                onBlur={handleBlur}
+                isDisabled={disabled}
+                isInvalid={touched.editionNumber && !!errors.editionNumber}
+                errorMessage={errors.editionNumber}
+                formatOptions={{ useGrouping: false }}
+                isRequired
+              />
+            </div>
+            <Input
+              label="Skribent"
+              labelPlacement="outside"
+              placeholder="Skribent"
+              name="author"
+              value={values.author}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              isDisabled={disabled}
+              isInvalid={touched.author && !!errors.author}
+              errorMessage={errors.author}
+              isRequired
+            />
+            <Input
+              label="Layout"
+              labelPlacement="outside"
+              placeholder="Layout"
+              name="layout"
+              value={values.layout}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              isDisabled={disabled}
+              isInvalid={touched.layout && !!errors.layout}
+              errorMessage={errors.layout}
+              isRequired
+            />
+            <Input
+              label="Foto"
+              labelPlacement="outside"
+              placeholder="Foto"
+              name="photo"
+              value={values.photo}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              isDisabled={disabled}
+              isInvalid={touched.photo && !!errors.photo}
+              errorMessage={errors.photo}
+            />
+            <Textarea
+              label="Tekst"
+              labelPlacement="outside"
+              placeholder="Tekst"
+              name="content"
+              value={values.content}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              isDisabled={disabled}
+              isInvalid={touched.content && !!errors.content}
+              errorMessage={errors.content}
+              isRequired
+            />
+            <div className="flex gap-[25px] w-full">
+              <Input
+                label={
+                  <TooltipLabel
+                    labelName="Sidetall"
+                    tooltipText='Skriv inn som en liste med tall, separert med komma og mellomrom: "10, 12, 13".'
                   />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.editionYear}
-                  </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col}>
-                  <Form.Label>Utgavenummer</Form.Label>
-                  <Form.Control
-                    placeholder="Utgavenummer"
-                    type="number"
-                    name="editionNumber"
-                    value={values.editionNumber}
-                    onChange={handleChange}
-                    isValid={touched.editionNumber && !errors.editionNumber}
-                    isInvalid={!!errors.editionNumber}
+                }
+                labelPlacement="outside"
+                placeholder="Sidetall"
+                name="pages"
+                value={values.pages}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                isDisabled={disabled}
+                isInvalid={touched.pages && !!errors.pages}
+                errorMessage={errors.pages}
+                isRequired
+              />
+              <Input
+                label={
+                  <TooltipLabel
+                    labelName="Tags"
+                    tooltipText='Skriv inn som en liste med ord som beskriver artikkelens
+                  innhold, separert med komma og mellomrom: "hei, på, deg".'
                   />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.editionNumber}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Row>
-              <Row>
-                <Form.Group as={Col}>
-                  <Form.Label>Tekst</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={5}
-                    name="content"
-                    value={values.content}
-                    onChange={handleChange}
-                    onPaste={(event: ClipboardEvent<HTMLTextAreaElement>) =>
-                      onPaste(event)
-                    }
-                    isValid={touched.content && !errors.content}
-                    isInvalid={!!errors.content}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.content}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Row>
-              <Row>
-                <Form.Group as={Col}>
-                  <Form.Label>Sidetall</Form.Label>
-                  <Form.Control
-                    placeholder="Sidetall"
-                    type="text"
-                    name="pages"
-                    value={values.pages}
-                    onChange={handleChange}
-                    isValid={touched.pages && !errors.pages}
-                    isInvalid={!!errors.pages}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.pages}
-                  </Form.Control.Feedback>
-                  <Form.Text className="text-muted">
-                    Skriv inn som en liste med tall, separert med komma og
-                    mellomrom: &quot;10, 12, 13&qout;
-                    <br />
-                    <i>Merk at dette er sidetall iht. utgaveplanen.</i>
-                  </Form.Text>
-                </Form.Group>
-                <Form.Group as={Col}>
-                  <Form.Label>Tags</Form.Label>
-                  <Form.Control
-                    placeholder="Tags"
-                    type="text"
-                    name="tags"
-                    value={values.tags}
-                    onChange={handleChange}
-                    isValid={touched.tags && !errors.tags}
-                    isInvalid={!!errors.tags}
-                  />
-                  <Form.Text className="text-muted">
-                    Skriv inn som en liste med ord som beskriver artikkelens
-                    innhold, separert med komma og mellomrom: &qout;hei, på,
-                    deg&qout;
-                  </Form.Text>
-                </Form.Group>
-              </Row>
-              <SubmitButton
-                isValid={isValid}
-                isSubmitting={isSubmitting}
-                buttonText={
-                  !article ? "Legg til artikkel" : "Oppdater artikkel"
+                }
+                labelPlacement="outside"
+                placeholder="Tags"
+                name="tags"
+                value={values.tags}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                isDisabled={disabled}
+                isInvalid={touched.tags && !!errors.tags}
+                errorMessage={errors.tags}
+              />
+            </div>
+            <Button
+              type="submit"
+              variant="solid"
+              color="primary"
+              className="w-[200px] mt-[20px]"
+              radius="full"
+              isDisabled={!isValid || disabled}
+              isLoading={isSubmitting}
+            >
+              {isSubmitting
+                ? "Laster"
+                : !article
+                  ? "Legg til artikkel"
+                  : "Oppdater artikkel"}
+            </Button>
+            {status.error && (
+              <Alert
+                color="danger"
+                title="Oups!"
+                description="Noe gikk galt. Husket du å laste opp PDF-en først? Man kan ikke opprette en artikkel uten tilhørende utgave i databasen."
+                endContent={
+                  <Button
+                    variant="flat"
+                    color="danger"
+                    className="min-w-[110px]"
+                    onPress={() => {
+                      resetForm();
+                      setStatus({ success: false, error: false });
+                    }}
+                  >
+                    Tøm skjema
+                  </Button>
                 }
               />
-
-              {status.error ? (
-                <Alert variant="warning">
-                  Oups!
-                  <br />
-                  Noe gikk galt. Husket du å laste opp PDF-en først? Man kan
-                  ikke opprette en artikkel uten tilhørende utgave i databasen.
-                  <hr />
-                  <div className="d-flex justify-content-end">
-                    <Button
-                      variant="secondary"
-                      onClick={() => {
-                        resetForm();
-                        setStatus({ success: false, error: false });
-                      }}
-                    >
-                      Tøm skjema
-                    </Button>
-                  </div>
-                </Alert>
-              ) : null}
-              {status.success ? (
-                <Alert variant="primary">
-                  Opplasting fullført!
-                  <br />
-                  Du kan nå legge til en ny artikkel, om du vil det.
-                  {!article ? (
-                    <>
-                      <hr />
-                      <div className="d-flex justify-content-end">
-                        <Button
-                          variant="secondary"
-                          onClick={() => {
-                            resetForm({
-                              values: {
-                                ...initialFormValues,
-                                editionYear: values.editionYear,
-                                editionNumber: values.editionNumber,
-                              },
-                            });
-                            setStatus({ success: false });
-                          }}
-                        >
-                          Tøm skjema
-                        </Button>
-                      </div>
-                    </>
-                  ) : null}
-                </Alert>
-              ) : null}
-            </Form>
-          </Fade>
+            )}
+            {status.success && (
+              <Alert
+                color="success"
+                title="Artikkel er lagt til!"
+                description="Tøm skjemaet dersom du ønsker å legge til enda en artikkel."
+                endContent={
+                  <Button
+                    variant="flat"
+                    color="success"
+                    className="min-w-[110px]"
+                    onPress={() => {
+                      resetForm();
+                      setStatus({ success: false });
+                    }}
+                  >
+                    Tøm skjema
+                  </Button>
+                }
+              />
+            )}
+          </Form>
         );
       }}
     </Formik>
