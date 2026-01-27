@@ -27,9 +27,9 @@ jobs:
           yarn install --frozen-lockfile
 
       - name: Install Firebase CLI
-        run: npm install -g firebase-tools
+        run: yarn global add firebase-tools
 
       - name: Deploy to Firebase Functions
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        run: firebase deploy --only functions --token "$FIREBASE_TOKEN"
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+        run: firebase deploy --only functions
