@@ -1,5 +1,6 @@
 name: Deploy to Firebase Functions on merge
 "on":
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -12,16 +13,21 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v2
-      - name: Install
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
-      - run: cd functions && npm install
+          node-version: 20
+          cache: "yarn"
+          cache-dependency-path: functions/yarn.lock
 
-      - name: Deploy to Firebase Functions
-        uses: w9jds/firebase-action@master
+      - name: Install dependencies
+        run: |
+          cd functions
+          yarn install --frozen-lockfile
+
+      - uses: w9jds/setup-firebase@main
         with:
-          args: deploy --only functions
-        env:
-          GCP_SA_KEY: ${{ secrets.FIREBASE_TOKEN }}
+          gcp_sa_key: ${{ secrets.GCP_SA_KEY }}
+      - run: firebase deploy --only functions
