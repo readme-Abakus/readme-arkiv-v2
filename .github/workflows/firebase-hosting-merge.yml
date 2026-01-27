@@ -29,7 +29,11 @@ jobs:
       - name: Install Firebase CLI
         run: yarn global add firebase-tools
 
+      - name: Create Firebase JSON key file
+        run: |
+          echo "${{ secrets.GCP_SA_KEY }}" > $HOME/firebase-sa.json
+
       - name: Deploy to Firebase Functions
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+          GOOGLE_APPLICATION_CREDENTIALS: $HOME/firebase-sa.json
         run: firebase deploy --only functions
