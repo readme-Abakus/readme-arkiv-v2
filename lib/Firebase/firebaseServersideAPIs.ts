@@ -1,3 +1,5 @@
+import "server-only";
+
 import { IEdition, IEditionData } from "../types";
 import { db, storage } from "./firebaseAdmin";
 
