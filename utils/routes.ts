@@ -4,9 +4,9 @@ const SEARCH = "/search";
 const ADMIN = "/admin";
 const SIGN_IN = "/signin";
 const PASSWORD_FORGET = "/pw-forget";
-const NEW_EDITION = ADMIN + "/new_edition";
 const EDITION_LIST = ADMIN + "/editions";
 const ARTICLE_LIST = ADMIN + "/articles";
+const NEW_EDITION = EDITION_LIST + "/new";
 const NEW_ARTICLE = ARTICLE_LIST + "/new";
 const EDIT_ARTICLE = ARTICLE_LIST + "/:id";
 
