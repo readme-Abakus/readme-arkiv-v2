@@ -9,6 +9,7 @@ import {
 import { useRouter } from "next/navigation";
 import { Alert, Button, Form, Input, Link } from "@heroui/react";
 import { ROUTES } from "../../../utils/routes";
+import { Envelope, Eye, EyeSlash, Lock } from "@gravity-ui/icons";
 
 export default function SignInForm() {
   const [signInWithEmailAndPassword, userCredential, loading, error] =
@@ -49,9 +50,7 @@ export default function SignInForm() {
           if (validationDetails.valueMissing) return "Obligatorisk felt.";
           return validationErrors;
         }}
-        startContent={
-          <span className="material-symbols-rounded sm">email</span>
-        }
+        startContent={<Envelope />}
       />
       <Input
         isRequired
@@ -59,7 +58,7 @@ export default function SignInForm() {
         placeholder="Passord"
         type={isPasswordVisible ? "text" : "password"}
         radius="full"
-        startContent={<span className="material-symbols-rounded sm">lock</span>}
+        startContent={<Lock />}
         onChange={(e) => setIsPasswordEmpty(e.target.value == "")}
         errorMessage={({ validationDetails, validationErrors }) => {
           if (validationDetails.valueMissing) return "Obligatorisk felt.";
@@ -72,13 +71,7 @@ export default function SignInForm() {
               className="flex items-center cursor-pointer"
               onClick={togglePasswordVisibility}
             >
-              {isPasswordVisible ? (
-                <span className="material-symbols-rounded sm">
-                  visibility_off
-                </span>
-              ) : (
-                <span className="material-symbols-rounded sm">visibility</span>
-              )}
+              {isPasswordVisible ? <EyeSlash /> : <Eye />}
             </button>
           )
         }

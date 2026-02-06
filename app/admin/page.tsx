@@ -1,18 +1,6 @@
-import { WithAuthentication } from "@/components/WithAuthentication";
-import Admin from "./_components/Admin";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "readme - admin",
-};
+import { redirect } from "next/navigation";
+import { ROUTES } from "utils/routes";
 
 export default function Page() {
-  return (
-    <WithAuthentication>
-      <div className="flex flex-col items-center gap-[10px]">
-        <h1 className="text-2xl font-bold text-default-foreground">Admin</h1>
-        <Admin />
-      </div>
-    </WithAuthentication>
-  );
+  redirect(ROUTES.EDITION_LIST);
 }

@@ -15,6 +15,14 @@ import {
   Link,
 } from "@heroui/react";
 import { ReadmeLogo } from "./ReadmeLogo";
+import {
+  Bars,
+  Xmark,
+  Magnifier,
+  ArrowRightFromSquare,
+  ArrowUpRightFromSquare,
+  PersonGear,
+} from "@gravity-ui/icons";
 
 export const NavBar: FC = () => {
   const [user, loading] = useAuthState(auth);
@@ -33,9 +41,7 @@ export const NavBar: FC = () => {
           className="text-xs hidden md:flex"
           as={Link}
           href={ROUTES.SEARCH}
-          endContent={
-            <span className="material-symbols-rounded md">search</span>
-          }
+          endContent={<Magnifier />}
         >
           SØK
         </Button>
@@ -51,13 +57,7 @@ export const NavBar: FC = () => {
               color="default"
               radius="full"
               className="text-xs"
-              endContent={
-                isOpen ? (
-                  <span className="material-symbols-rounded md">close</span>
-                ) : (
-                  <span className="material-symbols-rounded md">menu</span>
-                )
-              }
+              endContent={isOpen ? <Xmark /> : <Bars />}
             ></Button>
           </DropdownTrigger>
           <DropdownMenu aria-label="Static Actions">
@@ -66,9 +66,7 @@ export const NavBar: FC = () => {
               as={Link}
               className="text-foreground"
               href={ROUTES.SEARCH}
-              startContent={
-                <span className="material-symbols-rounded md">search</span>
-              }
+              startContent={<Magnifier />}
             >
               Artikkelsøk
             </DropdownItem>
@@ -78,9 +76,7 @@ export const NavBar: FC = () => {
               as={Link}
               className="text-foreground"
               href="https://abakus.no/"
-              startContent={
-                <span className="material-symbols-rounded md">open_in_new</span>
-              }
+              startContent={<ArrowUpRightFromSquare />}
             >
               Abakus.no
             </DropdownItem>
@@ -91,11 +87,7 @@ export const NavBar: FC = () => {
                   as={Link}
                   className="text-foreground"
                   href={ROUTES.ADMIN}
-                  startContent={
-                    <span className="material-symbols-rounded md">
-                      shield_person
-                    </span>
-                  }
+                  startContent={<PersonGear />}
                 >
                   Admin
                 </DropdownItem>
@@ -103,9 +95,7 @@ export const NavBar: FC = () => {
                   key="logout"
                   color="danger"
                   className="text-danger"
-                  startContent={
-                    <span className="material-symbols-rounded md">logout</span>
-                  }
+                  startContent={<ArrowRightFromSquare />}
                   onPress={() => signOut(auth)}
                 >
                   Log ut

@@ -4,6 +4,7 @@ import { FormEventHandler, useState } from "react";
 import { useSendPasswordResetEmail } from "react-firebase-hooks/auth";
 import { auth } from "../../../lib/Firebase/firebase";
 import { Alert, Button, Form, Input } from "@heroui/react";
+import { Envelope } from "@gravity-ui/icons";
 
 export default function PasswordForgetForm() {
   const [sendPasswordResetEmail, sending, error] =
@@ -30,9 +31,7 @@ export default function PasswordForgetForm() {
           if (validationDetails.valueMissing) return "Obligatorisk felt.";
           return validationErrors;
         }}
-        startContent={
-          <span className="material-symbols-rounded sm">email</span>
-        }
+        startContent={<Envelope />}
       />
       <Button
         type="submit"

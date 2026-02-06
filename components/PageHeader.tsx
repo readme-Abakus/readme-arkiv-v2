@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowLeft } from "@gravity-ui/icons";
 import { Button, Link } from "@heroui/react";
 
 interface IProps {
@@ -19,7 +20,7 @@ export default function PageHeader(props: IProps) {
             as={Link}
             href={props.backButtonRoute}
           >
-            <span className="material-symbols-rounded xl">arrow_back</span>
+            <ArrowLeft className="h-[28px] w-[28px]" />
           </Button>
         )}
         <h1 className="text-3xl font-bold text-default-foreground ">

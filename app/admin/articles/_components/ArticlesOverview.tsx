@@ -29,6 +29,13 @@ import {
 import { IArticle } from "../../../../lib/types";
 import React from "react";
 import { useArticleList } from "../../../../lib/Firebase/hooks";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRightFromSquare,
+  Pencil,
+  TrashBin,
+} from "@gravity-ui/icons";
 
 export default function ArticleOverview() {
   const [data, loading, error, pageNum, nextPage, prevPage] = useArticleList();
@@ -67,7 +74,7 @@ export default function ArticleOverview() {
         );
       case "actions":
         return (
-          <div className="relative flex items-center gap-[2px]">
+          <div className="relative flex items-center gap-[0px]">
             <Tooltip content="Åpne artikkel i utgave">
               <Button
                 isIconOnly
@@ -80,11 +87,7 @@ export default function ArticleOverview() {
                   `#page=${getPageNumber(article)}`
                 }
                 className="text-foreground-500"
-                startContent={
-                  <span className="material-symbols-rounded md">
-                    open_in_new
-                  </span>
-                }
+                startContent={<ArrowUpRightFromSquare />}
               ></Button>
             </Tooltip>
             <Tooltip content="Rediger artikkel">
@@ -96,9 +99,7 @@ export default function ArticleOverview() {
                 as={Link}
                 href={ROUTES.EDIT_ARTICLE.replace(":id", article.id)}
                 className="text-foreground-500"
-                startContent={
-                  <span className="material-symbols-rounded md">edit</span>
-                }
+                startContent={<Pencil />}
               ></Button>
             </Tooltip>
             <Tooltip color="danger" content="Slett artikkel">
@@ -109,9 +110,7 @@ export default function ArticleOverview() {
                 size="sm"
                 color="danger"
                 onPress={() => setDeleteModalActiveArticle(article)}
-                startContent={
-                  <span className="material-symbols-rounded md">delete</span>
-                }
+                startContent={<TrashBin />}
               ></Button>
             </Tooltip>
           </div>
@@ -171,18 +170,11 @@ export default function ArticleOverview() {
         <Button
           onPress={prevPage}
           isDisabled={pageNum === 0}
-          startContent={
-            <span className="material-symbols-rounded md">arrow_back</span>
-          }
+          startContent={<ArrowLeft />}
         >
           Forrige
         </Button>
-        <Button
-          onPress={nextPage}
-          endContent={
-            <span className="material-symbols-rounded md">arrow_forward</span>
-          }
-        >
+        <Button onPress={nextPage} endContent={<ArrowRight />}>
           Neste
         </Button>
       </ButtonGroup>

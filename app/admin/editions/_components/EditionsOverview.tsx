@@ -19,10 +19,13 @@ import { FC, useState } from "react";
 import { deleteEdition } from "../../../../lib/Firebase/firebaseClientAPIs";
 import { IEdition, IEditionData } from "../../../../lib/types";
 import React from "react";
+import { useRouter } from "next/navigation";
+import { ArrowUpRightFromSquare, TrashBin } from "@gravity-ui/icons";
 
 const EditionsOverview: FC<{ editionData: IEditionData[] }> = ({
   editionData,
 }) => {
+  const router = useRouter();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selectedEdition, setSelectedEdition] = useState<string | undefined>();
 
@@ -39,6 +42,7 @@ const EditionsOverview: FC<{ editionData: IEditionData[] }> = ({
           "Merk at det kan ta 5-10 minutter før endringen er synlig på forsiden.",
         color: "success",
       });
+      router.refresh();
     });
   };
 
@@ -112,9 +116,7 @@ const EditionCard: FC<{
             color="default"
             variant="bordered"
             isIconOnly
-            startContent={
-              <span className="material-symbols-rounded md">open_in_new</span>
-            }
+            startContent={<ArrowUpRightFromSquare />}
           />
         </Tooltip>
         <Tooltip content="Slett utgave" color="danger" delay={1000}>
@@ -122,9 +124,7 @@ const EditionCard: FC<{
             color="danger"
             variant="flat"
             isIconOnly
-            startContent={
-              <span className="material-symbols-rounded md">delete</span>
-            }
+            startContent={<TrashBin />}
             onPress={onDeletePressed}
           />
         </Tooltip>

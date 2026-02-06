@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { ArticleForm } from "../_components/ArticleForm";
-import { WithAuthentication } from "@/components/WithAuthentication";
 
 import {
   getArticleByID,
@@ -48,37 +47,35 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
     return () => {
       isSubscribed = false;
     };
-  }, [params]);
+  }, [params, router]);
 
   return (
-    <WithAuthentication>
-      <div className="flex flex-col items-left gap-5 max-w-[500px] w-full">
-        <PageHeader
-          title="Oppdater artikkel"
-          backButtonRoute={ROUTES.ARTICLE_LIST}
+    <div className="flex flex-col items-left gap-5 max-w-[500px] w-full mx-auto">
+      <PageHeader
+        title="Oppdater artikkel"
+        backButtonRoute={ROUTES.ARTICLE_LIST}
+      />
+      {loading ? (
+        <Spinner size="lg" />
+      ) : (
+        <ArticleForm
+          article={article}
+          doHandleSubmit={(values, { setStatus, setSubmitting }) => {
+            updateArticle(
+              values,
+              article?.id as string,
+              () => {
+                setSubmitting(false);
+                setStatus({ success: true });
+              },
+              () => {
+                setSubmitting(false);
+                setStatus({ error: true });
+              },
+            );
+          }}
         />
-        {loading ? (
-          <Spinner size="lg" />
-        ) : (
-          <ArticleForm
-            article={article}
-            doHandleSubmit={(values, { setStatus, setSubmitting }) => {
-              updateArticle(
-                values,
-                article?.id as string,
-                () => {
-                  setSubmitting(false);
-                  setStatus({ success: true });
-                },
-                () => {
-                  setSubmitting(false);
-                  setStatus({ error: true });
-                }
-              );
-            }}
-          />
-        )}
-      </div>
-    </WithAuthentication>
+      )}
+    </div>
   );
 }

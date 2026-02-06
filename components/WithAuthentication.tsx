@@ -5,6 +5,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../lib/Firebase/firebase";
 import { ROUTES } from "../utils/routes";
+import { Spinner } from "@heroui/react";
 
 export const WithAuthentication = ({ children }: { children: ReactNode }) => {
   const [user, loading] = useAuthState(auth);
@@ -21,6 +22,6 @@ export const WithAuthentication = ({ children }: { children: ReactNode }) => {
     setMounted(true);
   }, []);
 
-  if (!mounted || loading || !user) return null;
+  if (!mounted || loading || !user) return <Spinner size="lg" />;
   return <>{children}</>;
 };
