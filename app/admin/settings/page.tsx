@@ -3,7 +3,7 @@ import PageHeader from "@/components/PageHeader";
 import { ShowListingToggle } from "./_components/ShowListingToggle";
 
 export const metadata: Metadata = {
-  title: "readme - artikler",
+  title: "readme - instillinger",
 };
 
 export default function Page() {

@@ -47,7 +47,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
     return () => {
       isSubscribed = false;
     };
-  }, [params]);
+  }, [params, router]);
 
   return (
     <div className="flex flex-col items-left gap-5 max-w-[500px] w-full mx-auto">
