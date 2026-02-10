@@ -32,7 +32,6 @@
     "react-firebase-hooks": "^5.0.0",
     "react-instantsearch-dom": "^6.40.4",
     "react-switch": "^7.0.0",
-    "sass": "^1.48.0",
     "tailwindcss": "^4.1.18",
     "yup": "^0.32.11"
   },
